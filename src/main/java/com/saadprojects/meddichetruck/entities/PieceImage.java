@@ -1,5 +1,6 @@
 package com.saadprojects.meddichetruck.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,5 +19,9 @@ public class PieceImage {
     private String name;
 
     private String path;
+
+    @ManyToOne
+    @JsonIgnoreProperties("pieceImages")
+    private Piece piece;
 
 }

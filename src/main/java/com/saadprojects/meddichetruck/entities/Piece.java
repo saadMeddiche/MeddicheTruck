@@ -20,7 +20,8 @@ public class Piece {
 
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy =  "piece" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("piece")
     private List<PieceImage> images;
 
     @ManyToMany(mappedBy = "pieces")
