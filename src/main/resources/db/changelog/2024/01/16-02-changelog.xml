@@ -7,7 +7,6 @@
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
     <changeSet id="1705409382802-1" author="YouCode (generated)">
         <addColumn tableName="person">
-            <column name="test" type="VARCHAR(255)"/>
             <column name="test2" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
