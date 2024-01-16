@@ -27,8 +27,6 @@ public class Person {
 
     private String description;
 
-    private String test;
-
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonIgnoreProperties("person")
     private List<PhoneNumber> phoneNumbers;
