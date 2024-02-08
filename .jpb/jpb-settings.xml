@@ -12,7 +12,7 @@
     <persistence-units>
       <persistence-unit name="Default">
         <packages>
-          <package value="com.saadprojects.meddichetruck" />
+          <package value="com.MeddicheTruck.mtmain" />
         </packages>
       </persistence-unit>
     </persistence-units>
