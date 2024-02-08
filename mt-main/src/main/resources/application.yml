@@ -20,7 +20,7 @@ spring:
     show-sql: true
 
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   liquibase:
     changelog: changelog/app-changelog.xml

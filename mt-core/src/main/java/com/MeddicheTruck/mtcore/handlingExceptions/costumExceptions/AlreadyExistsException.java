@@ -1,4 +1,4 @@
-package com.MeddicheTruck.mtmain.handlingExceptions.costumExceptions;
+package com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

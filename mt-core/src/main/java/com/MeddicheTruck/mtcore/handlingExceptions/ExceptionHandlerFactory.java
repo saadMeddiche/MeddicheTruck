@@ -1,16 +1,13 @@
-package com.MeddicheTruck.mtmain.handlingExceptions;
+package com.MeddicheTruck.mtcore.handlingExceptions;
 
 
-
-import com.MeddicheTruck.mtmain.handlingExceptions.costumExceptions.*;
-
+import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.*;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.hibernate.query.QueryArgumentException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
@@ -71,14 +68,14 @@ public class ExceptionHandlerFactory {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> handleDHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
 
-
-
-//        if(exception.getMessage().contains("not one of the values accepted for Enum class: [CIN, PASSPORT, CARTE_RESIDENCE]")){
-//            return new ResponseEntity<>(List.of("Invalid identityDocument value it shoudld be [CIN ,PASSPORT,CARTE_RESIDENCE]") , HttpStatus.BAD_REQUEST);
-//        }
-
+        // if the format of the date is not correct
         if(exception.getMessage().contains("Failed to deserialize java.time.LocalDate")){
             return new ResponseEntity<>(List.of("Respect the format YYYY-MM-DD") , HttpStatus.BAD_REQUEST);
+        }
+
+        // if the request body is empty
+        if(exception.getMessage().contains("JSON parse error: No content to map due to end-of-input")){
+            return new ResponseEntity<>(List.of("The request body can not be empty") , HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(List.of("Development Purpose #1 , This error Not handled Yet") , HttpStatus.BAD_REQUEST);
@@ -87,10 +84,7 @@ public class ExceptionHandlerFactory {
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<?> handleDataIntegrityViolation(SQLIntegrityConstraintViolationException e) {
 
-
-//        if (e.getMessage().contains("foreign key constraint fails") && e.getMessage().contains("FOREIGN KEY (`level_id`) REFERENCES `level` (`id`)")) {
-//            return new ResponseEntity<>(List.of("Cannot delete the level because there is a competition associated with it."), HttpStatus.BAD_REQUEST);
-//        }
+        // The errors are not handled yet
 
         return new ResponseEntity<>(List.of("Development Purpose #2 , This error Not handled Yet") , HttpStatus.BAD_REQUEST);
     }
@@ -98,7 +92,6 @@ public class ExceptionHandlerFactory {
     // Thanks To Yassine Sahyane
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleDateMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-
         // Return list of errors
         List<String> errors = exception.getBindingResult()
                 .getFieldErrors()
