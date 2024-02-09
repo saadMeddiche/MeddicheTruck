@@ -5,6 +5,7 @@ import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.*;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.hibernate.query.QueryArgumentException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -17,6 +18,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -87,6 +89,16 @@ public class ExceptionHandlerFactory {
         // The errors are not handled yet
 
         return new ResponseEntity<>(List.of("Development Purpose #2 , This error Not handled Yet") , HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleDataIntegrityViolation(DataIntegrityViolationException e) {
+
+        if(e.getMessage().contains("Duplicate entry") && e.getMessage().contains("phone_number")){
+            return new ResponseEntity<>(List.of("This phone number has been already given to another person") , HttpStatus.CONFLICT);
+        }
+
+        return new ResponseEntity<>(List.of("Development Purpose #3 , This error Not handled Yet") , HttpStatus.BAD_REQUEST);
     }
 
     // Thanks To Yassine Sahyane

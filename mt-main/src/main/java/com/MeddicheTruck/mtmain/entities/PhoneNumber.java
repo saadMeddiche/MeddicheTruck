@@ -12,14 +12,18 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class PhoneNumber {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "The type of the phone number can not be null")
     private PhoneNumberType type;
 
+    @Column(unique = true)
+    @NotNull(message = "The number of the phone number can not be null")
     private String number;
 
     @ManyToOne
