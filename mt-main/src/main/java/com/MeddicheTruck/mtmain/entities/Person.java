@@ -1,8 +1,8 @@
 package com.MeddicheTruck.mtmain.entities;
 
+import com.MeddicheTruck.mtcore.embedabbles.FullName;
 import com.MeddicheTruck.mtmain.listeners.PersonListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.MeddicheTruck.mtmain.embedabbles.FullName;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

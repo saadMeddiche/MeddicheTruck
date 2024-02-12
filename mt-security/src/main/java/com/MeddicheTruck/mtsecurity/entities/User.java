@@ -1,7 +1,7 @@
 package com.MeddicheTruck.mtsecurity.entities;
 
 
-import com.MeddicheTruck.mtsecurity.embedabbles.FullName;
+import com.MeddicheTruck.mtcore.embedabbles.FullName;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

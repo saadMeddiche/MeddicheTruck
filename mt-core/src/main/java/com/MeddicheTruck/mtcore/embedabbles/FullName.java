@@ -1,4 +1,4 @@
-package com.MeddicheTruck.mtsecurity.embedabbles;
+package com.MeddicheTruck.mtcore.embedabbles;
 
 import jakarta.persistence.Embeddable;
 import lombok.*;

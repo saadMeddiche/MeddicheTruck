@@ -24,6 +24,7 @@ public class SignUpRequest {
     @Column(nullable = false)
     private String firstName;
 
+    @NotBlank(message = "The middle name can not be blank")
     @Pattern(regexp = "^[^\\s]*$", message = "No Space Allowed in middle name")
     private String middleName;
 

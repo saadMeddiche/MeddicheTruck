@@ -1,6 +1,7 @@
 package com.MeddicheTruck.mtsecurity.dtos.authentication.response;
 
-import com.MeddicheTruck.mtsecurity.embedabbles.FullName;
+
+import com.MeddicheTruck.mtcore.embedabbles.FullName;
 import com.MeddicheTruck.mtsecurity.entities.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
