@@ -2,6 +2,7 @@ package com.MeddicheTruck.mtsecurity.services.validations;
 
 
 
+import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.AlreadyExistsException;
 import com.MeddicheTruck.mtsecurity.entities.User;
 import com.MeddicheTruck.mtsecurity.repositories.UserRepository;
 import com.MeddicheTruck.mtcore.services.validations.BaseValidation;
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Component;
 import java.util.function.Predicate;
 
 @Component
-public class UserValdiationService extends BaseValidation {
+public class UserValidationService extends BaseValidation {
 
     private UserRepository userRepository;
 
-    public UserValdiationService(UserRepository userRepository){
+    public UserValidationService(UserRepository userRepository){
         this.userRepository = userRepository;
     }
 
@@ -22,9 +23,9 @@ public class UserValdiationService extends BaseValidation {
 
         validateObject(user);
 
-//        throwExceptionIf(EMAIL_ALREADY_EXISTS, user, AlreadyExistsException::new, "Email Already Exists");
-//
-//        throwExceptionIf(USERNAME_ALREADY_EXISTS, user, AlreadyExistsException::new, "Username Already Exists");
+        throwExceptionIf(EMAIL_ALREADY_EXISTS, user, AlreadyExistsException::new, "Email Already Exists");
+
+        throwExceptionIf(USERNAME_ALREADY_EXISTS, user, AlreadyExistsException::new, "Username Already Exists");
 
     }
 

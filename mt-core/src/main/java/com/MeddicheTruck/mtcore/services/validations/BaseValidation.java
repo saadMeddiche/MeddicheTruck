@@ -26,7 +26,7 @@ public abstract class BaseValidation {
     }
 
     @FunctionalInterface
-    interface ExceptionSupplier<E extends Exception> {
+    protected interface ExceptionSupplier<E extends Exception> {
         E get(String message);
     }
 }

@@ -4,7 +4,7 @@ package com.MeddicheTruck.mtsecurity.services.implementations;
 import com.MeddicheTruck.mtsecurity.entities.User;
 import com.MeddicheTruck.mtsecurity.repositories.UserRepository;
 import com.MeddicheTruck.mtsecurity.services.UserService;
-import com.MeddicheTruck.mtsecurity.services.validations.UserValdiationService;
+import com.MeddicheTruck.mtsecurity.services.validations.UserValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final UserValdiationService validation;
+    private final UserValidationService validation;
 
 
     public User createUser(User user){

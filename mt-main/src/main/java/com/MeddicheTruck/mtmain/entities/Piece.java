@@ -1,6 +1,5 @@
 package com.MeddicheTruck.mtmain.entities;
 
-import com.MeddicheTruck.mtmain.listeners.PieceListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(PieceListener.class)
+
 public class Piece {
 
     @Id

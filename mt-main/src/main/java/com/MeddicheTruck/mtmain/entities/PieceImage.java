@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.File;
+
 @Entity
 @Getter
 @Setter
@@ -18,7 +20,7 @@ public class PieceImage {
 
     private String name;
 
-    private String path;
+    private File file;
 
     @ManyToOne
     @JsonIgnoreProperties("pieceImages")
