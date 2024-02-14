@@ -42,6 +42,11 @@
 				<artifactId>mt-security</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.MeddicheTruck</groupId>
+				<artifactId>mt-main</artifactId>
+				<version>${project.parent.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

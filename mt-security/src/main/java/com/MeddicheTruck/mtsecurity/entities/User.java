@@ -3,6 +3,7 @@ package com.MeddicheTruck.mtsecurity.entities;
 
 import com.MeddicheTruck.mtcore.embedabbles.FullName;
 
+import com.MeddicheTruck.mtsecurity.embeddables.Password;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,7 +34,7 @@ public class User implements UserDetails {
 
     private String email;
 
-    private String password;
+    private Password password;
 
     private LocalDate birthDate;
 
@@ -52,7 +53,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return password.getHashedPassword();
     }
 
     @Override

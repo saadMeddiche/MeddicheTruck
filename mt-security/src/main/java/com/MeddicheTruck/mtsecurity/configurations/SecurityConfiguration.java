@@ -1,6 +1,7 @@
 package com.MeddicheTruck.mtsecurity.configurations;
 
 
+import com.MeddicheTruck.mtsecurity.embeddables.Password;
 import com.MeddicheTruck.mtsecurity.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +41,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request -> request
+                                .requestMatchers("/api/v1/authentication/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
@@ -54,7 +56,7 @@ public class SecurityConfiguration {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return Password.passwordEncoder;
     }
 
     @Bean

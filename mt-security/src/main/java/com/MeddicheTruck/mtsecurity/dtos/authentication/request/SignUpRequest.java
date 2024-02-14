@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -24,7 +26,6 @@ public class SignUpRequest {
     @Column(nullable = false)
     private String firstName;
 
-    @NotBlank(message = "The middle name can not be blank")
     @Pattern(regexp = "^[^\\s]*$", message = "No Space Allowed in middle name")
     private String middleName;
 
@@ -44,4 +45,8 @@ public class SignUpRequest {
     @Pattern(regexp = "^[^\\s]*$", message = "No Space Allowed")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "Password must contain at least one digit, one lowercase letter, one uppercase letter, and one special character (@#$%^&+=)")
     private String password;
+
+    @NotNull(message = "The birth date can not be null")
+    @Past(message = "The birth date must be in the past")
+    private LocalDate birthDate;
 }

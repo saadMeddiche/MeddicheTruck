@@ -22,10 +22,10 @@
 	<dependencies>
 
 
-		<dependency>
-			<groupId>com.MeddicheTruck</groupId>
-			<artifactId>mt-security</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.MeddicheTruck</groupId>-->
+<!--			<artifactId>mt-security</artifactId>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>com.MeddicheTruck</groupId>

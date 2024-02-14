@@ -67,21 +67,21 @@ public class ExceptionHandlerFactory {
 
 
     // Yeh I know ,  I also do not like this one
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<?> handleDHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
-
-        // if the format of the date is not correct
-        if(exception.getMessage().contains("Failed to deserialize java.time.LocalDate")){
-            return new ResponseEntity<>(List.of("Respect the format YYYY-MM-DD") , HttpStatus.BAD_REQUEST);
-        }
-
-        // if the request body is empty
-        if(exception.getMessage().contains("JSON parse error: No content to map due to end-of-input")){
-            return new ResponseEntity<>(List.of("The request body can not be empty") , HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(List.of("Development Purpose #1 , This error Not handled Yet") , HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(HttpMessageNotReadableException.class)
+//    public ResponseEntity<?> handleDHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
+//
+//        // if the format of the date is not correct
+//        if(exception.getMessage().contains("Failed to deserialize java.time.LocalDate")){
+//            return new ResponseEntity<>(List.of("Respect the format YYYY-MM-DD") , HttpStatus.BAD_REQUEST);
+//        }
+//
+//        // if the request body is empty
+//        if(exception.getMessage().contains("JSON parse error: No content to map due to end-of-input")){
+//            return new ResponseEntity<>(List.of("The request body can not be empty") , HttpStatus.BAD_REQUEST);
+//        }
+//
+//        return new ResponseEntity<>(List.of("Development Purpose #1 , This error Not handled Yet") , HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<?> handleDataIntegrityViolation(SQLIntegrityConstraintViolationException e) {
