@@ -1,9 +1,10 @@
 package com.MeddicheTruck.mtcore.services.implementations;
 
 import com.MeddicheTruck.mtcore.services.Naming;
+import org.springframework.stereotype.Component;
 
 
-
+@Component
 public class TimeNaming implements Naming {
     
     private final String SEPARATOR = "#¤#";
