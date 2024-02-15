@@ -1,3 +1,14 @@
+#Propeties Of FileStorageService
+default:
+  resource:
+    path: mt-main/src/main/resources/
+
+  file:
+    storage:
+      path: /images/
+
+  extension: .png
+
 token:
   signing:
     key: 412F4428472B4B6250655368566E5970337336763979244226452948404D6352
