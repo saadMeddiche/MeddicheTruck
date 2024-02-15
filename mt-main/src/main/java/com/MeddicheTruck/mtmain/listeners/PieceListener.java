@@ -10,7 +10,7 @@ public class PieceListener {
     public void prePersist(Piece piece) {
         piece.getImages().forEach(image -> {
             image.setPiece(piece);
-            image.setPhotoPath(FileStorageService.storeFile(image.getPhotoInBase64Format(), image.getName()));
+            image.setPhotoPath(FileStorageService.storeFile(image.getPhotoInBase64Format(), image.getName() , "pieces"));
         });
     }
 }

@@ -26,8 +26,6 @@ public class PieceImage {
     @Transient
     private byte[] photoInBase64Format;
 
-//    @Lob
-//    @Column(name = "photo", columnDefinition="BLOB")
     private String photoPath;
 
     @ManyToOne
