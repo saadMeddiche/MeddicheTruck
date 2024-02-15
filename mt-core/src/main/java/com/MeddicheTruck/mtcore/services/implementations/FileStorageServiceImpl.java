@@ -2,6 +2,8 @@ package com.MeddicheTruck.mtcore.services.implementations;
 
 import com.MeddicheTruck.mtcore.services.FileStorageService;
 import com.google.common.io.Files;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -14,6 +16,8 @@ import java.nio.file.Paths;
 
 
 @Service
+@Getter
+@Setter
 public class FileStorageServiceImpl implements FileStorageService {
 
     // The resource path of the mt-main module
