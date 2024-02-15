@@ -6,6 +6,8 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 
 public class FileStorageService {
@@ -34,28 +36,19 @@ public class FileStorageService {
 
     private static String getFullPath(String folderName , String photoName) {
 
-        StringBuilder fullPath = new StringBuilder();
 
         try {
-            fullPath.append(ResourceUtils.getURL(DEFAULT_RESOURCE_PATH));
+           URL resourceUrl = ResourceUtils.getURL(DEFAULT_RESOURCE_PATH);
+
+           String resourcePath = Paths.get(resourceUrl.toURI()).toString();
+
+            return Paths.get(resourcePath, DEFAULT_FILE_STORAGE_PATH, folderName, photoName + EXTENSION).toString();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("[Warning] The resource path was not found , that could cause a problem with the file storage service");
+            throw new RuntimeException("[Warning] The resource path was not found , that could cause a problem with the file storage service" , e);
+        } catch (Exception e) {
+            throw new RuntimeException("An error occurred while getting the full path", e);
         }
 
-        fullPath.append(DEFAULT_FILE_STORAGE_PATH);
-
-        fullPath.append("/");
-
-        fullPath.append(folderName);
-
-        fullPath.append("/");
-
-        fullPath.append(photoName);
-
-        fullPath.append(EXTENSION);
-
-        // Remove the file:/ from the path because ResourceUtils.getURL() returns a path with file:/ at the beginning
-        return fullPath.toString().replace("file:/", "");
 
     }
 }
