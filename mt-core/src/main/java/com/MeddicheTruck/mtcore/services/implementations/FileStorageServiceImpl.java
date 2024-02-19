@@ -1,6 +1,6 @@
 package com.MeddicheTruck.mtcore.services.implementations;
 
-import com.MeddicheTruck.mtcore.services.FileStorageService;
+import com.MeddicheTruck.mtcore.services.FileStorageSystem;
 import com.google.common.io.Files;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 @Service
 @Getter
 @Setter
-public class FileStorageServiceImpl implements FileStorageService {
+public class FileStorageServiceImpl implements FileStorageSystem {
 
     // The resource path of the mt-main module
     @Value("${default.resource.path}")
@@ -32,7 +32,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Value("${default.extension}")
     private String DEFAULT_EXTENSION;
 
-    public String storeFile(byte[] fileInBase64Format, String fileName , String folderName)  {
+    public String store(byte[] fileInBase64Format, String fileName , String folderName)  {
 
         String fullPath = getFullPath(folderName , fileName);
 

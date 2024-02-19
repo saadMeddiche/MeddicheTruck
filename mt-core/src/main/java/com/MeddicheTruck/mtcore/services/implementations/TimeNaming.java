@@ -12,6 +12,10 @@ public class TimeNaming implements Naming {
     @Override
     public  String uniquifyWord(String word){
 
+        if(word == null){
+            throw new RuntimeException("The word can not be null");
+        }
+
         long currentTimeInMillis = System.currentTimeMillis();
 
         return new StringBuilder()
