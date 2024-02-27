@@ -5,6 +5,7 @@ import com.MeddicheTruck.mtmain.enums.EngineType;
 import com.MeddicheTruck.mtmain.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.TenantId;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Vehicle {
+
+    @TenantId
+    private String tenant;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

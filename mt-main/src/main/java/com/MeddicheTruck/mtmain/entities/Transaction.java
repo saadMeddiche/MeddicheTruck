@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.MeddicheTruck.mtmain.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.TenantId;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,6 +16,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Transaction {
+
+    @TenantId
+    private String tenant;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
