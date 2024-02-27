@@ -21,6 +21,11 @@ spring:
     username: postgres
     password: 1234
 
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:create_security_schema.sql
+
   # Jakarta persistence configuration
   jpa:
     properties:
@@ -37,6 +42,9 @@ spring:
     changelog: changelog/app-changelog.xml
     default-schema: meddichetruck
     enabled: false
+
+
+
 
 
 
