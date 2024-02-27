@@ -23,6 +23,8 @@ public class UserServiceImpl implements UserService {
 
     public User createUser(User user){
 
+        user.setUsername(user.getUsername().toLowerCase());
+
         validation.validateUserOnCreating(user);
 
         return userRepository.save(user);
