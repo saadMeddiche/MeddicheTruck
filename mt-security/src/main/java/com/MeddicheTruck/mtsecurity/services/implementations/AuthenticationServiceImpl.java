@@ -1,12 +1,12 @@
 package com.MeddicheTruck.mtsecurity.services.implementations;
 
 import com.MeddicheTruck.mtcore.embedabbles.FullName;
+import com.MeddicheTruck.mtcore.services.SchemaCreationService;
 import com.MeddicheTruck.mtsecurity.dtos.authentication.request.SignInRequest;
 import com.MeddicheTruck.mtsecurity.dtos.authentication.request.SignUpRequest;
 import com.MeddicheTruck.mtsecurity.dtos.authentication.response.JwtAuthenticationResponse;
 
 import com.MeddicheTruck.mtsecurity.embeddables.Password;
-import com.MeddicheTruck.mtsecurity.entities.Role;
 import com.MeddicheTruck.mtsecurity.entities.User;
 import com.MeddicheTruck.mtsecurity.services.*;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +31,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final RoleService roleService;
 
+    private final SchemaCreationService schemaCreationService;
+
 
     @Override
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
@@ -41,6 +42,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         // Create the user in the database
         userService.createUser(user);
+
+        // Create the schema for the user
+        schemaCreationService.createTenantForUser(user.getUsername());
 
         // Generate a JWT token for the registered user
         String jwt = jwtService.generateToken(user);
