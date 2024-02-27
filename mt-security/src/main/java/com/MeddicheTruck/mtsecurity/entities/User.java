@@ -21,6 +21,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name ="users", schema = "security_schema")
 public class User implements UserDetails {
 
     @Id
@@ -45,6 +46,7 @@ public class User implements UserDetails {
     @ManyToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
+            schema = "security_schema",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
