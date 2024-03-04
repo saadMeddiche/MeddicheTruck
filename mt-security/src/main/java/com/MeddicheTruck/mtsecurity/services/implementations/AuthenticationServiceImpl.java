@@ -1,6 +1,7 @@
 package com.MeddicheTruck.mtsecurity.services.implementations;
 
 import com.MeddicheTruck.mtcore.embedabbles.FullName;
+import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.ValidationException;
 import com.MeddicheTruck.mtcore.services.SchemaCreationService;
 import com.MeddicheTruck.mtsecurity.dtos.authentication.request.SignInRequest;
 import com.MeddicheTruck.mtsecurity.dtos.authentication.request.SignUpRequest;
@@ -55,6 +56,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public JwtAuthenticationResponse signIn(SignInRequest request) {
+
+        if(!userService.existsByUsername(request.getUsername())){
+            throw new ValidationException("User not found");
+        }
+
         // Authenticate the user using the provided credentials
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
