@@ -28,6 +28,7 @@ public class UserValidationService extends BaseValidation {
 
         throwExceptionIf(USERNAME_ALREADY_EXISTS, user, AlreadyExistsException::new, "Username Already Exists");
 
+
     }
 
     public void validateUsernameExistent(String username) {
