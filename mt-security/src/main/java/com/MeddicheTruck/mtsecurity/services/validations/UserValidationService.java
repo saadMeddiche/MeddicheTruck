@@ -29,6 +29,11 @@ public class UserValidationService extends BaseValidation {
 
     }
 
+    public void validateUsernameExistent(String username) {
+        User user = User.builder().username(username).build();
+        throwExceptionIf(EMAIL_ALREADY_EXISTS, user, AlreadyExistsException::new, "Username Does Not Exist");
+    }
+
     private final Predicate<User> EMAIL_ALREADY_EXISTS = user -> userRepository.existsByEmail(user.getEmail());
 
     private final Predicate<User> USERNAME_ALREADY_EXISTS = user -> userRepository.existsByUsername(user.getUsername());

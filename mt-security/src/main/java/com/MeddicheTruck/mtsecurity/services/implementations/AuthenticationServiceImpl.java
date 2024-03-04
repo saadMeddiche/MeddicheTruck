@@ -10,6 +10,7 @@ import com.MeddicheTruck.mtsecurity.dtos.authentication.response.JwtAuthenticati
 import com.MeddicheTruck.mtsecurity.embeddables.Password;
 import com.MeddicheTruck.mtsecurity.entities.User;
 import com.MeddicheTruck.mtsecurity.services.*;
+import com.MeddicheTruck.mtsecurity.services.validations.UserValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,6 +26,8 @@ import java.time.LocalDate;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserService userService;
+
+    private final UserValidationService userValide;
 
     private final JwtService jwtService;
 
@@ -57,9 +60,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public JwtAuthenticationResponse signIn(SignInRequest request) {
 
-        if(!userService.existsByUsername(request.getUsername())){
-            throw new ValidationException("User not found");
-        }
+        // Validate if the user exists
+        userValide.validateUsernameExistent(request.getUsername());
 
         // Authenticate the user using the provided credentials
         authenticationManager.authenticate(
