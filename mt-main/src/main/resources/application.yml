@@ -17,16 +17,21 @@ spring:
 
   # Data Base configuration
   datasource:
-    url: jdbc:mysql://localhost:3306/meddichetruck?createDatabaseIfNotExist=true
-    username: root
-    password:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://localhost:5432/meddichetruck
+    username: postgres
+    password: 1234
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:create_security_schema.sql
 
   # Jakarta persistence configuration
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
 
     show-sql: true
 
@@ -37,6 +42,9 @@ spring:
     changelog: changelog/app-changelog.xml
     default-schema: meddichetruck
     enabled: false
+
+
+
 
 
 

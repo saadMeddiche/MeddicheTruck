@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.TenantId;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.ArrayList;
@@ -19,6 +20,9 @@ import java.util.List;
 @NoArgsConstructor
 @EntityListeners(PieceListener.class)
 public class Piece {
+
+    @TenantId
+    private String tenant;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

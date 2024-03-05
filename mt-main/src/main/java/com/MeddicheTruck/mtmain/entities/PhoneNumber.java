@@ -5,6 +5,7 @@ import com.MeddicheTruck.mtmain.enums.PhoneNumberType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.TenantId;
 
 @Entity
 @Getter
@@ -14,6 +15,9 @@ import lombok.*;
 @NoArgsConstructor
 
 public class PhoneNumber {
+
+    @TenantId
+    private String tenant;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

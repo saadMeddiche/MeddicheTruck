@@ -12,4 +12,9 @@ public interface UserService {
     User getByEmail(String email);
 
     User createUser(User user);
+
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
+
 }

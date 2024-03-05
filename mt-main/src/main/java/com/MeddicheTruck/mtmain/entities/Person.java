@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.TenantId;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.time.LocalDate;
@@ -21,6 +22,9 @@ import java.util.List;
 @NoArgsConstructor
 @EntityListeners(PersonListener.class)
 public class Person {
+
+    @TenantId
+    private String tenant;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

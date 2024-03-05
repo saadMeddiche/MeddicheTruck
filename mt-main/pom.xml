@@ -22,10 +22,10 @@
 	<dependencies>
 
 
-<!--		<dependency>-->
-<!--			<groupId>com.MeddicheTruck</groupId>-->
-<!--			<artifactId>mt-security</artifactId>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>com.MeddicheTruck</groupId>
+			<artifactId>mt-security</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.MeddicheTruck</groupId>
@@ -59,8 +59,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
