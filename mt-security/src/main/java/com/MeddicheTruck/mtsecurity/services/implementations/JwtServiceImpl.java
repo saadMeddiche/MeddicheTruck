@@ -8,9 +8,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,7 +31,15 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+
+        //Add authorities to the token
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("authorities", userDetails.getAuthorities()
+                .stream().map(GrantedAuthority::getAuthority).toList());
+
+
+        return generateToken(claims,
+                userDetails);
     }
 
     @Override
