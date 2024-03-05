@@ -39,6 +39,7 @@ public class User implements UserDetails {
 
     private LocalDate birthDate;
 
+    @Column(columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private LocalDate creationDateAccount;
 
     private LocalDate lastLogin;
