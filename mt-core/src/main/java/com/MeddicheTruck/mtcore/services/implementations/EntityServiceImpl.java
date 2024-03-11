@@ -40,10 +40,17 @@ public class EntityServiceImpl implements EntityService {
                 .map(attribute -> new MyField(
                         attribute.getName(),
                         attribute.getJavaType().getSimpleName(),
-                        attribute.getJavaType().isPrimitive(),
+                        false,
                         null,
-                        "ID#"+attribute.getName()
+                        setFieldId(attribute.getName())
                 ))
                 .toList();
+    }
+
+    private String setFieldId(String name) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID#");
+        sb.append(name);
+        return sb.toString();
     }
 }
