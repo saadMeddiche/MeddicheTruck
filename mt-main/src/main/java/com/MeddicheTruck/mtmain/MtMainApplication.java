@@ -1,6 +1,7 @@
 package com.MeddicheTruck.mtmain;
 
 import com.MeddicheTruck.mtcore.embedabbles.FullName;
+import com.MeddicheTruck.mtcore.services.EntityService;
 import com.MeddicheTruck.mtsecurity.embeddables.Password;
 import com.MeddicheTruck.mtsecurity.entities.Permission;
 import com.MeddicheTruck.mtsecurity.entities.Role;
@@ -43,6 +44,8 @@ public class MtMainApplication {
 
 	private final PermissionRepository permissionRepository;
 
+	private final EntityService entityService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MtMainApplication.class, args);
 	}
@@ -59,6 +62,8 @@ public class MtMainApplication {
 				crateDefaultRoles();
 
 				createDefaultUsers();
+
+				entityService.getAllEntitiesWithPublicSchema().forEach(System.out::println);
 			}
 		};
 	}

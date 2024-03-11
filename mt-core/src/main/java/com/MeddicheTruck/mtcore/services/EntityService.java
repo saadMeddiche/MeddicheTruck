@@ -1,10 +1,10 @@
 package com.MeddicheTruck.mtcore.services;
 
-import com.MeddicheTruck.mtcore.models.Entity;
+import com.MeddicheTruck.mtcore.models.MyEntity;
 
 import java.util.List;
 
 public interface EntityService {
 
-    List<Entity> getAllEntitiesWithPublicSchema();
+    List<MyEntity> getAllEntitiesWithPublicSchema();
 }
