@@ -34,6 +34,7 @@ public class PieceImage {
 
     @ManyToOne
     @JsonIgnoreProperties("pieceImages")
+    @JsonIgnore
     private Piece piece;
 
     @Override
