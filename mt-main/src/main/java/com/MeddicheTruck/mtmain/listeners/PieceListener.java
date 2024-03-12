@@ -22,15 +22,18 @@ public class PieceListener {
         this.n = n;
     }
     @PrePersist
+
     public void prePersist(Piece piece) {
 
         Optional.ofNullable(piece.getImages())
             .ifPresent(images -> images.forEach(
                     image -> {
                         image.setPiece(piece);
-                        image.setPhotoPath(fss.store(image.getPhotoInBase64Format(),
+                        image.setPhotoPath(fss.store(
+                                image.getPhotoInBase64Format(),
                                 n.uniquifyWord(image.getName()) ,
-                                "pieces"));
+                                "pieces")
+                        );
                     }
             ));
 

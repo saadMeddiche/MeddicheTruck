@@ -42,7 +42,7 @@ public class FileStorageServiceImpl implements FileStorageSystem {
 
         writeToFile(fileInBase64Format, file);
 
-        return fullPath;
+        return getResourceRelativePath(fullPath);
     }
 
     // Creates all necessary parent directories for the provided File object.
@@ -80,7 +80,18 @@ public class FileStorageServiceImpl implements FileStorageSystem {
         } catch (Exception e) {
             throw new RuntimeException("An error occurred while getting the full path", e);
         }
-
-
     }
+
+    private String getResourceRelativePath(String fullPath) {
+        System.out.println(fullPath);
+
+        int resourcesIndex = fullPath.indexOf("\\resources");
+
+        if (resourcesIndex != -1) {
+            return fullPath.substring(resourcesIndex).replace("\\", "/");
+        } else {
+            throw new IllegalArgumentException("Path does not contain the /resources directory.");
+        }
+    }
+
 }
