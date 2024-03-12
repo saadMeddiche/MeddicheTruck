@@ -43,7 +43,10 @@ spring:
     default-schema: meddichetruck
     enabled: false
 
-
+  # Add Prefix to the base url
+  data:
+    rest:
+      basePath: /api/v1
 
 
 
