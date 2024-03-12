@@ -53,11 +53,11 @@ public class SecurityConfiguration {
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(configurer -> configurer
-                        .accessDeniedHandler(accessDeniedHandler())
-                        .authenticationEntryPoint(authenticationEntryPoint())
-                );
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//                .exceptionHandling(configurer -> configurer
+//                        .accessDeniedHandler(accessDeniedHandler())
+//                        .authenticationEntryPoint(authenticationEntryPoint())
+//                );
         return http.build();
     }
 
