@@ -49,15 +49,15 @@ public class SecurityConfiguration {
                         request -> request
                                 .requestMatchers("/api/v1/authentication/signUp").permitAll()
                                 .requestMatchers("/api/v1/authentication/signIn").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-//                .exceptionHandling(configurer -> configurer
-//                        .accessDeniedHandler(accessDeniedHandler())
-//                        .authenticationEntryPoint(authenticationEntryPoint())
-//                );
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(configurer -> configurer
+                        .accessDeniedHandler(accessDeniedHandler())
+                        .authenticationEntryPoint(authenticationEntryPoint())
+                );
         return http.build();
     }
 
@@ -105,6 +105,7 @@ public class SecurityConfiguration {
 
     private AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, authException) -> {
+            System.out.println(request.getHeader("Authorization"));
             response.setContentType("application/json");
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().write("[ \"You must be authenticated to access this resource.\" ]");

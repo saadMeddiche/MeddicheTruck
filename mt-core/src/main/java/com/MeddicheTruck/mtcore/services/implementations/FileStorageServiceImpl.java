@@ -24,10 +24,6 @@ public class FileStorageServiceImpl implements FileStorageSystem {
     @Value("${default.resource.path}")
     private String DEFAULT_RESOURCE_PATH ;
 
-    // The folder inside the resource path where the files (images) will be stored
-    @Value("${default.file.storage.path}")
-    private String DEFAULT_FILE_STORAGE_PATH;
-
     // The extension of the files that will be stored
     @Value("${default.extension}")
     private String DEFAULT_EXTENSION;
@@ -73,7 +69,7 @@ public class FileStorageServiceImpl implements FileStorageSystem {
 
            String resourcePath = Paths.get(resourceUrl.toURI()).toString();
 
-            return Paths.get(resourcePath, DEFAULT_FILE_STORAGE_PATH, folderName, fileName + DEFAULT_EXTENSION).toString();
+            return Paths.get(resourcePath, folderName, fileName + DEFAULT_EXTENSION).toString();
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException("[Warning] The resource path was not found , that could cause a problem with the file storage service" , e);
@@ -83,9 +79,7 @@ public class FileStorageServiceImpl implements FileStorageSystem {
     }
 
     private String getResourceRelativePath(String fullPath) {
-        System.out.println(fullPath);
-
-        int resourcesIndex = fullPath.indexOf("\\resources");
+        int resourcesIndex = fullPath.indexOf("\\images");
 
         if (resourcesIndex != -1) {
             return fullPath.substring(resourcesIndex).replace("\\", "/");

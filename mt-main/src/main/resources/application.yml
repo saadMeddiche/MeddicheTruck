@@ -1,11 +1,7 @@
 #Propeties Of FileStorageService
 default:
   resource:
-    path: mt-main/src/main/resources/
-
-  file:
-    storage:
-      path: /images/
+    path: mt-main/src/main/resources/static/images
 
   extension: .png
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TimeNaming implements Naming {
     
-    private final String SEPARATOR = "#¤#";
+    private final String SEPARATOR = "_";
 
     @Override
     public  String uniquifyWord(String word){
