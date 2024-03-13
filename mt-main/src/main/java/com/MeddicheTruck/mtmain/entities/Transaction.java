@@ -30,6 +30,7 @@ public class Transaction {
 
     private LocalDateTime timeTransaction;
 
+    @Enumerated(EnumType.STRING)
     private TransactionType type;
 
     @ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.EAGER)

@@ -24,8 +24,10 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private VehicleType type;
 
+    @Enumerated(EnumType.STRING)
     private EngineType engineType;
 
     private String model;
