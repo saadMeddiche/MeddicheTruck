@@ -30,7 +30,7 @@ import java.util.List;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.MeddicheTruck.mtcore" ,"com.MeddicheTruck.mtsecurity"})
+@ComponentScan(basePackages = {"com.MeddicheTruck.mtcore" ,"com.MeddicheTruck.mtsecurity" ,"com.MeddicheTruck.mtmain.configurations"})
 @RequiredArgsConstructor
 //@ComponentScan(basePackages = {"com.MeddicheTruck.mtcore"})
 public class MtMainApplication {
@@ -63,7 +63,7 @@ public class MtMainApplication {
 
 				createDefaultUsers();
 
-				entityService.getAllEntitiesWithPublicSchema().forEach(System.out::println);
+//				entityService.getAllEntitiesWithPublicSchema().forEach(System.out::println);
 			}
 		};
 	}

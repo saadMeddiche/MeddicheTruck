@@ -3,6 +3,7 @@ package com.MeddicheTruck.mtmain.entities;
 import com.MeddicheTruck.mtmain.listeners.PieceListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
