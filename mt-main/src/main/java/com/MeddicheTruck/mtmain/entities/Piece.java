@@ -23,6 +23,7 @@ import java.util.List;
 public class Piece {
 
     @TenantId
+    @JsonIgnore
     private String tenant;
 
     @Id

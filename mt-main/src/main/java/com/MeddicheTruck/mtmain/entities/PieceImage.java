@@ -18,6 +18,7 @@ import java.util.Arrays;
 @NoArgsConstructor
 public class PieceImage {
 
+    @JsonIgnore
     @TenantId
     private String tenant;
 
