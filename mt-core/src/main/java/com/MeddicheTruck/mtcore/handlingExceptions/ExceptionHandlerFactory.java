@@ -16,6 +16,7 @@ import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -69,6 +70,11 @@ public class ExceptionHandlerFactory {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException exception) {
         return new ResponseEntity<>(List.of("Password or username is incorrect") , HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<?> handleNoResourceFoundException(NoResourceFoundException exception) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 

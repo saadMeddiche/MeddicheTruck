@@ -37,6 +37,8 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 //@EnableMethodSecurity
 public class SecurityConfiguration {
 
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
+
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private final UserService userService;
@@ -53,6 +55,7 @@ public class SecurityConfiguration {
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
+                .addFilterBefore(exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(configurer -> configurer
                         .accessDeniedHandler(accessDeniedHandler())
