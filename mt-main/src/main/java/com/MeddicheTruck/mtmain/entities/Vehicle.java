@@ -1,11 +1,13 @@
 package com.MeddicheTruck.mtmain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.MeddicheTruck.mtmain.enums.EngineType;
 import com.MeddicheTruck.mtmain.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.TenantId;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
 public class Vehicle {
 
     @TenantId
+    @JsonIgnore
     private String tenant;
 
     @Id
@@ -32,10 +35,11 @@ public class Vehicle {
 
     private String model;
 
-    private String matricule;
+    private String plate;
 
     @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonIgnoreProperties("vehicle")
-    private List<VehicleImage> vehicleImages;
+    @RestResource(exported = false)
+    private List<VehicleImage> images;
 
 }

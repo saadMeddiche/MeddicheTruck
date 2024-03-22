@@ -51,7 +51,8 @@ public class SecurityConfiguration {
                         request -> request
                                 .requestMatchers("/api/v1/authentication/signUp").permitAll()
                                 .requestMatchers("/api/v1/authentication/signIn").permitAll()
-                        .anyRequest().permitAll()
+                                .requestMatchers("/images/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider())
@@ -114,5 +115,6 @@ public class SecurityConfiguration {
             response.getWriter().write("[ \"You must be authenticated to access this resource.\" ]");
         };
     }
+
 
 }
