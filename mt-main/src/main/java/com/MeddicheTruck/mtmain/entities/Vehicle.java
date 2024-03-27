@@ -1,5 +1,6 @@
 package com.MeddicheTruck.mtmain.entities;
 
+import com.MeddicheTruck.mtmain.listeners.VehicleListener;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.MeddicheTruck.mtmain.enums.EngineType;
@@ -17,6 +18,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(VehicleListener.class)
 public class Vehicle {
 
     @TenantId

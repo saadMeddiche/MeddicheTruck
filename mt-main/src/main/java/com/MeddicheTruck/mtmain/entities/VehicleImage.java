@@ -20,7 +20,10 @@ public class VehicleImage {
 
     private String name;
 
-    private String path;
+    @Transient
+    private byte[] photoInBase64Format;
+
+    private String photoPath;
 
     @ManyToOne
     @JsonIgnoreProperties("vehicleImages")
