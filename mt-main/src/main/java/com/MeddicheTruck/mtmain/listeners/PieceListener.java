@@ -22,7 +22,6 @@ public class PieceListener {
         this.n = n;
     }
     @PrePersist
-
     public void prePersist(Piece piece) {
 
         Optional.ofNullable(piece.getImages())

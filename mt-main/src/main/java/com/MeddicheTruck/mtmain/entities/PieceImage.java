@@ -34,7 +34,7 @@ public class PieceImage {
     private String photoPath;
 
     @ManyToOne
-    @JsonIgnoreProperties("pieceImages")
+    @JsonIgnoreProperties("images")
     @JsonIgnore
     private Piece piece;
 

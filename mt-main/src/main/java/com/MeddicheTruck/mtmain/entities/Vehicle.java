@@ -41,7 +41,8 @@ public class Vehicle {
 
     @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonIgnoreProperties("vehicle")
-    @RestResource(exported = false)
+//    @RestResource(exported = false)
     private List<VehicleImage> images;
+
 
 }

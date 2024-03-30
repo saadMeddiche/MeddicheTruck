@@ -26,6 +26,6 @@ public class VehicleImage {
     private String photoPath;
 
     @ManyToOne
-    @JsonIgnoreProperties("vehicleImages")
+    @JsonIgnoreProperties("images")
     private Vehicle vehicle;
 }
