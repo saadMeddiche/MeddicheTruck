@@ -33,6 +33,17 @@ public class PieceController {
         return ResponseEntity.ok(new CustomPageResponse<>(piecePage , PieceDto.class));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPiece(@PathVariable Long id) {
+        if(!pieceService.existsById(id)) return ResponseEntity.notFound().build();
+
+        Piece piece = pieceService.findById(id);
+
+        PieceDto pieceDto = modelMapper.map(piece, PieceDto.class);
+
+        return ResponseEntity.ok(pieceDto);
+    }
+
     @PostMapping
     public ResponseEntity<?> createPiece(@Valid @RequestBody PieceDto pieceDto) {
 
@@ -48,7 +59,7 @@ public class PieceController {
     @PutMapping()
     public ResponseEntity<?> updatePiece(@Valid @RequestBody PieceDto pieceDto) {
 
-        if(pieceService.existsById(pieceDto.getId())) return ResponseEntity.notFound().build();
+        if(!pieceService.existsById(pieceDto.getId())) return ResponseEntity.notFound().build();
 
         Piece piece = modelMapper.map(pieceDto, Piece.class);
 

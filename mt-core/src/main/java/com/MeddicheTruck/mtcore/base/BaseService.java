@@ -14,15 +14,15 @@ public abstract class BaseService<E extends BaseEntity, R extends BaseRepository
 
     abstract protected String recordName();
 
-    public R repository;
+    protected R repository;
 
     @Autowired
-    public BaseService(R repository){
+    protected BaseService(R repository){
         this.repository = repository;
     }
 
-    public List<E> saveAll(List<Long> ids){
-        return repository.findAllById(ids);
+    public List<E> saveAll(List<E> entities){
+        return repository.saveAll(entities);
     }
     public E save(E entity){
         return (E) repository.save(entity);

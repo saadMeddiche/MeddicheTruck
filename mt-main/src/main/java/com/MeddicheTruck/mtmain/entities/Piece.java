@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Piece extends BaseEntity {
 
-    @NotNull(message = "The name of the piece can not be null")
     private String name;
 
     @OneToMany(mappedBy =  "piece" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)

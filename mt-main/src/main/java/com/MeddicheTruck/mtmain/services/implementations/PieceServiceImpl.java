@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 @Primary
 public class PieceServiceImpl extends BaseService<Piece , PieceRepository> implements PieceService {
 
-    private PieceRepository pieceRepository;
-
     @Override
     public String recordName() {
         return "piece";
@@ -21,6 +19,5 @@ public class PieceServiceImpl extends BaseService<Piece , PieceRepository> imple
     @Autowired
     public PieceServiceImpl(PieceRepository pieceRepository) {
         super(pieceRepository);
-        this.pieceRepository = pieceRepository;
     }
 }
