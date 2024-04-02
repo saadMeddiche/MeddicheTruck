@@ -1,5 +1,6 @@
 package com.MeddicheTruck.mtmain.controllers;
 
+import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.ValidationException;
 import com.MeddicheTruck.mtcore.services.FileStorageSystem;
 import com.MeddicheTruck.mtcore.services.Naming;
 import com.MeddicheTruck.mtmain.entities.Vehicle;
@@ -7,12 +8,11 @@ import com.MeddicheTruck.mtmain.entities.VehicleImage;
 import com.MeddicheTruck.mtmain.repositories.VehicleImageRepository;
 import com.MeddicheTruck.mtmain.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/vehicleImages")
@@ -50,5 +50,23 @@ public class VehicleImageController {
 
         VehicleImage savedVehicleImage = vehicleImageRepository.save(vehicleImage);
         return ResponseEntity.ok(savedVehicleImage);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteVehicleImage(@PathVariable Long id) {
+
+        System.out.println("I am here 2");
+        Optional<VehicleImage> vehicleImage = vehicleImageRepository.findById(id);
+
+        vehicleImage.ifPresentOrElse(
+                (value) ->{
+
+                },
+                () ->{
+                    throw new ValidationException("Vehicle Image Does Not Exist");
+                }
+        );
+        vehicleImageRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
