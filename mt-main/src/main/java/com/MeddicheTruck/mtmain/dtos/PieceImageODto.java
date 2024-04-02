@@ -9,8 +9,10 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PieceImageDto extends BaseImageDto {
+public class PieceImageODto extends BaseImageDto {
 
-    @NotNull(message = "The piece id can not be null")
     private Long pieceId;
+
+    private String photoPath;
+
 }

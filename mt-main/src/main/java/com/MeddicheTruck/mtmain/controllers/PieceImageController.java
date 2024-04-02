@@ -1,8 +1,7 @@
 package com.MeddicheTruck.mtmain.controllers;
 
-import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
-import com.MeddicheTruck.mtmain.dtos.PieceImageDto;
-import com.MeddicheTruck.mtmain.entities.PieceImage;
+import com.MeddicheTruck.mtmain.dtos.PieceImageIDto;
+import com.MeddicheTruck.mtmain.dtos.PieceImageODto;
 import com.MeddicheTruck.mtmain.services.PieceImageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,31 +34,31 @@ public class PieceImageController {
     public ResponseEntity<?> getPieceImage(@PathVariable Long id) {
         if(!pieceImageService.existsById(id)) return ResponseEntity.notFound().build();
 
-        PieceImageDto pieceImage = pieceImageService.findById(id);
+        PieceImageODto pieceImage = pieceImageService.findById(id);
 
         return ResponseEntity.ok(pieceImage);
     }
 
     @PostMapping
-    public ResponseEntity<?> createPiece(@Valid @RequestBody PieceImageDto pieceImageDto) {
+    public ResponseEntity<?> createPieceImage(@Valid @RequestBody PieceImageIDto pieceImageIDto) {
 
-        PieceImageDto addedPieceImageDto = pieceImageService.save(pieceImageDto);
+        PieceImageODto addedPieceImageIDto = pieceImageService.save(pieceImageIDto);
 
-        return ResponseEntity.ok(addedPieceImageDto);
+        return ResponseEntity.ok(addedPieceImageIDto);
     }
 
     @PutMapping()
-    public ResponseEntity<?> updatePiece(@Valid @RequestBody PieceImageDto pieceImageDto) {
+    public ResponseEntity<?> updatePieceImage(@Valid @RequestBody PieceImageIDto pieceImageIDto) {
 
-        if(!pieceImageService.existsById(pieceImageDto.getId())) return ResponseEntity.notFound().build();
+        if(!pieceImageService.existsById(pieceImageIDto.getId())) return ResponseEntity.notFound().build();
 
-        PieceImageDto updatedPieceImageDto = pieceImageService.update(pieceImageDto);
+        PieceImageODto updatedPieceImageIDto = pieceImageService.update(pieceImageIDto);
 
-        return ResponseEntity.ok(updatedPieceImageDto);
+        return ResponseEntity.ok(updatedPieceImageIDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePiece(@PathVariable Long id) {
+    public ResponseEntity<?> deletePieceImage(@PathVariable Long id) {
         if(!pieceImageService.existsById(id)) return ResponseEntity.notFound().build();
 
         pieceImageService.deleteById(id);

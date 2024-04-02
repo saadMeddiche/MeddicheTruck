@@ -18,4 +18,12 @@ public class PieceImage extends BaseImage {
     @JsonIgnoreProperties("images")
     private Piece piece;
 
+    @Override
+    public String toString() {
+        return "PieceImage{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", piece=" + piece +
+                '}';
+    }
 }

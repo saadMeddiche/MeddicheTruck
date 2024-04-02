@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Primary
-public class PieceServiceImpl extends BaseService<Piece , PieceDto, PieceRepository> implements PieceService {
+public class PieceServiceImpl extends BaseService<Piece , PieceDto,PieceDto, PieceRepository> implements PieceService {
 
     @Override
     public String recordName() {
@@ -19,6 +19,6 @@ public class PieceServiceImpl extends BaseService<Piece , PieceDto, PieceReposit
     }
     @Autowired
     public PieceServiceImpl(PieceRepository pieceRepository) {
-        super(pieceRepository , Piece.class , PieceDto.class);
+        super(pieceRepository , Piece.class , PieceDto.class , PieceDto.class);
     }
 }

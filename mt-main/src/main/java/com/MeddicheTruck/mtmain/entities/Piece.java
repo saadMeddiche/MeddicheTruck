@@ -28,4 +28,11 @@ public class Piece extends BaseEntity {
     @JsonIgnoreProperties({"pieces" , "involvedPersons"})
     private List<Transaction> transactions = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
