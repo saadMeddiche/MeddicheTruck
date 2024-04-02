@@ -1,10 +1,10 @@
 package com.MeddicheTruck.mtmain.entities;
 
+import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.MeddicheTruck.mtmain.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.TenantId;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,14 +15,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transaction {
-
-    @TenantId
-    private String tenant;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Transaction extends BaseEntity {
 
     private String name;
 

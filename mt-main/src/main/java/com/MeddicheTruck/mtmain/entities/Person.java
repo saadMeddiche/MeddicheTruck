@@ -1,13 +1,12 @@
 package com.MeddicheTruck.mtmain.entities;
 
 import com.MeddicheTruck.mtcore.embedabbles.FullName;
-import com.MeddicheTruck.mtmain.listeners.PersonListener;
+import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.TenantId;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.time.LocalDate;
@@ -20,15 +19,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(PersonListener.class)
-public class Person {
-
-    @TenantId
-    private String tenant;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Person extends BaseEntity {
 
     @Embedded
     @Valid

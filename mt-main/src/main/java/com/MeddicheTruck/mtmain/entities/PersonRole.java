@@ -1,11 +1,8 @@
 package com.MeddicheTruck.mtmain.entities;
 
+import com.MeddicheTruck.mtcore.models.BaseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.*;
-import org.hibernate.annotations.TenantId;
 
 /*
 * Each Transaction have involved persons in it , and each person has his own role in that transaction . For Example, he can be a buyer or a seller or a manager.
@@ -17,14 +14,15 @@ import org.hibernate.annotations.TenantId;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonRole {
-
-    @TenantId
-    private String tenant;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PersonRole extends BaseEntity {
 
     private String name;
+
+    @Override
+    public String toString() {
+        return "PersonRole{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

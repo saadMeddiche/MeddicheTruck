@@ -1,14 +1,13 @@
 package com.MeddicheTruck.mtmain.entities;
 
+import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.TenantId;
 
 /*
 * This class is used to represent the involved persons in a transaction and its role in that transaction
 * */
-
 
 @Entity
 @Getter
@@ -16,14 +15,7 @@ import org.hibernate.annotations.TenantId;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InvolvedPerson {
-
-    @TenantId
-    private String tenant;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class InvolvedPerson extends BaseEntity {
 
     @ManyToOne
     @JsonIgnoreProperties({"involvedPersons" , "pieces"})
@@ -35,5 +27,15 @@ public class InvolvedPerson {
 
     @ManyToOne
     private PersonRole personRole;
+
+    @Override
+    public String toString() {
+        return "InvolvedPerson{" +
+                "id=" + id +
+                ", transaction=" + transaction +
+                ", person=" + person +
+                ", personRole=" + personRole +
+                '}';
+    }
 
 }

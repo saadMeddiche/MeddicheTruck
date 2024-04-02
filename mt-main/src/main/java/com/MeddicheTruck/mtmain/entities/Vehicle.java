@@ -1,12 +1,11 @@
 package com.MeddicheTruck.mtmain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.MeddicheTruck.mtmain.enums.EngineType;
 import com.MeddicheTruck.mtmain.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.TenantId;
 
 import java.util.List;
 
@@ -16,15 +15,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Vehicle {
-
-    @TenantId
-    @JsonIgnore
-    private String tenant;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Vehicle extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private VehicleType type;

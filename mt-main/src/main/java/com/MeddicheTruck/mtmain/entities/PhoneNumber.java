@@ -1,11 +1,11 @@
 package com.MeddicheTruck.mtmain.entities;
 
+import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.MeddicheTruck.mtmain.enums.PhoneNumberType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.TenantId;
 
 @Entity
 @Getter
@@ -13,14 +13,7 @@ import org.hibernate.annotations.TenantId;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PhoneNumber {
-
-    @TenantId
-    private String tenant;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class PhoneNumber extends BaseEntity {
 
     @NotNull(message = "The type of the phone number can not be null")
     private PhoneNumberType type;
