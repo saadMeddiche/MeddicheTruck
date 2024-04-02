@@ -1,6 +1,7 @@
 package com.MeddicheTruck.mtmain.entities;
 
 import com.MeddicheTruck.mtcore.models.BaseEntity;
+import com.MeddicheTruck.mtmain.enums.PersonRole;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,7 +26,6 @@ public class InvolvedPerson extends BaseEntity {
     @JsonIgnoreProperties("involvedPersons")
     private Person person;
 
-    @ManyToOne
     private PersonRole personRole;
 
     @Override
