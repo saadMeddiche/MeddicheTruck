@@ -30,7 +30,7 @@ public class PieceController {
 
         Page<Piece> piecePage = pieceService.dynamicSearch(searchTerm, pageable);
 
-        return ResponseEntity.ok(new CustomPageResponse<Piece , PieceDto>(piecePage , PieceDto.class));
+        return ResponseEntity.ok(new CustomPageResponse<>(piecePage , PieceDto.class));
     }
 
     @PostMapping
