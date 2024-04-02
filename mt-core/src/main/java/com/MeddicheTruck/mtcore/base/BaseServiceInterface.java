@@ -1,28 +1,28 @@
 package com.MeddicheTruck.mtcore.base;
 
+import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
 import com.MeddicheTruck.mtcore.models.BaseEntity;
+import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface BaseServiceInterface<E extends BaseEntity> {
+public interface BaseServiceInterface<E extends BaseEntity , DTO extends BaseEntityDto> {
 
-    List<E> saveAll(List<E> entities);
+    List<DTO> saveAll(List<DTO> entities);
     
-    E save(E entity);
+    DTO save(DTO entity);
     
-    E update(E entity);
-    
-    void delete(E entity);
+    DTO update(DTO entity);
 
     void deleteById(Long id);
     
-    E findById(Long id);
+    DTO findById(Long id);
     
-    List<E> findAll();
+    List<DTO> findAll();
 
     Boolean existsById(Long id);
 
-    Page<E> dynamicSearch(String searchTerm , Pageable pageable);
+    CustomPageResponse<E,DTO> dynamicSearch(String searchTerm , Pageable pageable);
 }

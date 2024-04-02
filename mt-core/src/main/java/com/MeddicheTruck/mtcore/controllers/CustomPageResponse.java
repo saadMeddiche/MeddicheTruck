@@ -1,4 +1,4 @@
-package com.MeddicheTruck.mtmain.controllers;
+package com.MeddicheTruck.mtcore.controllers;
 
 import com.MeddicheTruck.mtcore.models.BaseEntity;
 import lombok.Getter;

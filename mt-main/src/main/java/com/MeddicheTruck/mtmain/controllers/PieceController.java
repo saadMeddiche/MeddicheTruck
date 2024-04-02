@@ -1,5 +1,6 @@
 package com.MeddicheTruck.mtmain.controllers;
 
+import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
 import com.MeddicheTruck.mtmain.dtos.PieceDto;
 import com.MeddicheTruck.mtmain.entities.Piece;
 import com.MeddicheTruck.mtmain.services.PieceService;
@@ -28,18 +29,14 @@ public class PieceController {
 
         PageRequest pageable = PageRequest.of(page, size);
 
-        Page<Piece> piecePage = pieceService.dynamicSearch(searchTerm, pageable);
-
-        return ResponseEntity.ok(new CustomPageResponse<>(piecePage , PieceDto.class));
+        return ResponseEntity.ok(pieceService.dynamicSearch(searchTerm, pageable));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPiece(@PathVariable Long id) {
         if(!pieceService.existsById(id)) return ResponseEntity.notFound().build();
 
-        Piece piece = pieceService.findById(id);
-
-        PieceDto pieceDto = modelMapper.map(piece, PieceDto.class);
+        PieceDto pieceDto = pieceService.findById(id);
 
         return ResponseEntity.ok(pieceDto);
     }
@@ -47,11 +44,7 @@ public class PieceController {
     @PostMapping
     public ResponseEntity<?> createPiece(@Valid @RequestBody PieceDto pieceDto) {
 
-        Piece piece = modelMapper.map(pieceDto, Piece.class);
-
-        Piece addedPiece = pieceService.save(piece);
-
-        PieceDto addedPieceDto = modelMapper.map(addedPiece, PieceDto.class);
+        PieceDto addedPieceDto = pieceService.save(pieceDto);
 
         return ResponseEntity.ok(addedPieceDto);
     }
@@ -61,11 +54,7 @@ public class PieceController {
 
         if(!pieceService.existsById(pieceDto.getId())) return ResponseEntity.notFound().build();
 
-        Piece piece = modelMapper.map(pieceDto, Piece.class);
-
-        Piece updatedPiece = pieceService.update( piece);
-
-        PieceDto updatedPieceDto = modelMapper.map(updatedPiece, PieceDto.class);
+        PieceDto updatedPieceDto = pieceService.update( pieceDto);
 
         return ResponseEntity.ok(updatedPieceDto);
     }

@@ -1,60 +1,75 @@
 package com.MeddicheTruck.mtcore.base;
 
+import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
 import com.MeddicheTruck.mtcore.models.BaseEntity;
+import com.MeddicheTruck.mtcore.models.BaseEntityDto;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseService<E extends BaseEntity, R extends BaseRepository> implements BaseServiceInterface<E> {
+public abstract class BaseService<E extends BaseEntity, DTO extends BaseEntityDto, R extends BaseRepository<E> > implements BaseServiceInterface<E,DTO> {
 
     abstract protected String recordName();
 
     protected R repository;
 
+    protected Class<E> entityClass;
+
+    protected Class<DTO> dtoClass;
+
+    private ModelMapper mapper = new ModelMapper();
+
     @Autowired
-    protected BaseService(R repository){
+    protected BaseService(R repository , Class<E> entityClass , Class<DTO> dtoClass){
         this.repository = repository;
+        this.entityClass = entityClass;
+        this.dtoClass = dtoClass;
     }
 
-    public List<E> saveAll(List<E> entities){
-        return repository.saveAll(entities);
+    public List<DTO> saveAll(List<DTO> entities){
+        List<E> entitiesToSave = entities.stream().map(dto -> mapper.map(dto, entityClass)).toList();
+        List<E> savedEntities = repository.saveAll(entitiesToSave);
+        return savedEntities.stream().map(entity -> mapper.map(entity, dtoClass)).toList();
     }
-    public E save(E entity){
-        return (E) repository.save(entity);
+    public DTO save(DTO entity){
+        E entityToSave = mapper.map(entity, entityClass);
+        E  savedEntity = (E) repository.save(entityToSave);
+        return mapper.map(savedEntity, dtoClass);
     }
 
-    public E update(E entity){
-        return (E) repository.save(entity);
-    }
-
-    public void delete(E entity){
-        repository.delete(entity);
+    public DTO update(DTO entity){
+        E entityToUpdate = mapper.map(entity, entityClass);
+        E updatedEntity = repository.save(entityToUpdate);
+        return mapper.map(updatedEntity, dtoClass);
     }
 
     public void deleteById(Long id){
         repository.deleteById(id);
     }
 
-    public E findById(Long id){
+    public DTO findById(Long id){
         Optional<E> optionalEntity = repository.findById(id);
-        return optionalEntity.orElseThrow(() -> new DoNotExistException(String.format("%s with id %d does not exist", recordName(), id)));
+        if(optionalEntity.isEmpty()) throw new DoNotExistException(String.format("%s with id %d does not exist", recordName(), id));
+        return mapper.map(optionalEntity.get(), dtoClass);
     }
 
     public Boolean existsById(Long id) {
         return repository.existsById(id);
     }
 
-    public List<E> findAll(){
-        return repository.findAll();
+    public List<DTO> findAll(){
+        List<E> entities = repository.findAll();
+        return entities.stream().map(entity -> mapper.map(entity, dtoClass)).toList();
     }
 
-    public Page<E> dynamicSearch(String searchTerm , Pageable pageable){
-        return repository.dynamicSearch(searchTerm ,pageable);
+    public CustomPageResponse<E,DTO> dynamicSearch(String searchTerm , Pageable pageable){
+        Page<E> entities = repository.dynamicSearch(searchTerm, pageable);
+        return new CustomPageResponse<>(entities , dtoClass);
     }
 
 }

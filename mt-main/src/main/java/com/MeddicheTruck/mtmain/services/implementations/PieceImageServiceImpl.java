@@ -1,6 +1,8 @@
 package com.MeddicheTruck.mtmain.services.implementations;
 
 import com.MeddicheTruck.mtcore.base.BaseService;
+import com.MeddicheTruck.mtmain.dtos.PieceDto;
+import com.MeddicheTruck.mtmain.dtos.PieceImageDto;
 import com.MeddicheTruck.mtmain.entities.PieceImage;
 import com.MeddicheTruck.mtmain.repositories.PieceImageRepository;
 import com.MeddicheTruck.mtmain.services.PieceImageService;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Primary
-public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageRepository> implements PieceImageService {
+public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageDto, PieceImageRepository> implements PieceImageService {
     @Override
     protected String recordName() {
         return "piece image";
@@ -18,7 +20,7 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageRep
 
     @Autowired
     public PieceImageServiceImpl(PieceImageRepository pieceImageRepository) {
-        super(pieceImageRepository);
+        super(pieceImageRepository, PieceImage.class, PieceImageDto.class);
     }
 
 }
