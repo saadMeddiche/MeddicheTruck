@@ -1,7 +1,11 @@
 package com.MeddicheTruck.mtcore.services.implementations;
 
+import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.ValidationException;
 import com.MeddicheTruck.mtcore.services.Naming;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 
 @Component
@@ -13,7 +17,7 @@ public class TimeNaming implements Naming {
     public  String uniquifyWord(String word){
 
         if(word == null){
-            throw new RuntimeException("The word can not be null");
+            throw new ValidationException("word can not be null");
         }
 
         long currentTimeInMillis = System.currentTimeMillis();

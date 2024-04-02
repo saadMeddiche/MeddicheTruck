@@ -30,7 +30,7 @@ import java.util.List;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.MeddicheTruck.mtcore" ,"com.MeddicheTruck.mtsecurity" ,"com.MeddicheTruck.mtmain.configurations"})
+@ComponentScan(basePackages = {"com.MeddicheTruck.mtcore" ,"com.MeddicheTruck.mtsecurity" ,"com.MeddicheTruck.mtmain.configurations" ,"com.MeddicheTruck.mtmain.controllers"})
 @RequiredArgsConstructor
 //@ComponentScan(basePackages = {"com.MeddicheTruck.mtcore"})
 public class MtMainApplication {
