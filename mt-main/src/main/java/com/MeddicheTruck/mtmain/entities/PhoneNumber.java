@@ -13,7 +13,6 @@ import org.hibernate.annotations.TenantId;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class PhoneNumber {
 
     @TenantId

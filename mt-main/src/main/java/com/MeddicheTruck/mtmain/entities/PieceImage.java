@@ -18,7 +18,6 @@ import java.util.Arrays;
 @NoArgsConstructor
 public class PieceImage {
 
-    @JsonIgnore
     @TenantId
     private String tenant;
 
@@ -28,25 +27,11 @@ public class PieceImage {
 
     private String name;
 
-    @Transient
-    private byte[] photoInBase64Format;
-
     private String photoPath;
 
     @ManyToOne
     @JsonIgnoreProperties("images")
     @JsonIgnore
     private Piece piece;
-
-    @Override
-    public String toString() {
-        return "PieceImage{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", photo=" + Arrays.toString(photoInBase64Format) +
-                ", photoPath='" + photoPath + '\'' +
-                '}';
-    }
-
 
 }

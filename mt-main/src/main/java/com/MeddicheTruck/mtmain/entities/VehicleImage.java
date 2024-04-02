@@ -15,19 +15,16 @@ import org.springframework.data.rest.core.annotation.RestResource;
 public class VehicleImage {
     @TenantId
     private String tenant;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-    @Transient
-    private byte[] photoInBase64Format;
-
     private String photoPath;
 
     @ManyToOne
     @JsonIgnoreProperties("images")
-//    @RestResource(exported = false)
     private Vehicle vehicle;
 }

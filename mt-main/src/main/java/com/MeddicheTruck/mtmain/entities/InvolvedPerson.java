@@ -34,6 +34,6 @@ public class InvolvedPerson {
     private Person person;
 
     @ManyToOne
-    private PersonRoleInTransaction personRoleInTransaction;
+    private PersonRole personRole;
 
 }

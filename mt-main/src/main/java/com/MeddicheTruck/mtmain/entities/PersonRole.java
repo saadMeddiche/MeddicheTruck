@@ -17,7 +17,7 @@ import org.hibernate.annotations.TenantId;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonRoleInTransaction {
+public class PersonRole {
 
     @TenantId
     private String tenant;

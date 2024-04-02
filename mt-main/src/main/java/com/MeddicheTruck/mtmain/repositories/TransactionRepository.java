@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource
+@Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long>{
     @Query("SELECT t FROM Transaction t WHERE " +
             "t.name LIKE %:searchTerm% OR " +
