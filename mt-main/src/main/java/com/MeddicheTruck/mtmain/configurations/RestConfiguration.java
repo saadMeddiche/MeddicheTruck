@@ -6,6 +6,7 @@ import com.MeddicheTruck.mtmain.entities.Vehicle;
 import com.MeddicheTruck.mtmain.entities.VehicleImage;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.core.mapping.RepositoryDetectionStrategy;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
@@ -19,5 +20,6 @@ public class RestConfiguration implements RepositoryRestConfigurer {
         config.exposeIdsFor(PieceImage.class);
         config.exposeIdsFor(Vehicle.class);
         config.exposeIdsFor(VehicleImage.class);
+        config.setRepositoryDetectionStrategy(RepositoryDetectionStrategy.RepositoryDetectionStrategies.ANNOTATED);
     }
 }

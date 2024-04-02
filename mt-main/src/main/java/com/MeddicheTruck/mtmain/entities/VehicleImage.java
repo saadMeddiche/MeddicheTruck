@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.TenantId;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 @Entity
 @Getter
@@ -27,5 +28,6 @@ public class VehicleImage {
 
     @ManyToOne
     @JsonIgnoreProperties("images")
+//    @RestResource(exported = false)
     private Vehicle vehicle;
 }
