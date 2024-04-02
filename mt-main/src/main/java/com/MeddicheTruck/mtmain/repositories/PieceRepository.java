@@ -1,5 +1,6 @@
 package com.MeddicheTruck.mtmain.repositories;
 
+import com.MeddicheTruck.mtcore.base.BaseRepository;
 import com.MeddicheTruck.mtmain.entities.Piece;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PieceRepository extends JpaRepository<Piece, Long> {
+public interface PieceRepository extends BaseRepository<Piece> {
+    @Override
     @Query("SELECT p FROM Piece p WHERE p.name LIKE %:searchTerm%")
     Page<Piece> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
 }

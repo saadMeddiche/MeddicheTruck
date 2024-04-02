@@ -23,8 +23,7 @@ public class Piece extends BaseEntity {
 
     @OneToMany(mappedBy =  "piece" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonIgnoreProperties("piece")
-    @RestResource(exported = false)
-    private List<PieceImage> images ;
+    private List<PieceImage> images = new ArrayList<>();
 
     @ManyToMany(mappedBy = "pieces")
     @JsonIgnoreProperties({"pieces" , "involvedPersons"})
