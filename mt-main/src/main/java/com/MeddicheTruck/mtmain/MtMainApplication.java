@@ -1,7 +1,6 @@
 package com.MeddicheTruck.mtmain;
 
 import com.MeddicheTruck.mtcore.embedabbles.FullName;
-import com.MeddicheTruck.mtcore.services.EntityService;
 import com.MeddicheTruck.mtsecurity.embeddables.Password;
 import com.MeddicheTruck.mtsecurity.entities.Permission;
 import com.MeddicheTruck.mtsecurity.entities.Role;
@@ -9,21 +8,13 @@ import com.MeddicheTruck.mtsecurity.entities.User;
 import com.MeddicheTruck.mtsecurity.repositories.PermissionRepository;
 import com.MeddicheTruck.mtsecurity.repositories.RoleRepository;
 import com.MeddicheTruck.mtsecurity.repositories.UserRepository;
-import com.MeddicheTruck.mtsecurity.services.RoleService;
-import com.MeddicheTruck.mtsecurity.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-
-import javax.sql.DataSource;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +35,6 @@ public class MtMainApplication {
 
 	private final PermissionRepository permissionRepository;
 
-	private final EntityService entityService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MtMainApplication.class, args);
@@ -62,8 +52,7 @@ public class MtMainApplication {
 				crateDefaultRoles();
 
 				createDefaultUsers();
-
-//				entityService.getAllEntitiesWithPublicSchema().forEach(System.out::println);
+				
 			}
 		};
 	}
