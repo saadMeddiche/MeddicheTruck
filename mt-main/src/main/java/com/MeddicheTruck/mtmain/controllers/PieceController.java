@@ -11,8 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/pieces")
 @RequiredArgsConstructor
@@ -50,7 +48,7 @@ public class PieceController {
     @PutMapping()
     public ResponseEntity<?> updatePiece(@Valid @RequestBody PieceDto pieceDto) {
 
-        if(pieceService.existsById(pieceDto.getId())) ResponseEntity.notFound().build();
+        if(pieceService.existsById(pieceDto.getId())) return ResponseEntity.notFound().build();
 
         Piece piece = modelMapper.map(pieceDto, Piece.class);
 
@@ -63,7 +61,7 @@ public class PieceController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePiece(@PathVariable Long id) {
-        if(pieceService.existsById(id)) ResponseEntity.notFound().build();
+        if(!pieceService.existsById(id)) return ResponseEntity.notFound().build();
 
         pieceService.deleteById(id);
 
