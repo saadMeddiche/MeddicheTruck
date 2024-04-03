@@ -1,7 +1,6 @@
 package com.MeddicheTruck.mtmain.dtos;
 
-import com.MeddicheTruck.mtcore.models.BaseImageDto;
-import jakarta.validation.constraints.NotNull;
+import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import lombok.*;
 
 @Getter
@@ -9,9 +8,11 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PieceImageODto extends BaseImageDto {
+public class PieceImageODto extends BaseEntityDto {
 
     private Long pieceId;
+
+    private String name;
 
     private String photoPath;
 

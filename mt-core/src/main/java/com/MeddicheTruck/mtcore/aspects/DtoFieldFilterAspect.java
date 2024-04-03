@@ -4,36 +4,44 @@ import com.MeddicheTruck.mtcore.annotations.*;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.http.HttpMethod;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 @Aspect
 @Component
 public class DtoFieldFilterAspect {
 
-    @Around("@annotation(com.MeddicheTruck.mtcore.annotations.FilterDtoFields) && args(dto)")
+    // Get around the methods in BaseController that have in their @parameters a dto and are annotated with @FilterDtoFields
+    @Around("execution(* com.MeddicheTruck.mtcore.base.BaseController.*(..)) && args(.., @com.MeddicheTruck.mtcore.annotations.FilterDtoFields dto)")
     public Object filterFields(ProceedingJoinPoint joinPoint, Object dto) throws Throwable {
-        System.out.println("Filtering fields");
+
+        Method interceptedMethod = ((MethodSignature) joinPoint.getSignature()).getMethod();
+
         if (dto != null && dto.getClass().isAnnotationPresent(AdaptedDto.class)) {
             Field[] fields = dto.getClass().getDeclaredFields();
             for (Field field : fields) {
-                if (!shouldIncludeField(field, HttpMethod.valueOf(joinPoint.getArgs()[0].toString()))) {
+                if (!shouldIncludeField(field, interceptedMethod)) {
                     field.setAccessible(true);
                     field.set(dto, null);
+                    System.out.println("Field " + field.getName() + " was set to null");
                 }
             }
         }
+
         return joinPoint.proceed();
     }
 
-    private boolean shouldIncludeField(Field field, HttpMethod method) {
-        if (field.isAnnotationPresent(IncludeOnPostRequest.class) && method == HttpMethod.POST) {
+    private boolean shouldIncludeField(Field field, Method method) {
+        if (field.isAnnotationPresent(IncludeOnPostRequest.class) && method.isAnnotationPresent(PostMapping.class)) {
             return true;
         }
 
-        if (field.isAnnotationPresent(IncludeOnPutRequest.class) && method == HttpMethod.PUT) {
+        if (field.isAnnotationPresent(IncludeOnPutRequest.class) && method.isAnnotationPresent(PutMapping.class)) {
             return true;
         }
 
