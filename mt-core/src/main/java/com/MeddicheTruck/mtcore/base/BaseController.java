@@ -27,7 +27,7 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPiece(@PathVariable Long id) {
+    public ResponseEntity<?> get(@PathVariable Long id) {
         if(!service.existsById(id)) return ResponseEntity.notFound().build();
 
         O_DTO pieceDto = service.findById(id);
@@ -36,7 +36,7 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
     }
 
     @PostMapping
-    public ResponseEntity<?> createPiece(@Valid @RequestBody I_DTO pieceDto) {
+    public ResponseEntity<?> create(@Valid @RequestBody I_DTO pieceDto) {
 
         O_DTO addedPieceDto = service.save(pieceDto);
 
@@ -44,7 +44,7 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
     }
 
     @PutMapping()
-    public ResponseEntity<?> updatePiece(@Valid @RequestBody I_DTO pieceDto) {
+    public ResponseEntity<?> update(@Valid @RequestBody I_DTO pieceDto) {
 
         if(!service.existsById(pieceDto.getId())) return ResponseEntity.notFound().build();
 
@@ -54,7 +54,7 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePiece(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         if(!service.existsById(id)) return ResponseEntity.notFound().build();
 
         service.deleteById(id);
