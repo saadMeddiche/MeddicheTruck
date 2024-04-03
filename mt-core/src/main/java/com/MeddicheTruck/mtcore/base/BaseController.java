@@ -1,11 +1,13 @@
 package com.MeddicheTruck.mtcore.base;
 
+import com.MeddicheTruck.mtcore.annotations.FilterDtoFields;
 import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEntityDto, O_DTO extends BaseEntityDto , S extends BaseServiceInterface<E ,I_DTO ,O_DTO> > {
 
@@ -30,27 +32,27 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
     public ResponseEntity<?> get(@PathVariable Long id) {
         if(!service.existsById(id)) return ResponseEntity.notFound().build();
 
-        O_DTO pieceDto = service.findById(id);
+        O_DTO dto = service.findById(id);
 
-        return ResponseEntity.ok(pieceDto);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody I_DTO pieceDto) {
+    public ResponseEntity<?> create(@Valid @RequestBody @FilterDtoFields I_DTO dto) {
 
-        O_DTO addedPieceDto = service.save(pieceDto);
+        O_DTO addedDto = service.save(dto);
 
-        return ResponseEntity.ok(addedPieceDto);
+        return ResponseEntity.ok(addedDto);
     }
 
     @PutMapping()
-    public ResponseEntity<?> update(@Valid @RequestBody I_DTO pieceDto) {
+    public ResponseEntity<?> update(@Valid @RequestBody @FilterDtoFields I_DTO dto) {
 
-        if(!service.existsById(pieceDto.getId())) return ResponseEntity.notFound().build();
+        if(!service.existsById(dto.getId())) return ResponseEntity.notFound().build();
 
-        O_DTO updatedPieceDto = service.update(pieceDto);
+        O_DTO updatedDto = service.update(dto);
 
-        return ResponseEntity.ok(updatedPieceDto);
+        return ResponseEntity.ok(updatedDto);
     }
 
     @DeleteMapping("/{id}")
@@ -61,4 +63,5 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
 
         return ResponseEntity.ok().build();
     }
+
 }

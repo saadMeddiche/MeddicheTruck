@@ -1,5 +1,6 @@
 package com.MeddicheTruck.mtcore.models;
 
+import com.MeddicheTruck.mtcore.annotations.IncludeOnPostRequest;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +11,8 @@ import lombok.Setter;
 @Setter
 @MappedSuperclass
 public abstract class BaseImageDto extends BaseEntityDto {
-    @NotNull(message = "The name can not be null")
-    @NotBlank(message = "The name can not be blank")
+//    @NotNull(message = "The name can not be null")
+//    @NotBlank(message = "The name can not be blank")
+    @IncludeOnPostRequest
     protected String name;
 }

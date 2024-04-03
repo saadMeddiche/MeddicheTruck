@@ -1,10 +1,12 @@
 package com.MeddicheTruck.mtcore.base;
 
+import com.MeddicheTruck.mtcore.annotations.FilterDtoFields;
 import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
 import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,6 +54,18 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
     public void beforeSave(E entity , I_DTO entityDto){}
 
     public O_DTO update(I_DTO entityDto){
+
+        // Why new ModelMapper() ?
+        // Because the mapper is a stateful object, and we need to create a new instance of it to avoid any side effects.
+        // Example : You can't create a new TypeMap for the same classes with different configurations.
+        ModelMapper mapper = new ModelMapper();
+
+        // https://www.baeldung.com/java-modelmapper#2-auto-skip-null-properties
+        mapper.getConfiguration().setSkipNullEnabled(true);
+        TypeMap<I_DTO, E> propertyMap = mapper.createTypeMap(i_dtoClass, entityClass);
+        propertyMap.setProvider(p -> findByIdEntity(entityDto.getId()));
+        // ---
+
         E entityToUpdate = mapper.map(entityDto, entityClass);
         beforeUpdate(entityToUpdate , entityDto);
         E updatedEntity = repository.save(entityToUpdate);
@@ -69,6 +83,12 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
         return mapper.map(optionalEntity.get(), o_dtoClass);
     }
 
+    public E findByIdEntity(Long id){
+        Optional<E> optionalEntity = repository.findById(id);
+        if(optionalEntity.isEmpty()) throw new DoNotExistException(String.format("%s with id %d does not exist", recordName(), id));
+        return optionalEntity.get();
+    }
+
     public Boolean existsById(Long id) {
         return repository.existsById(id);
     }
@@ -82,5 +102,6 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
         Page<E> entities = repository.dynamicSearch(searchTerm, pageable);
         return new CustomPageResponse<>(entities , o_dtoClass);
     }
+
 
 }

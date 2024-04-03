@@ -45,16 +45,13 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
 
         // Check if the piece exists in the database before saving the piece image
         if(!pieceService.existsById(pieceImageIDto.getPieceId()))
-            throw new DoNotExistException(String.format("The %s with id %d does not exist", recordName(), pieceImageIDto.getId()));
-
-        // Set the name of the piece image to a unique name
-        pieceImage.setName(naming.uniquifyWord(pieceImage.getName()));
+            throw new DoNotExistException(String.format("The piece with id %d does not exist", pieceImageIDto.getPieceId()));
 
         // Store the piece image , and set the photo path of the piece image to the path of the stored image
         pieceImage.setPhotoPath(
                 fileStorageSystem.store(
                         pieceImageIDto.getPhotoInBase64(),
-                        pieceImage.getName(),
+                         naming.uniquifyWord(pieceImageIDto.getName()),
                         "pieces")
         );
 

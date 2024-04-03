@@ -19,6 +19,8 @@ public interface BaseServiceInterface<E extends BaseEntity , I_DTO extends BaseE
     void deleteById(Long id);
 
     O_DTO findById(Long id);
+
+    E findByIdEntity(Long id);
     
     List<O_DTO> findAll();
 
