@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+// Mapping Source :https://www.baeldung.com/java-dto-pattern
+
 public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntityDto , O_DTO extends BaseEntityDto , R extends BaseRepository<E> > implements BaseServiceInterface<E, I_DTO , O_DTO> {
 
     abstract protected String recordName();
@@ -51,11 +53,11 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
 
     public O_DTO update(I_DTO entityDto){
         E entityToUpdate = mapper.map(entityDto, entityClass);
-        beforeUpdate(entityToUpdate);
+        beforeUpdate(entityToUpdate , entityDto);
         E updatedEntity = repository.save(entityToUpdate);
         return mapper.map(updatedEntity, o_dtoClass);
     }
-    public void beforeUpdate(E entity){}
+    public void beforeUpdate(E entity , I_DTO entityDto){}
 
     public void deleteById(Long id){
         repository.deleteById(id);
