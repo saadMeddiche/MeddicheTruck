@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEntityDto, O_DTO extends BaseEntityDto , R extends BaseRepository<E>, S extends BaseServiceInterface<E ,I_DTO ,O_DTO> > {
+public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEntityDto, O_DTO extends BaseEntityDto , S extends BaseServiceInterface<E ,I_DTO ,O_DTO> > {
 
     protected final S service;
 
