@@ -96,6 +96,10 @@ public class ExceptionHandlerFactory {
             return new ResponseEntity<>(List.of("Tried to insert a string in column with type long") , HttpStatus.BAD_REQUEST);
         }
 
+        if(exception.getMessage().contains("JSON parse error: Unexpected character")){
+            return new ResponseEntity<>(List.of("Unexpected character in the request body") , HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(List.of("Development Purpose #1 , This error Not handled Yet") , HttpStatus.BAD_REQUEST);
     }
 

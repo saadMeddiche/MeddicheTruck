@@ -18,7 +18,7 @@ public class PieceImageIDto extends BaseEntityDto {
     @IncludeOnPutRequest
     protected Long id;
 
-    @IncludeOnPostRequest
+    @IncludeOnAllRequests
     protected String name;
 
     @IncludeOnAllRequests
