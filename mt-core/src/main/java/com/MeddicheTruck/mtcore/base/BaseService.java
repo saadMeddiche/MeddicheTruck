@@ -3,6 +3,7 @@ package com.MeddicheTruck.mtcore.base;
 import com.MeddicheTruck.mtcore.annotations.FilterDtoFields;
 import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
+import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.ValidationException;
 import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import org.modelmapper.ModelMapper;
@@ -78,18 +79,21 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
     }
 
     public O_DTO findById(Long id){
+        if(id == null) throw new ValidationException(String.format("The id of %s can't be null", recordName()));
         Optional<E> optionalEntity = repository.findById(id);
         if(optionalEntity.isEmpty()) throw new DoNotExistException(String.format("%s with id %d does not exist", recordName(), id));
         return mapper.map(optionalEntity.get(), o_dtoClass);
     }
 
     public E findByIdEntity(Long id){
+        if(id == null) throw new ValidationException(String.format("The id of %s can't be null", recordName()));
         Optional<E> optionalEntity = repository.findById(id);
         if(optionalEntity.isEmpty()) throw new DoNotExistException(String.format("%s with id %d does not exist", recordName(), id));
         return optionalEntity.get();
     }
 
     public Boolean existsById(Long id) {
+        if(id == null) throw new ValidationException(String.format("The id of %s can't be null", recordName()));
         return repository.existsById(id);
     }
 
