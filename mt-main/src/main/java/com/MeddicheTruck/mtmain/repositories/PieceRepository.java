@@ -15,4 +15,5 @@ public interface PieceRepository extends BaseRepository<Piece> {
     @Override
     @Query("SELECT p FROM Piece p WHERE p.name LIKE %:searchTerm%")
     Page<Piece> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
+
 }

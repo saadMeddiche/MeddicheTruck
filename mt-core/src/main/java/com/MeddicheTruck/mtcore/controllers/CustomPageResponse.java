@@ -10,15 +10,15 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CustomPageResponse <E extends BaseEntity , DTO> {
+public class CustomPageResponse <E extends BaseEntity , O_DTO> {
 
-    private List<DTO> content;
+    private List<O_DTO> content;
     private long totalElements;
     private int totalPages;
     private int pageNumber;
     private int pageSize;
 
-    public CustomPageResponse(Page<E> page , Class<DTO> dtoClass) {
+    public CustomPageResponse(Page<E> page , Class<O_DTO> dtoClass) {
         ModelMapper modelMapper = new ModelMapper();
         this.content = page.getContent().stream().map(entity -> modelMapper.map(entity, dtoClass)).toList();
         this.totalElements = page.getTotalElements();

@@ -1,6 +1,7 @@
 package com.MeddicheTruck.mtmain.services.implementations;
 
 import com.MeddicheTruck.mtcore.base.BaseService;
+import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
 import com.MeddicheTruck.mtcore.services.FileStorageSystem;
 import com.MeddicheTruck.mtcore.services.Naming;
@@ -12,6 +13,8 @@ import com.MeddicheTruck.mtmain.services.PieceImageService;
 import com.MeddicheTruck.mtmain.services.PieceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,7 +58,12 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
                         "pieces")
         );
 
-//        mapper.getConfiguration().setSkipNullEnabled(true);
+    }
+
+    @Override
+    public CustomPageResponse<PieceImage , PieceImageODto> getPieceImagesByPieceId(Long pieceId , String searchTerm, Pageable pageable) {
+        Page<PieceImage> pieceImagePage =  repository.findPieceImagesByPieceId(pieceId ,searchTerm, pageable);
+        return new CustomPageResponse<>(pieceImagePage , PieceImageODto.class);
     }
 
 }
