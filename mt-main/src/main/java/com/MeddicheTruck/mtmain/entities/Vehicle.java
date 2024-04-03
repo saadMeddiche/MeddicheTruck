@@ -7,6 +7,7 @@ import com.MeddicheTruck.mtmain.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,6 @@ public class Vehicle extends BaseEntity {
 
     @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonIgnoreProperties("vehicle")
-    private List<VehicleImage> images;
+    private List<VehicleImage> images = new ArrayList<>();
 
 }

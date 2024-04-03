@@ -1,0 +1,21 @@
+package com.MeddicheTruck.mtmain.services.implementations;
+
+import com.MeddicheTruck.mtcore.base.BaseService;
+import com.MeddicheTruck.mtmain.dtos.VehicleDto;
+import com.MeddicheTruck.mtmain.entities.Vehicle;
+import com.MeddicheTruck.mtmain.repositories.VehicleRepository;
+import com.MeddicheTruck.mtmain.services.VehicleService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class VehicleServiceImpl extends BaseService<Vehicle , VehicleDto , VehicleDto , VehicleRepository > implements VehicleService {
+
+    @Override
+    public String recordName() {
+        return "vehicle";
+    }
+
+    public VehicleServiceImpl(VehicleRepository vehicleRepository) {
+        super(vehicleRepository , Vehicle.class , VehicleDto.class , VehicleDto.class);
+    }
+}
