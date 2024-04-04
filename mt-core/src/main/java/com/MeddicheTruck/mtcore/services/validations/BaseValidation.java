@@ -2,13 +2,22 @@ package com.MeddicheTruck.mtcore.services.validations;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
+import org.modelmapper.ModelMapper;
 
 import java.util.Set;
 import java.util.function.Predicate;
 
-public abstract class BaseValidation {
+public class BaseValidation {
 
-    protected  <O> void validateObject(O object) {
+    public <O ,AO> void validateObjectAgainstAnotherObject(O object, AO anotherObject) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        AO objectToValidate = modelMapper.map(object, (Class<AO>) anotherObject.getClass());
+
+        validateObject(objectToValidate);
+    }
+
+    public  <O> void validateObject(O object) {
 
         Validation.buildDefaultValidatorFactory()
                 .getValidator()
@@ -21,12 +30,13 @@ public abstract class BaseValidation {
 
     }
 
-    protected  <O, E extends Exception> void throwExceptionIf(Predicate<O> predicate, O value, ExceptionSupplier<E> exceptionSupplier, String message) throws E {
+
+    public  <O, E extends Exception> void throwExceptionIf(Predicate<O> predicate, O value, ExceptionSupplier<E> exceptionSupplier, String message) throws E {
         if (predicate.test(value)) throw exceptionSupplier.get(message);
     }
 
     @FunctionalInterface
-    protected interface ExceptionSupplier<E extends Exception> {
+    public interface ExceptionSupplier<E extends Exception> {
         E get(String message);
     }
 }

@@ -30,7 +30,6 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
-        if(!service.existsById(id)) return ResponseEntity.notFound().build();
 
         O_DTO dto = service.findById(id);
 
@@ -38,7 +37,7 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody @FilterDtoFields I_DTO dto) {
+    public ResponseEntity<?> create(@RequestBody @FilterDtoFields I_DTO dto) {
 
         O_DTO addedDto = service.save(dto);
 
@@ -57,7 +56,6 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        if(!service.existsById(id)) return ResponseEntity.notFound().build();
 
         service.deleteById(id);
 
