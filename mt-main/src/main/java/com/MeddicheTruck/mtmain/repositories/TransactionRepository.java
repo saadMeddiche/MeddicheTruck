@@ -1,5 +1,6 @@
 package com.MeddicheTruck.mtmain.repositories;
 
+import com.MeddicheTruck.mtcore.base.BaseRepository;
 import com.MeddicheTruck.mtmain.entities.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TransactionRepository extends JpaRepository<Transaction, Long>{
+public interface TransactionRepository extends BaseRepository<Transaction> {
     @Query("SELECT t FROM Transaction t WHERE " +
             "t.name LIKE %:searchTerm% OR " +
             "t.Description LIKE %:searchTerm% OR " +
