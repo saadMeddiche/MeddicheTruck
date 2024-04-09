@@ -4,5 +4,5 @@ public enum PhoneNumberType {
     PERSONAL,
     WORK,
     FIX,
-    ENTREPRISE
+    ENTERPRISE
 }

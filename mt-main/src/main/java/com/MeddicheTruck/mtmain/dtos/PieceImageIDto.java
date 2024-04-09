@@ -23,7 +23,7 @@ public class PieceImageIDto extends BaseEntityDto {
     @NotNull(message = "The name of the piece image can not be null")
     protected String name;
 
-    @IncludeOnAllRequests
+    @IncludeOnPostRequest
     @NotNull(message = "The photo path of the piece can not be null")
     private Long pieceId;
 

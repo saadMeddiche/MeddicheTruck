@@ -15,15 +15,12 @@ import lombok.*;
 @NoArgsConstructor
 public class PhoneNumber extends BaseEntity {
 
-    @NotNull(message = "The type of the phone number can not be null")
     private PhoneNumberType type;
 
     @Column(unique = true)
-    @NotNull(message = "The number of the phone number can not be null")
     private String number;
 
     @ManyToOne
-    @NotNull(message = "The person of the phone number can not be null")
     @JsonIgnoreProperties({"phoneNumbers" , "involvedPersons"})
     private Person person;
 
