@@ -17,7 +17,7 @@ import lombok.*;
 @AdaptedDto
 public class PhoneNumberDto extends BaseEntityDto{
 
-    @IncludeOnAllRequests
+    @IncludeOnPutRequest
     private Long id;
 
     @IncludeOnAllRequests

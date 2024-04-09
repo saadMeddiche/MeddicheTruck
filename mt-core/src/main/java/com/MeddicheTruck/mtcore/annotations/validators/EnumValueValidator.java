@@ -7,7 +7,7 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Arrays;
 
-public class EnumValueValidator implements ConstraintValidator<EnumValue, Enum<?>> {
+public class EnumValueValidator implements ConstraintValidator<EnumValue, String> {
 
 
     private Class<? extends Enum<?>> enumClass;
@@ -18,12 +18,12 @@ public class EnumValueValidator implements ConstraintValidator<EnumValue, Enum<?
     }
 
     @Override
-    public boolean isValid(Enum<?> value, ConstraintValidatorContext context) {
+    public boolean isValid(String value, ConstraintValidatorContext context) {
 
         if (value == null) return false;
 
         return Arrays.stream(enumClass.getEnumConstants())
-                .anyMatch(enumValue -> enumValue.name().equals(value.name()));
+                .anyMatch(enumValue -> enumValue.name().equals(value));
 
     }
 }

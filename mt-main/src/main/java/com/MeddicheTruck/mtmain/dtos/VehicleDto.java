@@ -22,14 +22,14 @@ public class VehicleDto extends BaseEntityDto {
     @IncludeOnPutRequest
     public Long id;
 
-    @EnumValue(enumClass = VehicleType.class , message = "The type of the vehicle is invalid")
+    @EnumValue(enumClass = VehicleType.class , message = "The type of the vehicle must be CAR, TRUCK or MOTORCYCLE")
     @IncludeOnAllRequests
-    public VehicleType type;
+    public String type;
 
 
     @EnumValue(enumClass = EngineType.class ,message = "The engine type of the vehicle is invalid")
     @IncludeOnAllRequests
-    public EngineType engineType;
+    public String engineType;
 
     @IncludeOnAllRequests
     @NotNull(message = "The model of the vehicle can not be null")

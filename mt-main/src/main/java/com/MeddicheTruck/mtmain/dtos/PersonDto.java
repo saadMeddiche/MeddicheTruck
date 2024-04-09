@@ -2,6 +2,7 @@ package com.MeddicheTruck.mtmain.dtos;
 
 import com.MeddicheTruck.mtcore.annotations.AdaptedDto;
 import com.MeddicheTruck.mtcore.annotations.IncludeOnAllRequests;
+import com.MeddicheTruck.mtcore.annotations.IncludeOnPutRequest;
 import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AdaptedDto
 public class PersonDto extends BaseEntityDto {
-    @IncludeOnAllRequests
+    @IncludeOnPutRequest
     private Long id;
 
     @IncludeOnAllRequests
@@ -26,7 +27,6 @@ public class PersonDto extends BaseEntityDto {
 
     @IncludeOnAllRequests
     @NotNull(message = "The middle name of the person can not be null")
-    @NotBlank(message = "The middle name of the person can not be blank")
     private String middleName;
 
     @IncludeOnAllRequests

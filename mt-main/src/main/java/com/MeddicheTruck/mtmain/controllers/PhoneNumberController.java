@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/phoneNumbers")
 public class PhoneNumberController extends BaseController<PhoneNumber , PhoneNumberDto , PhoneNumberDto , PhoneNumberService> {
 
-        @Autowired
-        public PhoneNumberController(PhoneNumberService phoneNumberService) {
-            super(phoneNumberService);
-        }
+    @Autowired
+    PhoneNumberController(PhoneNumberService phoneNumberService) {
+        super(phoneNumberService);
+    }
 
-        @GetMapping("/person/{personId}")
-        public ResponseEntity<?> getPhoneNumbersByPersonId(@PathVariable Long personId ,
-                                                           @RequestParam(defaultValue = "") String searchTerm ,
-                                                           @RequestParam(defaultValue = "0") int page,
-                                                           @RequestParam(defaultValue = "5") int size) {
-            PageRequest pageable = PageRequest.of(page, size);
-            return ResponseEntity.ok(service.getPhoneNumbersByPersonId(personId , searchTerm, pageable));
-        }
+    @GetMapping("/person/{personId}")
+    ResponseEntity<?> getPhoneNumbersByPersonId(@PathVariable Long personId ,
+                                                       @RequestParam(defaultValue = "") String searchTerm ,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "5") int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.getPhoneNumbersByPersonId(personId , searchTerm, pageable));
+    }
 
 }

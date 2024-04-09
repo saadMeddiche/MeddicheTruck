@@ -100,14 +100,6 @@ public class ExceptionHandlerFactory {
             return new ResponseEntity<>(List.of("Unexpected character in the request body") , HttpStatus.BAD_REQUEST);
         }
 
-        if(exception.getMessage().contains("not one of the values accepted for Enum class: [BIKE, CAR, TRUCK")){
-            return new ResponseEntity<>(List.of("The type of the vehicle is invalid") , HttpStatus.BAD_REQUEST);
-        }
-
-        if(exception.getMessage().contains("not one of the values accepted for Enum class: [HYDRAULIC_FUEL, COMBUSTION_DIESEL")){
-            return new ResponseEntity<>(List.of("The engine type of the vehicle is invalid") , HttpStatus.BAD_REQUEST);
-        }
-
         if(exception.getMessage().contains("Required request body is missing")){
             return new ResponseEntity<>(List.of("The request body is missing") , HttpStatus.BAD_REQUEST);
         }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/persons")
 public class PersonController extends BaseController<Person, PersonDto, PersonDto , PersonService> {
     @Autowired
-    protected PersonController(PersonService service) {
+    PersonController(PersonService service) {
         super(service);
     }
 }
