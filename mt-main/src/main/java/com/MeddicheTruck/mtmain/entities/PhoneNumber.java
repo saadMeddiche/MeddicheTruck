@@ -15,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 public class PhoneNumber extends BaseEntity {
 
+    @Enumerated(EnumType.STRING)
     private PhoneNumberType type;
 
     @Column(unique = true)

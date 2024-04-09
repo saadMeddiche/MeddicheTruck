@@ -34,11 +34,25 @@ public class PhoneNumberServiceImpl extends BaseService<PhoneNumber, PhoneNumber
 
     @Override
     public void globalValidation(PhoneNumberDto phoneNumberDto) {
-        // Validate the person id
+
         throwExceptionIf(ID_PERSON_NOT_FOUND , phoneNumberDto.getPersonId() , DoNotExistException::new , String.format("The person with id %d does not exist" , phoneNumberDto.getPersonId()));
 
-        // Validate the phone number DTO
         validateObject(phoneNumberDto);
+    }
+
+    @Override
+    public void saveValidation(PhoneNumberDto phoneNumberDto) {
+        throwExceptionIf(repository::existsPhoneNumberByNumber , phoneNumberDto.getNumber() , DoNotExistException::new , String.format("The phone number %s already exists" , phoneNumberDto.getNumber()));
+        globalValidation(phoneNumberDto);
+    }
+
+    @Override
+    public void updateValidation(PhoneNumberDto phoneNumberDto) {
+        // if the phone number already exists, and it is not the same phone number that we are updating
+        if(repository.existsPhoneNumberByNumberAndIdNot(phoneNumberDto.getNumber() , phoneNumberDto.getId()))
+            throw new DoNotExistException(String.format("The phone number %s already exists" , phoneNumberDto.getNumber()));
+
+        globalValidation(phoneNumberDto);
     }
 
     @Override

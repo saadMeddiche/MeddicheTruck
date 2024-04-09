@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface PhoneNumberRepository extends BaseRepository<PhoneNumber>{
 
     @Query("SELECT p FROM PhoneNumber p WHERE" +
@@ -19,4 +21,8 @@ public interface PhoneNumberRepository extends BaseRepository<PhoneNumber>{
 
     @Query("SELECT p FROM PhoneNumber p WHERE p.person.id = :personId AND p.number LIKE %:searchTerm%")
     Page<PhoneNumber> findPhoneNumbersByPersonId(Long personId ,@Param("searchTerm") String searchTerm, Pageable pageable);
+
+    Boolean existsPhoneNumberByNumber(String number);
+
+    Boolean existsPhoneNumberByNumberAndIdNot(String number, Long id);
 }
