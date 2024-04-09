@@ -2,21 +2,29 @@ package com.MeddicheTruck.mtmain.services.implementations;
 
 import com.MeddicheTruck.mtcore.base.BaseService;
 import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
+import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
 import com.MeddicheTruck.mtmain.dtos.PhoneNumberDto;
 import com.MeddicheTruck.mtmain.entities.PhoneNumber;
 import com.MeddicheTruck.mtmain.repositories.PhoneNumberRepository;
+import com.MeddicheTruck.mtmain.services.PersonService;
 import com.MeddicheTruck.mtmain.services.PhoneNumberService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.function.Predicate;
+
 @Service
 @Primary
 public class PhoneNumberServiceImpl extends BaseService<PhoneNumber, PhoneNumberDto, PhoneNumberDto , PhoneNumberRepository> implements PhoneNumberService {
 
-    public PhoneNumberServiceImpl(PhoneNumberRepository phoneNumberRepository) {
+    PersonService personService;
+
+    public PhoneNumberServiceImpl(PhoneNumberRepository phoneNumberRepository,
+                                  PersonService personService) {
         super(phoneNumberRepository , PhoneNumber.class , PhoneNumberDto.class , PhoneNumberDto.class);
+        this.personService = personService;
     }
 
     @Override
@@ -25,10 +33,23 @@ public class PhoneNumberServiceImpl extends BaseService<PhoneNumber, PhoneNumber
     }
 
     @Override
+    public void globalValidation(PhoneNumberDto phoneNumberDto) {
+        // Validate the person id
+        throwExceptionIf(ID_PERSON_NOT_FOUND , phoneNumberDto.getPersonId() , DoNotExistException::new , String.format("The person with id %d does not exist" , phoneNumberDto.getPersonId()));
+
+        // Validate the phone number DTO
+        validateObject(phoneNumberDto);
+    }
+
+    @Override
     public CustomPageResponse<PhoneNumber, PhoneNumberDto> getPhoneNumbersByPersonId(Long personId, String searchTerm, Pageable pageable) {
+
+        throwExceptionIf(ID_PERSON_NOT_FOUND , personId , DoNotExistException::new , String.format("The person with id %d does not exist" , personId));
 
         Page<PhoneNumber> phoneNumbersPage = repository.findPhoneNumbersByPersonId(personId , searchTerm , pageable);
 
         return new CustomPageResponse<>(phoneNumbersPage , PhoneNumberDto.class);
     }
+
+    Predicate<Long> ID_PERSON_NOT_FOUND = id -> !personService.existsById(id);
 }

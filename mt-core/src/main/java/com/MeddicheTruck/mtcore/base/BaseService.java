@@ -57,13 +57,13 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
         return mapper.map(savedEntity, o_dtoClass);
     }
 
-    public void saveValidation(I_DTO entityDto){
-        validateObject(entityDto);
+    public void saveValidation(I_DTO dto){
+        globalValidation(dto);
     }
-    public void beforeSave(E entity , I_DTO entityDto){}
+    public void beforeSave(E entity , I_DTO dto){}
 
-    public O_DTO update(I_DTO entityDto){
-        updateValidation(entityDto);
+    public O_DTO update(I_DTO dto){
+        updateValidation(dto);
         // Why new ModelMapper() ?
         // Because the mapper is a stateful object, and we need to create a new instance of it to avoid any side effects.
         // Example : You can't create a new TypeMap for the same classes with different configurations.
@@ -72,24 +72,28 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
         // https://www.baeldung.com/java-modelmapper#2-auto-skip-null-properties
         mapper.getConfiguration().setSkipNullEnabled(true);
         TypeMap<I_DTO, E> propertyMap = mapper.createTypeMap(i_dtoClass, entityClass);
-        propertyMap.setProvider(p -> findByIdEntity(entityDto.getId()));
+        propertyMap.setProvider(p -> findByIdEntity(dto.getId()));
         // ---
 
-        E entityToUpdate = mapper.map(entityDto, entityClass);
-        beforeUpdate(entityToUpdate , entityDto);
+        E entityToUpdate = mapper.map(dto, entityClass);
+        beforeUpdate(entityToUpdate , dto);
         E updatedEntity = repository.save(entityToUpdate);
         return mapper.map(updatedEntity, o_dtoClass);
     }
 
-    public void updateValidation(I_DTO entityDto){
-        validateObject(entityDto);
+    public void updateValidation(I_DTO dto){
+        globalValidation(dto);
     }
-    public void beforeUpdate(E entity , I_DTO entityDto){}
+    public void beforeUpdate(E entity , I_DTO dto){}
 
     public void deleteById(Long id){
         deleteValidation(id);
         beforeDelete(id);
         repository.deleteById(id);
+    }
+
+    public void globalValidation(I_DTO dto){
+        validateObject(dto);
     }
 
     public void deleteValidation(Long id){

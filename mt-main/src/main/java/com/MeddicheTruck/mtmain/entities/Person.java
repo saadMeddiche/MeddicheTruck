@@ -1,13 +1,10 @@
 package com.MeddicheTruck.mtmain.entities;
 
-import com.MeddicheTruck.mtcore.embedabbles.FullName;
 import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.data.rest.core.annotation.RestResource;
+import org.hibernate.annotations.Formula;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,10 +18,14 @@ import java.util.List;
 @NoArgsConstructor
 public class Person extends BaseEntity {
 
-    @Embedded
-    @Valid
-    @NotNull(message = "The name of the person can not be null")
-    private FullName name;
+    private String firstName;
+
+    private String middleName;
+
+    private String lastName;
+
+    @Formula("CONCAT(first_name, ' ', middle_name, ' ', last_name)")
+    private String fullName;
 
     private LocalDate birthDate;
 
@@ -32,7 +33,6 @@ public class Person extends BaseEntity {
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonIgnoreProperties("person")
-    @RestResource(exported=false)
     private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
@@ -43,7 +43,7 @@ public class Person extends BaseEntity {
     public String toString() {
         return "Person{" +
                 "id=" + id +
-                ", name=" + name.getFirst() + "|" + name.getMiddle() + "|" + name.getLast() +
+                ", name=" + firstName + "|" + middleName + "|" + lastName +
                 ", birthDate=" + birthDate +
                 ", description='" + description +
                 ", phoneNumbers=" + phoneNumbers +

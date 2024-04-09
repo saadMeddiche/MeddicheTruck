@@ -31,6 +31,6 @@ public class PhoneNumberDto extends BaseEntityDto{
 
     @IncludeOnAllRequests
     @NotNull(message = "The person id of the phone number can not be null")
-    private String personId;
+    private Long personId;
 
 }

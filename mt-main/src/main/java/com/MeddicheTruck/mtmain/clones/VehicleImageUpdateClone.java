@@ -1,6 +1,5 @@
 package com.MeddicheTruck.mtmain.clones;
 
-
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
