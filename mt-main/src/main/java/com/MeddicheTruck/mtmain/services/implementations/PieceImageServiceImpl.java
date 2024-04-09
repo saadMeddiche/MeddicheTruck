@@ -5,6 +5,7 @@ import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
 import com.MeddicheTruck.mtcore.services.FileStorageSystem;
 import com.MeddicheTruck.mtcore.services.Naming;
+import com.MeddicheTruck.mtmain.clones.PieceImageUpdateClone;
 import com.MeddicheTruck.mtmain.dtos.PieceImageIDto;
 import com.MeddicheTruck.mtmain.dtos.PieceImageODto;
 import com.MeddicheTruck.mtmain.entities.PieceImage;
@@ -16,6 +17,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Predicate;
 
 @Service
 @Primary
@@ -45,9 +48,7 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
         // Validate the piece image IDto
         validateObject(pieceImageIDto);
 
-        // Check if the piece exists in the database before saving the piece image
-        if(!pieceService.existsById(pieceImageIDto.getPieceId()))
-            throw new DoNotExistException(String.format("The piece with id %d does not exist", pieceImageIDto.getPieceId()));
+        throwExceptionIf(ID_PIECE_DO_NOT_EXISTS, pieceImageIDto.getPieceId(), DoNotExistException::new, String.format("The piece with id %d does not exist", pieceImageIDto.getPieceId()));
     }
 
     @Override
@@ -61,9 +62,19 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
         );
     }
 
+    @Override
+    public void updateValidation(PieceImageIDto pieceImageIDto) {
+        validateObjectAgainstAnotherObject(pieceImageIDto , PieceImageUpdateClone.class);
+    }
+
     public CustomPageResponse<PieceImage , PieceImageODto> getPieceImagesByPieceId(Long pieceId , String searchTerm, Pageable pageable) {
+
+        throwExceptionIf(ID_PIECE_DO_NOT_EXISTS, pieceId, DoNotExistException::new, String.format("The piece with id %d does not exist", pieceId));
+
         Page<PieceImage> pieceImagePage =  repository.findPieceImagesByPieceId(pieceId ,searchTerm, pageable);
         return new CustomPageResponse<>(pieceImagePage , PieceImageODto.class);
     }
+
+    Predicate<Long> ID_PIECE_DO_NOT_EXISTS = id -> !pieceService.existsById(id);
 
 }

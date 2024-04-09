@@ -14,21 +14,20 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @AdaptedDto
-public class PieceImageIDto extends BaseEntityDto {
+public class VehicleImageIDto extends BaseEntityDto {
 
     @IncludeOnPutRequest
     protected Long id;
 
     @IncludeOnAllRequests
-    @NotNull(message = "The name of the piece image can not be null")
+    @NotNull(message = "The name of the vehicle image can not be null")
     protected String name;
 
-    @IncludeOnAllRequests
-    @NotNull(message = "The photo path of the piece can not be null")
-    private Long pieceId;
+    @IncludeOnPostRequest
+    @NotNull(message = "The photo of the vehicle can not be null")
+    private Long vehicleId;
 
     @IncludeOnPostRequest
-    @NotNull(message = "The photo of the piece can not be null")
+    @NotNull(message = "The photo of the vehicle can not be null")
     protected byte[] photoInBase64;
-
 }

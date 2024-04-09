@@ -108,6 +108,10 @@ public class ExceptionHandlerFactory {
             return new ResponseEntity<>(List.of("The engine type of the vehicle is invalid") , HttpStatus.BAD_REQUEST);
         }
 
+        if(exception.getMessage().contains("Required request body is missing")){
+            return new ResponseEntity<>(List.of("The request body is missing") , HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(List.of("Development Purpose #1 , This error Not handled Yet") , HttpStatus.BAD_REQUEST);
     }
 

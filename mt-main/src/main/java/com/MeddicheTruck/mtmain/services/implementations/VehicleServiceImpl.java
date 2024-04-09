@@ -6,9 +6,11 @@ import com.MeddicheTruck.mtmain.dtos.VehicleDto;
 import com.MeddicheTruck.mtmain.entities.Vehicle;
 import com.MeddicheTruck.mtmain.repositories.VehicleRepository;
 import com.MeddicheTruck.mtmain.services.VehicleService;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
+@Primary
 public class VehicleServiceImpl extends BaseService<Vehicle , VehicleDto , VehicleDto , VehicleRepository > implements VehicleService {
 
     @Override
