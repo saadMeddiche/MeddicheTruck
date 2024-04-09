@@ -18,10 +18,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Vehicle extends BaseEntity {
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private VehicleType type;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private EngineType engineType;
 
     private String model;

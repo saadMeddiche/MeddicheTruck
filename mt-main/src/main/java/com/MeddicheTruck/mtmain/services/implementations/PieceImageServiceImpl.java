@@ -41,12 +41,17 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
     }
 
     @Override
-    public void beforeSave(PieceImage pieceImage , PieceImageIDto pieceImageIDto) {
+    public void saveValidation(PieceImageIDto pieceImageIDto) {
+        // Validate the piece image IDto
+        validateObject(pieceImageIDto);
 
         // Check if the piece exists in the database before saving the piece image
         if(!pieceService.existsById(pieceImageIDto.getPieceId()))
             throw new DoNotExistException(String.format("The piece with id %d does not exist", pieceImageIDto.getPieceId()));
+    }
 
+    @Override
+    public void beforeSave(PieceImage pieceImage , PieceImageIDto pieceImageIDto) {
         // Store the piece image , and set the photo path of the piece image to the path of the stored image
         pieceImage.setPhotoPath(
                 fileStorageSystem.store(
@@ -54,10 +59,8 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
                          naming.uniquifyWord(pieceImageIDto.getName()),
                         "pieces")
         );
-
     }
 
-    @Override
     public CustomPageResponse<PieceImage , PieceImageODto> getPieceImagesByPieceId(Long pieceId , String searchTerm, Pageable pageable) {
         Page<PieceImage> pieceImagePage =  repository.findPieceImagesByPieceId(pieceId ,searchTerm, pageable);
         return new CustomPageResponse<>(pieceImagePage , PieceImageODto.class);

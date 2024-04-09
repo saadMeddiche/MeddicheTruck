@@ -45,7 +45,7 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
     }
 
     @PutMapping()
-    public ResponseEntity<?> update(@Valid @RequestBody @FilterDtoFields I_DTO dto) {
+    public ResponseEntity<?> update(@RequestBody @FilterDtoFields I_DTO dto) {
 
         if(!service.existsById(dto.getId())) return ResponseEntity.notFound().build();
 

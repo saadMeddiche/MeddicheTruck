@@ -20,7 +20,6 @@ public class EnumValueValidator implements ConstraintValidator<EnumValue, Enum<?
     @Override
     public boolean isValid(Enum<?> value, ConstraintValidatorContext context) {
 
-
         if (value == null) return false;
 
         return Arrays.stream(enumClass.getEnumConstants())

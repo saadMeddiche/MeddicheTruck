@@ -20,22 +20,22 @@ import lombok.*;
 public class VehicleDto extends BaseEntityDto {
 
     @IncludeOnPutRequest
-    protected Long id;
+    public Long id;
 
     @EnumValue(enumClass = VehicleType.class , message = "The type of the vehicle is invalid")
     @IncludeOnAllRequests
-    private VehicleType type;
+    public VehicleType type;
 
 
     @EnumValue(enumClass = EngineType.class ,message = "The engine type of the vehicle is invalid")
     @IncludeOnAllRequests
-    private EngineType engineType;
+    public EngineType engineType;
 
     @IncludeOnAllRequests
     @NotNull(message = "The model of the vehicle can not be null")
-    private String model;
+    public String model;
 
     @IncludeOnAllRequests
     @NotNull(message = "The plate of the vehicle can not be null")
-    private String plate;
+    public String plate;
 }

@@ -9,10 +9,10 @@ import java.util.function.Predicate;
 
 public class BaseValidation {
 
-    public <O ,AO> void validateObjectAgainstAnotherObject(O object, AO anotherObject) {
+    public <O ,AO> void validateObjectAgainstAnotherObject(O object, Class<AO> anotherObject) {
         ModelMapper modelMapper = new ModelMapper();
 
-        AO objectToValidate = modelMapper.map(object, (Class<AO>) anotherObject.getClass());
+        AO objectToValidate = modelMapper.map(object, anotherObject);
 
         validateObject(objectToValidate);
     }
