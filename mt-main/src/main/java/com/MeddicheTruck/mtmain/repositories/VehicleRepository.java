@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface VehicleRepository extends BaseRepository<Vehicle> {
 
     @Query("SELECT v FROM Vehicle v WHERE" +
+            " v.id = :id OR" +
             " v.model LIKE %:searchTerm% OR" +
             " v.plate LIKE %:searchTerm% OR" +
             " CAST(v.type AS string) LIKE %:searchTerm% OR" +

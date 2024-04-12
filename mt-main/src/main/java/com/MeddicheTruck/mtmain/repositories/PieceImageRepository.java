@@ -10,7 +10,9 @@ import org.springframework.data.repository.query.Param;
 public interface PieceImageRepository extends BaseRepository<PieceImage> {
 
     @Override
-    @Query("SELECT p FROM PieceImage p WHERE p.name LIKE %:searchTerm%")
+    @Query("SELECT p FROM PieceImage p WHERE" +
+            " p.id = :id OR" +
+            " p.name LIKE %:searchTerm%")
     Page<PieceImage> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
 
     @Query("SELECT p FROM PieceImage p WHERE p.piece.id = :pieceId AND p.name LIKE %:searchTerm%")
