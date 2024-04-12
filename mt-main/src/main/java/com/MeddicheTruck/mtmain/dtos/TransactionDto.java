@@ -32,7 +32,7 @@ public class TransactionDto extends BaseEntityDto {
 
     @IncludeOnAllRequests
     @NotNull(message = "Description is required")
-    private String Description;
+    private String description;
 
     @IncludeOnAllRequests
     @NotNull(message = "Transaction Time is required")
