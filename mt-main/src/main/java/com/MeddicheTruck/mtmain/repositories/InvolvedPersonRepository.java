@@ -4,6 +4,7 @@ import com.MeddicheTruck.mtcore.base.BaseRepository;
 import com.MeddicheTruck.mtmain.entities.InvolvedPerson;
 import com.MeddicheTruck.mtmain.entities.Person;
 import com.MeddicheTruck.mtmain.entities.Transaction;
+import com.MeddicheTruck.mtmain.enums.PersonRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,4 +28,6 @@ public interface InvolvedPersonRepository extends BaseRepository<InvolvedPerson>
 
     @Query("SELECT ip.person  FROM InvolvedPerson ip WHERE ip.transaction.id = :id")
     Page<Person> findPersonsByTransactionId(Long id , Pageable pageable);
+
+    Boolean existsByPersonIdAndTransactionIdAndPersonRole(Long person_id, Long transaction_id, PersonRole personRole);
 }

@@ -3,12 +3,14 @@ package com.MeddicheTruck.mtmain.services.implementations;
 import com.MeddicheTruck.mtcore.base.BaseService;
 import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
+import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.ValidationException;
 import com.MeddicheTruck.mtmain.dtos.InvolvedPersonDto;
 import com.MeddicheTruck.mtmain.dtos.PersonDto;
 import com.MeddicheTruck.mtmain.dtos.TransactionDto;
 import com.MeddicheTruck.mtmain.entities.InvolvedPerson;
 import com.MeddicheTruck.mtmain.entities.Person;
 import com.MeddicheTruck.mtmain.entities.Transaction;
+import com.MeddicheTruck.mtmain.enums.PersonRole;
 import com.MeddicheTruck.mtmain.repositories.InvolvedPersonRepository;
 import com.MeddicheTruck.mtmain.services.InvolvedPersonService;
 import com.MeddicheTruck.mtmain.services.PersonService;
@@ -36,9 +38,23 @@ public class InvolvedPersonImpl extends BaseService<InvolvedPerson, InvolvedPers
 
     @Override
     public String recordName() {
-        return "involved person";
+        return "involvement";
     }
 
+
+    @Override
+    public void globalValidation(InvolvedPersonDto involvedPersonDto){
+        validateObject(involvedPersonDto);
+
+        // Check if the transaction and the person exist
+        throwExceptionIf(transactionService::doesNotExistById , involvedPersonDto.getTransactionId() , DoNotExistException::new , String.format("The transaction with id %d does not exist" , involvedPersonDto.getTransactionId()));
+        throwExceptionIf(personService::doesNotExistById , involvedPersonDto.getPersonId() , DoNotExistException::new , String.format("The person with id %d does not exist" , involvedPersonDto.getPersonId()));
+
+        // Check if the person is already involved in the transaction
+        if(repository.existsByPersonIdAndTransactionIdAndPersonRole(involvedPersonDto.getPersonId() , involvedPersonDto.getTransactionId() , PersonRole.valueOf(involvedPersonDto.getPersonRole()))){
+            throw new ValidationException(String.format("The person with id %d is already involved in the transaction with id %d as a %s" , involvedPersonDto.getPersonId() , involvedPersonDto.getTransactionId() , involvedPersonDto.getPersonRole()));
+        }
+    }
 
     @Override
     public CustomPageResponse<Transaction, TransactionDto> getTransactionsByPersonId(Long id , Pageable pageable){
