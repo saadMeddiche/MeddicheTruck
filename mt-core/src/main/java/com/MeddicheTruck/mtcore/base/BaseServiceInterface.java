@@ -26,5 +26,7 @@ public interface BaseServiceInterface<E extends BaseEntity , I_DTO extends BaseE
 
     Boolean existsById(Long id);
 
+    public Boolean doesNotExistById(Long id);
+
     CustomPageResponse<E,O_DTO> dynamicSearch(String searchTerm , Pageable pageable);
 }

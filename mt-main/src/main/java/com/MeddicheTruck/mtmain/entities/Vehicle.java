@@ -32,4 +32,8 @@ public class Vehicle extends BaseEntity {
     @JsonIgnoreProperties("vehicle")
     private List<VehicleImage> images = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "vehicles")
+    @JsonIgnoreProperties({"vehicles" , "involvedPersons"})
+    private List<Transaction> transactions = new ArrayList<>();
+
 }

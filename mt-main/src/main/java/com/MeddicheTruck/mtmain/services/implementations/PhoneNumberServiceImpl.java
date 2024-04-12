@@ -35,7 +35,7 @@ public class PhoneNumberServiceImpl extends BaseService<PhoneNumber, PhoneNumber
     @Override
     public void globalValidation(PhoneNumberDto phoneNumberDto) {
 
-        throwExceptionIf(ID_PERSON_NOT_FOUND , phoneNumberDto.getPersonId() , DoNotExistException::new , String.format("The person with id %d does not exist" , phoneNumberDto.getPersonId()));
+        throwExceptionIf(personService::doesNotExistById , phoneNumberDto.getPersonId() , DoNotExistException::new , String.format("The person with id %d does not exist" , phoneNumberDto.getPersonId()));
 
         validateObject(phoneNumberDto);
     }
@@ -58,12 +58,11 @@ public class PhoneNumberServiceImpl extends BaseService<PhoneNumber, PhoneNumber
     @Override
     public CustomPageResponse<PhoneNumber, PhoneNumberDto> getPhoneNumbersByPersonId(Long personId, String searchTerm, Pageable pageable) {
 
-        throwExceptionIf(ID_PERSON_NOT_FOUND , personId , DoNotExistException::new , String.format("The person with id %d does not exist" , personId));
+        throwExceptionIf(personService::doesNotExistById , personId , DoNotExistException::new , String.format("The person with id %d does not exist" , personId));
 
         Page<PhoneNumber> phoneNumbersPage = repository.findPhoneNumbersByPersonId(personId , searchTerm , pageable);
 
         return new CustomPageResponse<>(phoneNumbersPage , PhoneNumberDto.class);
     }
 
-    Predicate<Long> ID_PERSON_NOT_FOUND = id -> !personService.existsById(id);
 }

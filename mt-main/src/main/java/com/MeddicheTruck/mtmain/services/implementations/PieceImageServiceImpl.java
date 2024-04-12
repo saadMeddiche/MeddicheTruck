@@ -48,7 +48,7 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
         // Validate the piece image IDto
         validateObject(pieceImageIDto);
 
-        throwExceptionIf(ID_PIECE_DO_NOT_EXISTS, pieceImageIDto.getPieceId(), DoNotExistException::new, String.format("The piece with id %d does not exist", pieceImageIDto.getPieceId()));
+        throwExceptionIf(pieceService::doesNotExistById, pieceImageIDto.getPieceId(), DoNotExistException::new, String.format("The piece with id %d does not exist", pieceImageIDto.getPieceId()));
     }
 
     @Override
@@ -69,12 +69,10 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
 
     public CustomPageResponse<PieceImage , PieceImageODto> getPieceImagesByPieceId(Long pieceId , String searchTerm, Pageable pageable) {
 
-        throwExceptionIf(ID_PIECE_DO_NOT_EXISTS, pieceId, DoNotExistException::new, String.format("The piece with id %d does not exist", pieceId));
+        throwExceptionIf(pieceService::doesNotExistById, pieceId, DoNotExistException::new, String.format("The piece with id %d does not exist", pieceId));
 
         Page<PieceImage> pieceImagePage =  repository.findPieceImagesByPieceId(pieceId ,searchTerm, pageable);
         return new CustomPageResponse<>(pieceImagePage , PieceImageODto.class);
     }
-
-    Predicate<Long> ID_PIECE_DO_NOT_EXISTS = id -> !pieceService.existsById(id);
 
 }

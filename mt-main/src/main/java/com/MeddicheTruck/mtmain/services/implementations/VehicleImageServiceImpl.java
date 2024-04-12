@@ -50,7 +50,7 @@ public class VehicleImageServiceImpl extends BaseService<VehicleImage, VehicleIm
     @Override
     public void saveValidation(VehicleImageIDto vehicleImageIDto) {
         validateObject(vehicleImageIDto);
-        throwExceptionIf(ID_VEHICLE_DO_NOT_EXISTS, vehicleImageIDto.getVehicleId(), DoNotExistException::new, String.format("The vehicle with id %d does not exist", vehicleImageIDto.getVehicleId()));
+        throwExceptionIf(vehicleService::doesNotExistById, vehicleImageIDto.getVehicleId(), DoNotExistException::new, String.format("The vehicle with id %d does not exist", vehicleImageIDto.getVehicleId()));
     }
 
     @Override
@@ -72,12 +72,11 @@ public class VehicleImageServiceImpl extends BaseService<VehicleImage, VehicleIm
     @Override
     public CustomPageResponse<VehicleImage, VehicleImageODto> getVehicleImagesByVehicleId(Long vehicleId, String searchTerm, Pageable pageable) {
 
-        throwExceptionIf(ID_VEHICLE_DO_NOT_EXISTS, vehicleId, DoNotExistException::new, String.format("The vehicle with id %d does not exist", vehicleId));
+        throwExceptionIf(vehicleService::doesNotExistById, vehicleId, DoNotExistException::new, String.format("The vehicle with id %d does not exist", vehicleId));
 
         Page<VehicleImage> vehicleImages = repository.findVehicleImageByVehicleId(vehicleId, searchTerm, pageable);
 
         return new CustomPageResponse<>(vehicleImages, VehicleImageODto.class);
     }
 
-    Predicate<Long> ID_VEHICLE_DO_NOT_EXISTS = id -> !vehicleService.existsById(id);
 }

@@ -121,6 +121,10 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
         return repository.existsById(id);
     }
 
+    public Boolean doesNotExistById(Long id) {
+        return !existsById(id);
+    }
+
     public List<O_DTO> findAll(){
         List<E> entities = repository.findAll();
         return entities.stream().map(entity -> mapper.map(entity, o_dtoClass)).toList();

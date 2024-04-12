@@ -19,11 +19,11 @@ import lombok.*;
 public class InvolvedPerson extends BaseEntity {
 
     @ManyToOne
-    @JsonIgnoreProperties({"involvedPersons" , "pieces"})
+    @JsonIgnoreProperties({"involvedPersons" , "pieces", "vehicles"})
     private Transaction transaction;
 
     @ManyToOne
-    @JsonIgnoreProperties("involvedPersons")
+    @JsonIgnoreProperties({"involvements" , "phoneNumbers"})
     private Person person;
 
     private PersonRole personRole;

@@ -19,7 +19,7 @@ public class Transaction extends BaseEntity {
 
     private String name;
 
-    private String Description;
+    private String description;
 
     private LocalDateTime timeTransaction;
 
@@ -34,6 +34,16 @@ public class Transaction extends BaseEntity {
     )
     @JsonIgnoreProperties("transactions")
     private List<Piece> pieces;
+
+    @ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "transaction_vehicle",
+            joinColumns = @JoinColumn(name = "transaction_id"),
+            inverseJoinColumns = @JoinColumn(name = "vehicle_id")
+    )
+    @JsonIgnoreProperties("transactions")
+    private List<Vehicle> vehicles;
+
 
     @OneToMany(cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
     @JsonIgnoreProperties("transaction")
