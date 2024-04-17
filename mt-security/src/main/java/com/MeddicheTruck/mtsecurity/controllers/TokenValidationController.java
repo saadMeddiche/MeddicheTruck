@@ -21,7 +21,7 @@ public class TokenValidationController {
 
     private  final UserService userService;
 
-    @GetMapping("/validate")
+    @PostMapping("/validate")
     public ResponseEntity<?> validateToken(@Valid @RequestBody TokenValidationRequest request) {
 
         // Load user details by username
