@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface VehicleImageRepository extends BaseRepository<VehicleImage> {
     @Override
     @Query("SELECT v FROM VehicleImage v WHERE" +
-            " v.id = :searchTerm OR" +
+            " CAST(v.id AS string ) = :searchTerm OR" +
             " v.name LIKE %:searchTerm%")
     Page<VehicleImage> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
 

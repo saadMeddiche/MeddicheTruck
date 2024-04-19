@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface PieceRepository extends BaseRepository<Piece> {
     @Override
     @Query("SELECT p FROM Piece p WHERE" +
-            " p.id = :searchTerm OR" +
+            " CAST(p.id AS string ) = :searchTerm OR" +
             " p.name LIKE %:searchTerm%")
     Page<Piece> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
 

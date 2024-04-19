@@ -11,7 +11,7 @@ public interface PieceImageRepository extends BaseRepository<PieceImage> {
 
     @Override
     @Query("SELECT p FROM PieceImage p WHERE" +
-            " p.id = :searchTerm OR" +
+            " CAST(p.id AS string ) = :searchTerm OR" +
             " p.name LIKE %:searchTerm%")
     Page<PieceImage> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
 

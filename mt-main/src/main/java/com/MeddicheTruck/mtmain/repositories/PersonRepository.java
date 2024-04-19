@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonRepository extends BaseRepository<Person> {
     @Query("SELECT p FROM Person p WHERE " +
-            " p.id = :searchTerm OR " +
+            "CAST(p.id AS string ) = :searchTerm OR " +
             "p.firstName LIKE %:searchTerm% OR " +
             "p.middleName LIKE %:searchTerm% OR " +
             "p.lastName LIKE %:searchTerm% OR " +
