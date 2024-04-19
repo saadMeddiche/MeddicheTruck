@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TransactionRepository extends BaseRepository<Transaction> {
     @Query("SELECT t FROM Transaction t WHERE " +
-            "t.id = :id OR " +
+            "t.id = :searchTerm OR " +
             "t.name LIKE %:searchTerm% OR " +
             "t.description LIKE %:searchTerm% OR " +
             "CAST(t.timeTransaction AS string) LIKE %:searchTerm% OR " +

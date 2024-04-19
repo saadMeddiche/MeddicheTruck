@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface PhoneNumberRepository extends BaseRepository<PhoneNumber>{
 
     @Query("SELECT p FROM PhoneNumber p WHERE" +
-            " p.id = :id OR" +
+            " p.id = :searchTerm OR" +
             " p.number LIKE %:searchTerm% OR" +
             " CAST(p.type AS string ) LIKE %:searchTerm% OR" +
             " p.person.firstName LIKE %:searchTerm% OR" +

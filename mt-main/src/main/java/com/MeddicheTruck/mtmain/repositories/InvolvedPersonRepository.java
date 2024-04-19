@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface InvolvedPersonRepository extends BaseRepository<InvolvedPerson> {
 
     @Query("SELECT ip FROM InvolvedPerson ip WHERE" +
-            " ip.id = :id OR" +
+            " ip.id = :searchTerm OR" +
             " ip.person.firstName LIKE %:searchTerm% OR" +
             " ip.person.lastName LIKE %:searchTerm% OR" +
             " ip.person.middleName LIKE %:searchTerm% OR" +
