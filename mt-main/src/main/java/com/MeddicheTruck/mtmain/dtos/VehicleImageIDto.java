@@ -24,7 +24,7 @@ public class VehicleImageIDto extends BaseEntityDto {
     protected String name;
 
     @IncludeOnPostRequest
-    @NotNull(message = "The photo of the vehicle can not be null")
+    @NotNull(message = "The id of the vehicle can not be null")
     private Long vehicleId;
 
     @IncludeOnPostRequest
