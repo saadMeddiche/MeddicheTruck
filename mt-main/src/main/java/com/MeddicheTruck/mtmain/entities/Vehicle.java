@@ -28,7 +28,7 @@ public class Vehicle extends BaseEntity {
 
     private String plate;
 
-    @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JsonIgnoreProperties("vehicle")
     private List<VehicleImage> images = new ArrayList<>();
 

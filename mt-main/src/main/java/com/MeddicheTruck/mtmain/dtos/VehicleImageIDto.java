@@ -5,6 +5,7 @@ import com.MeddicheTruck.mtcore.annotations.IncludeOnAllRequests;
 import com.MeddicheTruck.mtcore.annotations.IncludeOnPostRequest;
 import com.MeddicheTruck.mtcore.annotations.IncludeOnPutRequest;
 import com.MeddicheTruck.mtcore.models.BaseEntityDto;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class VehicleImageIDto extends BaseEntityDto {
 
     @IncludeOnAllRequests
     @NotNull(message = "The name of the vehicle image can not be null")
+    @NotBlank(message = "The name of the vehicle image can not be blank")
     protected String name;
 
     @IncludeOnPostRequest
