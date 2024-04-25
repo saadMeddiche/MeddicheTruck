@@ -19,7 +19,7 @@ public class VehicleImageController extends BaseController<VehicleImage, Vehicle
         super(vehicleImageService);
     }
 
-    @GetMapping("/vehicle/{vehicleId}")
+    @GetMapping("/of/{vehicleId}")
     public ResponseEntity<?> getVehicleImagesByVehicleId(@PathVariable Long vehicleId ,
                                                          @RequestParam(defaultValue = "") String searchTerm ,
                                                          @RequestParam(defaultValue = "0") int page,

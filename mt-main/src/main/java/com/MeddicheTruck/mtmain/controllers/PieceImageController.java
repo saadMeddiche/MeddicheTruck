@@ -19,7 +19,7 @@ public class PieceImageController extends BaseController<PieceImage, PieceImageI
         super(pieceImageService);
     }
 
-    @GetMapping("/piece/{pieceId}")
+    @GetMapping("/of/{pieceId}")
     public ResponseEntity<?> getPieceImagesByPieceId(@PathVariable Long pieceId ,
                                                      @RequestParam(defaultValue = "") String searchTerm ,
                                                      @RequestParam(defaultValue = "0") int page,

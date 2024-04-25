@@ -7,6 +7,7 @@ import com.MeddicheTruck.mtcore.annotations.IncludeOnPutRequest;
 import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import com.MeddicheTruck.mtmain.enums.EngineType;
 import com.MeddicheTruck.mtmain.enums.VehicleType;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -35,9 +36,11 @@ public class VehicleDto extends BaseEntityDto {
 
     @IncludeOnAllRequests
     @NotNull(message = "The model of the vehicle can not be null")
+    @NotBlank(message = "The model of the vehicle can not be blank")
     public String model;
 
     @IncludeOnAllRequests
     @NotNull(message = "The plate of the vehicle can not be null")
+    @NotBlank(message = "The plate of the vehicle can not be blank")
     public String plate;
 }
