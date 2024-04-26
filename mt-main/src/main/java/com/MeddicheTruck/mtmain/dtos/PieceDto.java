@@ -23,4 +23,8 @@ public class PieceDto  extends BaseEntityDto {
     @NotBlank(message = "The name of the piece can not be blank")
     @IncludeOnAllRequests
     private String name;
+
+    @IncludeOnAllRequests
+    @NotNull(message = "The stock of the piece can not be null")
+    private Boolean inStock;
 }

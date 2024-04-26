@@ -23,6 +23,10 @@ public class VehicleDto extends BaseEntityDto {
     @IncludeOnPutRequest
     public Long id;
 
+    @IncludeOnAllRequests
+    @NotNull(message = "The stock of the piece can not be null")
+    private Boolean inStock;
+
     @NotNull(message = "The type of the vehicle can not be null")
     @EnumValue(enumClass = VehicleType.class , message = "The type of the vehicle must be CAR, TRUCK or MOTORCYCLE")
     @IncludeOnAllRequests

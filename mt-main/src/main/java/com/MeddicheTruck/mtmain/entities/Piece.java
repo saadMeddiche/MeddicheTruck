@@ -20,7 +20,7 @@ public class Piece extends BaseEntity {
 
     private String name;
 
-    private Boolean inStock;
+    private Boolean inStock = true;
 
     @OneToMany(mappedBy =  "piece" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonIgnoreProperties("piece")
