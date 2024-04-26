@@ -36,7 +36,7 @@ public class PersonDto extends BaseEntityDto {
 
     @IncludeOnAllRequests
     @NotNull(message = "The birth date of the person can not be null")
-    @Past(message = "The birth date of the person can not be in the future")
+    @Past(message = "The birth date of the person can not be in the future or today")
     private LocalDate birthDate;
 
     @IncludeOnAllRequests

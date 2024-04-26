@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 public interface PersonRepository extends BaseRepository<Person> {
     @Query("SELECT p FROM Person p WHERE " +
             "CAST(p.id AS string ) = :searchTerm OR " +
+            "CONCAT(p.firstName, ' ', p.middleName, ' ', p.lastName) LIKE %:searchTerm% OR " +
+            "CONCAT(p.firstName, ' ', p.lastName) LIKE %:searchTerm% OR " +
             "p.firstName LIKE %:searchTerm% OR " +
             "p.middleName LIKE %:searchTerm% OR " +
             "p.lastName LIKE %:searchTerm% OR " +
