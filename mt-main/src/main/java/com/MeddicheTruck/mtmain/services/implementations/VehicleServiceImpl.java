@@ -27,4 +27,9 @@ public class VehicleServiceImpl extends BaseService<Vehicle , VehicleDto , Vehic
         validateObjectAgainstAnotherObject(vehicleDto , VehicleUpdateClone.class);
     }
 
+    @Override
+    public Boolean isInStock(Long id) {
+        return repository.isInStock(id);
+    }
+
 }

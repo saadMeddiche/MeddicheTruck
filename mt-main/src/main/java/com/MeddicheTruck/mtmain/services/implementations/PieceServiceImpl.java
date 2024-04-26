@@ -21,4 +21,9 @@ public class PieceServiceImpl extends BaseService<Piece , PieceDto,PieceDto, Pie
     public PieceServiceImpl(PieceRepository pieceRepository) {
         super(pieceRepository , Piece.class , PieceDto.class , PieceDto.class);
     }
+
+    @Override
+    public Boolean isInStock(Long id) {
+        return repository.isInStock(id);
+    }
 }

@@ -22,7 +22,7 @@ public class PhoneNumber extends BaseEntity {
     private String number;
 
     @ManyToOne
-    @JsonIgnoreProperties({"phoneNumbers" , "involvedPersons"})
+    @JsonIgnoreProperties({"phoneNumbers"})
     private Person person;
 
     @Override

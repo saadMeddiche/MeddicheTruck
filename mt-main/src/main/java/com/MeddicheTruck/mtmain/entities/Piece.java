@@ -20,13 +20,15 @@ public class Piece extends BaseEntity {
 
     private String name;
 
+    private Boolean inStock;
+
     @OneToMany(mappedBy =  "piece" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JsonIgnoreProperties("piece")
     private List<PieceImage> images = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "pieces")
-    @JsonIgnoreProperties({"pieces" , "involvedPersons"})
-    private List<Transaction> transactions = new ArrayList<>();
+    @OneToMany(mappedBy = "piece" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("piece")
+    private List<PieceTransaction> transactions = new ArrayList<>();
 
     @Override
     public String toString() {

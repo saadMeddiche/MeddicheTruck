@@ -18,4 +18,7 @@ public interface PieceRepository extends BaseRepository<Piece> {
             " p.name LIKE %:searchTerm%")
     Page<Piece> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
 
+    @Query("SELECT p.inStock FROM Piece p WHERE p.id = :id")
+    Boolean isInStock(@Param("id") Long id);
+
 }

@@ -1,51 +1,34 @@
 package com.MeddicheTruck.mtmain.entities;
 
 import com.MeddicheTruck.mtcore.models.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.MeddicheTruck.mtmain.enums.TransactionType;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-@Entity
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@MappedSuperclass
 public class Transaction extends BaseEntity {
 
-    private String name;
+    private LocalDate date;
+
+    private LocalTime time;
 
     private String description;
-
-    private LocalDateTime timeTransaction;
 
     @Enumerated(EnumType.STRING)
     private TransactionType type;
 
-    @ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "transaction_piece",
-            joinColumns = @JoinColumn(name = "transaction_id"),
-            inverseJoinColumns = @JoinColumn(name = "piece_id")
-    )
-    @JsonIgnoreProperties("transactions")
-    private List<Piece> pieces;
+    @ManyToOne
+    private Person person;
 
-    @ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "transaction_vehicle",
-            joinColumns = @JoinColumn(name = "transaction_id"),
-            inverseJoinColumns = @JoinColumn(name = "vehicle_id")
-    )
-    @JsonIgnoreProperties("transactions")
-    private List<Vehicle> vehicles;
-
-
-    @OneToMany(cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("transaction")
-    private List<InvolvedPerson> involvedPersons;
+    private Double price;
 }

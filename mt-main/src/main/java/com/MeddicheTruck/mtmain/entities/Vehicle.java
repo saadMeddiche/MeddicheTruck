@@ -18,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Vehicle extends BaseEntity {
 
+    private Boolean inStock;
+
     @Enumerated(value = EnumType.STRING)
     private VehicleType type;
 
@@ -32,8 +34,8 @@ public class Vehicle extends BaseEntity {
     @JsonIgnoreProperties("vehicle")
     private List<VehicleImage> images = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "vehicles")
-    @JsonIgnoreProperties({"vehicles" , "involvedPersons"})
-    private List<Transaction> transactions = new ArrayList<>();
+    @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("vehicle")
+    private List<VehicleTransaction> transactions = new ArrayList<>();
 
 }

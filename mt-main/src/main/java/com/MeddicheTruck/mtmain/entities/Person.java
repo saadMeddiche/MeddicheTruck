@@ -36,8 +36,10 @@ public class Person extends BaseEntity {
     private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("person")
-    private List<InvolvedPerson> involvements = new ArrayList<>();
+    private List<PieceTransaction> pieceTransactionsAsBuyer;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    private List<VehicleTransaction> vehicleTransactionsAsSeller;
 
     @Override
     public String toString() {

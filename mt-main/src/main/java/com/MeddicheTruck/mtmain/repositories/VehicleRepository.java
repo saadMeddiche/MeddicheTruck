@@ -20,4 +20,7 @@ public interface VehicleRepository extends BaseRepository<Vehicle> {
             " CAST(v.type AS string) LIKE %:searchTerm% OR" +
             " CAST(v.engineType AS string) LIKE %:searchTerm%")
     Page<Vehicle> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
+
+    @Query("SELECT v.inStock FROM Vehicle v WHERE v.id = :id")
+    Boolean isInStock(@Param("id") Long id);
 }
