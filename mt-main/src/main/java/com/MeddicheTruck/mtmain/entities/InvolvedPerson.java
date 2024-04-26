@@ -26,6 +26,7 @@ public class InvolvedPerson extends BaseEntity {
     @JsonIgnoreProperties({"involvements" , "phoneNumbers"})
     private Person person;
 
+    @Enumerated(EnumType.STRING)
     private PersonRole personRole;
 
     @Override
