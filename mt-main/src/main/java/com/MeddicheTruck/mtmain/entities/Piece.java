@@ -22,11 +22,11 @@ public class Piece extends BaseEntity {
 
     private Boolean inStock = true;
 
-    @OneToMany(mappedBy =  "piece" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy =  "piece" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JsonIgnoreProperties("piece")
     private List<PieceImage> images = new ArrayList<>();
 
-    @OneToMany(mappedBy = "piece" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "piece" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JsonIgnoreProperties("piece")
     private List<PieceTransaction> transactions = new ArrayList<>();
 
