@@ -2,6 +2,7 @@ package com.MeddicheTruck.mtmain.services.implementations;
 
 import com.MeddicheTruck.mtcore.base.BaseService;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
+import com.MeddicheTruck.mtmain.clones.PieceTransactionUpdateClone;
 import com.MeddicheTruck.mtmain.dtos.PieceTransactionDto;
 import com.MeddicheTruck.mtmain.entities.PieceTransaction;
 import com.MeddicheTruck.mtmain.repositories.PieceTransactionRepository;
@@ -37,6 +38,11 @@ public class PieceTransactionServiceImpl extends BaseService<PieceTransaction , 
         throwExceptionIf(pieceService::doesNotExistById , pieceTransactionDto.getPieceId() , DoNotExistException::new , String.format("The piece with id %d does not exist" , pieceTransactionDto.getPieceId()));
         throwExceptionIf(personService::doesNotExistById , pieceTransactionDto.getPersonId() , DoNotExistException::new , String.format("The person with id %d does not exist" , pieceTransactionDto.getPersonId()));
         validateObject(pieceTransactionDto);
+    }
+
+    @Override
+    public void updateValidation(PieceTransactionDto pieceTransactionDto) {
+        validateObjectAgainstAnotherObject(pieceTransactionDto , PieceTransactionUpdateClone.class);
     }
 
 

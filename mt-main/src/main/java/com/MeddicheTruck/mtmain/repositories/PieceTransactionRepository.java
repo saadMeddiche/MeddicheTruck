@@ -16,6 +16,8 @@ public interface PieceTransactionRepository extends BaseRepository<PieceTransact
             "CAST(pt.id AS string ) = :searchTerm OR " +
             "CAST(pt.date AS string) LIKE %:searchTerm% OR "+
             "CAST(pt.time AS string) LIKE %:searchTerm% OR "+
+            "CAST(pt.type AS string) LIKE %:searchTerm% OR "+
+            "pt.description LIKE %:searchTerm% OR "+
             "pt.piece.name LIKE %:searchTerm% OR "+
             "pt.person.fullName LIKE %:searchTerm% OR "+
             "CAST(pt.price AS string) LIKE %:searchTerm% ")
