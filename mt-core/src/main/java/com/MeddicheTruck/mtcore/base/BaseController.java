@@ -3,7 +3,6 @@ package com.MeddicheTruck.mtcore.base;
 import com.MeddicheTruck.mtcore.annotations.FilterDtoFields;
 import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.MeddicheTruck.mtcore.models.BaseEntityDto;
-import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +33,11 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
         O_DTO dto = service.findById(id);
 
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
