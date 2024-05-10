@@ -29,11 +29,11 @@ public class Person extends BaseEntity {
 
     private LocalDate birthDate;
 
-    private String description;
+    private String mainPhoneNumber;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL , fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("person")
-    private List<PhoneNumber> phoneNumbers = new ArrayList<>();
+    private String secondaryPhoneNumber;
+
+    private String description;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     private List<PieceTransaction> pieceTransactionsAsBuyer;
@@ -48,7 +48,6 @@ public class Person extends BaseEntity {
                 ", name=" + firstName + "|" + middleName + "|" + lastName +
                 ", birthDate=" + birthDate +
                 ", description='" + description +
-                ", phoneNumbers=" + phoneNumbers +
                 '}';
     }
 }

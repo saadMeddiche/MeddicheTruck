@@ -40,6 +40,12 @@ public class PersonDto extends BaseEntityDto {
     private LocalDate birthDate;
 
     @IncludeOnAllRequests
+    private String mainPhoneNumber;
+
+    @IncludeOnAllRequests
+    private String secondaryPhoneNumber;
+
+    @IncludeOnAllRequests
     @NotNull(message = "The description of the person can not be null")
     private String description;
 }
