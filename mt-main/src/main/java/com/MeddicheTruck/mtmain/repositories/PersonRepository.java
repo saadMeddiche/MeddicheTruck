@@ -22,4 +22,10 @@ public interface PersonRepository extends BaseRepository<Person> {
             "CAST(p.birthDate AS string ) LIKE %:searchTerm% OR " +
             "p.description LIKE %:searchTerm%")
     Page<Person> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
+
+    // For saving a new person
+    Boolean existsPersonByMainPhoneNumber(String mainPhoneNumber);
+
+    // For updating a person
+    Boolean existsPersonByMainPhoneNumberAndIdNot(String mainPhoneNumber, Long id);
 }
