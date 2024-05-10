@@ -1,8 +1,10 @@
 package com.MeddicheTruck.mtsecurity.services.implementations;
 
 
+import com.MeddicheTruck.mtsecurity.dtos.UserUpdateDto;
 import com.MeddicheTruck.mtsecurity.entities.User;
 import com.MeddicheTruck.mtsecurity.repositories.UserRepository;
+import com.MeddicheTruck.mtsecurity.services.JwtService;
 import com.MeddicheTruck.mtsecurity.services.UserService;
 import com.MeddicheTruck.mtsecurity.services.validations.UserValidationService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserValidationService validation;
 
+    private final JwtService jwtService;
+
 
     public User createUser(User user){
 
@@ -27,6 +31,15 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
     }
+
+    public User updateUser(User user){
+        return userRepository.save(user);
+    }
+
+    public void updateProfile(UserUpdateDto userUpdateDto){
+
+    }
+
     @Override
     public User getByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));

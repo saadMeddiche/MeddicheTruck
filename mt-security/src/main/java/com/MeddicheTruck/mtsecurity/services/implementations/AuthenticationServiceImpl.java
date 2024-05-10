@@ -72,6 +72,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         // Retrieve the user details from the database
         User user = userService.getByUsername(request.getUsername());
 
+        // Update the last login date
+        user.setLastLogin(LocalDate.now());
+
+        // Update the user in the database
+        userService.updateUser(user);
+
         // Generate a JWT token for the authenticated user
         String jwt = jwtService.generateToken(user);
 
