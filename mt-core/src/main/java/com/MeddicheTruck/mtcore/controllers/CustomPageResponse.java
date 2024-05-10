@@ -26,4 +26,12 @@ public class CustomPageResponse <E extends BaseEntity , O_DTO> {
         this.pageNumber = page.getNumber();
         this.pageSize = page.getSize();
     }
+
+    public CustomPageResponse(Page<E> page , Class<O_DTO> dtoClass , ModelMapper modelMapper) {
+        this.content = page.getContent().stream().map(entity -> modelMapper.map(entity, dtoClass)).toList();
+        this.totalElements = page.getTotalElements();
+        this.totalPages = page.getTotalPages();
+        this.pageNumber = page.getNumber();
+        this.pageSize = page.getSize();
+    }
 }

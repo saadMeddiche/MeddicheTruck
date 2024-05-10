@@ -24,7 +24,7 @@ public class Person extends BaseEntity {
 
     private String lastName;
 
-    @Formula("CONCAT(first_name, ' ', middle_name, ' ', last_name)")
+    @Formula("CASE WHEN middle_name IS NULL OR middle_name = '' THEN CONCAT(first_name, ' ', last_name) ELSE CONCAT(first_name, ' ', middle_name, ' ', last_name) END")
     private String fullName;
 
     private LocalDate birthDate;

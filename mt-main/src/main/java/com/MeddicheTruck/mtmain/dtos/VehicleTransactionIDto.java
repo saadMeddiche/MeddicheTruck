@@ -20,7 +20,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @AdaptedDto
-public class VehicleTransactionDto extends BaseEntityDto {
+public class VehicleTransactionIDto extends BaseEntityDto {
 
     @IncludeOnPutRequest
     public Long id;

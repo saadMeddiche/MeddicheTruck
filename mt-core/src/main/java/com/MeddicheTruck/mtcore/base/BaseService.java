@@ -132,7 +132,11 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
 
     public CustomPageResponse<E,O_DTO> dynamicSearch(String searchTerm , Pageable pageable){
         Page<E> entities = repository.dynamicSearch(searchTerm, pageable);
-        return new CustomPageResponse<>(entities , o_dtoClass);
+        return new CustomPageResponse<>(entities , o_dtoClass , defineMapperForDynamicSearch());
+    }
+
+    public ModelMapper defineMapperForDynamicSearch(){
+        return new ModelMapper();
     }
 
     public void idNullValidation(Long id){
