@@ -28,6 +28,7 @@ public class Vehicle extends BaseEntity {
 
     private String model;
 
+    @Column(unique = true)
     private String plate;
 
     @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)

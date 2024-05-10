@@ -23,4 +23,8 @@ public interface VehicleRepository extends BaseRepository<Vehicle> {
 
     @Query("SELECT v.inStock FROM Vehicle v WHERE v.id = :id")
     Boolean isInStock(@Param("id") Long id);
+
+    Boolean existsVehicleByPlate(String plate);
+
+    Boolean existsVehicleByPlateAndIdNot(String plate, Long id);
 }
