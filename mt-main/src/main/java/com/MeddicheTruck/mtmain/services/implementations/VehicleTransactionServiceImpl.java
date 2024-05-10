@@ -6,7 +6,6 @@ import com.MeddicheTruck.mtmain.dtos.VehicleTransactionDto;
 import com.MeddicheTruck.mtmain.entities.VehicleTransaction;
 import com.MeddicheTruck.mtmain.repositories.VehicleTransactionRepository;
 import com.MeddicheTruck.mtmain.services.PersonService;
-import com.MeddicheTruck.mtmain.services.PieceService;
 import com.MeddicheTruck.mtmain.services.VehicleService;
 import com.MeddicheTruck.mtmain.services.VehicleTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
