@@ -6,4 +6,6 @@ import com.MeddicheTruck.mtmain.entities.Vehicle;
 
 public interface VehicleService extends BaseServiceInterface<Vehicle, VehicleDto, VehicleDto> {
     Boolean isInStock(Long id);
+
+    Boolean isNotInStock(Long id);
 }

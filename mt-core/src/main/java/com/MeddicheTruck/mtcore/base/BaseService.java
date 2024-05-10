@@ -54,13 +54,16 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
         E entityToSave = mapper.map(entityDto, entityClass);
         beforeSave(entityToSave , entityDto);
         E  savedEntity = repository.save(entityToSave);
+        afterSave(savedEntity , entityDto);
         return mapper.map(savedEntity, o_dtoClass);
     }
 
     public void saveValidation(I_DTO dto){
         globalValidation(dto);
     }
-    public void beforeSave(E entity , I_DTO dto){}
+    public void beforeSave(E entityToSave , I_DTO entityDto){}
+
+    public void afterSave(E savedEntity , I_DTO entityDto){}
 
     public O_DTO update(I_DTO dto){
         updateValidation(dto);

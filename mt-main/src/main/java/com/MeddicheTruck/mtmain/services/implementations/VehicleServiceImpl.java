@@ -43,4 +43,9 @@ public class VehicleServiceImpl extends BaseService<Vehicle , VehicleDto , Vehic
         return repository.isInStock(id);
     }
 
+    @Override
+    public Boolean isNotInStock(Long id) {
+        return !isInStock(id);
+    }
+
 }

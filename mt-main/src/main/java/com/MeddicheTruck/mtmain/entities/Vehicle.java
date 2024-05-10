@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Vehicle extends BaseEntity {
 
-    private Boolean inStock = true;
+    private Boolean inStock;
 
     @Enumerated(value = EnumType.STRING)
     private VehicleType type;
