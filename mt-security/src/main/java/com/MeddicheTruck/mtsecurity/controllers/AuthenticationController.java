@@ -23,13 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-    @PreAuthorize("permitAll")
     @PostMapping("/signUp")
     public ResponseEntity<JwtAuthenticationResponse> signUp(@Valid @RequestBody SignUpRequest request) {
         JwtAuthenticationResponse response = authenticationService.signUp(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PreAuthorize("permitAll")
     @PostMapping("/signIn")
     public ResponseEntity<JwtAuthenticationResponse> signIn(@Valid @RequestBody SignInRequest request) {
         JwtAuthenticationResponse response = authenticationService.signIn(request);
