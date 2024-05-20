@@ -1,6 +1,5 @@
 package com.MeddicheTruck.mtsecurity.configurations;
 
-
 import com.MeddicheTruck.mtsecurity.embeddables.Password;
 import com.MeddicheTruck.mtsecurity.services.implementations.SecurityUserDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +46,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         request -> request
                                 .requestMatchers(
-                                        "authentication",
+                                        "/api/v1/authentication/**",
                                         "images/**"
                                 ).permitAll()
                                 .anyRequest().authenticated()

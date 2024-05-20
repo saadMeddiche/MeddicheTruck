@@ -4,23 +4,15 @@ package com.MeddicheTruck.mtsecurity.services.implementations;
 import com.MeddicheTruck.mtcore.embedabbles.FullName;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.ValidationException;
 import com.MeddicheTruck.mtsecurity.dtos.UserUpdateDto;
-import com.MeddicheTruck.mtsecurity.entities.Role;
 import com.MeddicheTruck.mtsecurity.entities.User;
 import com.MeddicheTruck.mtsecurity.repositories.UserRepository;
-import com.MeddicheTruck.mtsecurity.services.AuthenticationService;
-import com.MeddicheTruck.mtsecurity.services.JwtService;
 import com.MeddicheTruck.mtsecurity.services.UserService;
 import com.MeddicheTruck.mtsecurity.services.validations.UserValidationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Optional;
 
 
@@ -42,7 +34,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(User user){
+    public User userLoggedIn(User user){
+        user.setLastLogin(LocalDate.now());
         return userRepository.save(user);
     }
 

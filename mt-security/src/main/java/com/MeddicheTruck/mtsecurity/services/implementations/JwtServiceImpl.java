@@ -40,6 +40,7 @@ public class JwtServiceImpl implements JwtService {
 
         //Add authorities to the token
         Map<String, Object> claims = new HashMap<>();
+        System.out.println(user.getAuthorities());
         claims.put("authorities", user.getAuthorities());
 
         return generateToken(claims, user);

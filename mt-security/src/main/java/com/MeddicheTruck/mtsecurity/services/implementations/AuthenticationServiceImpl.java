@@ -74,11 +74,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = userService.getByUsername(request.getUsername())
                 .orElseThrow(() -> new ValidationException("User not found"));
 
-        // Update the last login date
-        user.setLastLogin(LocalDate.now());
-
         // Update the user in the database
-        User updatedUser = userService.updateUser(user);
+        User updatedUser = userService.userLoggedIn(user);
 
         // Generate a JWT token for the authenticated user
         String jwt = jwtService.generateToken(updatedUser);
