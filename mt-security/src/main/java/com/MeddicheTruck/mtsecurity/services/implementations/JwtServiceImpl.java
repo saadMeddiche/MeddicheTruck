@@ -15,10 +15,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -40,8 +40,10 @@ public class JwtServiceImpl implements JwtService {
 
         //Add authorities to the token
         Map<String, Object> claims = new HashMap<>();
-        System.out.println(user.getAuthorities());
-        claims.put("authorities", user.getAuthorities());
+
+        List<String> authorities = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+
+        claims.put("authorities", authorities);
 
         return generateToken(claims, user);
     }
