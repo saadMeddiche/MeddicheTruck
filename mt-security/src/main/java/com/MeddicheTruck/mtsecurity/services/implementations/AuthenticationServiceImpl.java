@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,13 +48,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = buildUser(request);
 
         // Create the user in the database
-        userService.createUser(user);
+        User createdUser = userService.createUser(user);
 
         // Create the schema for the user
         schemaCreationService.createTenantForUser(user.getUsername());
 
         // Generate a JWT token for the registered user
-        String jwt = jwtService.generateToken(user);
+        String jwt = jwtService.generateToken(createdUser);
 
         // Return the JWT token in the response
         return JwtAuthenticationResponse.builder().token(jwt).build();
@@ -70,32 +71,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
         // Retrieve the user details from the database
-        User user = userService.getByUsername(request.getUsername());
+        User user = userService.getByUsername(request.getUsername())
+                .orElseThrow(() -> new ValidationException("User not found"));
 
         // Update the last login date
         user.setLastLogin(LocalDate.now());
 
         // Update the user in the database
-        userService.updateUser(user);
+        User updatedUser = userService.updateUser(user);
 
         // Generate a JWT token for the authenticated user
-        String jwt = jwtService.generateToken(user);
+        String jwt = jwtService.generateToken(updatedUser);
 
         // Return the JWT token in the response
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
-    @Override
-    public User getCurrentAuthenticatedUser() {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-        String username = userDetails.getUsername();
-
-        return userService.getByUsername(username);
-    }
 
     private User buildUser(SignUpRequest request) {
 

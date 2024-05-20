@@ -3,6 +3,7 @@ package com.MeddicheTruck.mtsecurity.configurations;
 
 import com.MeddicheTruck.mtsecurity.embeddables.Password;
 import com.MeddicheTruck.mtsecurity.services.UserService;
+import com.MeddicheTruck.mtsecurity.services.implementations.SecurityUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,7 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    private final UserService userService;
+    private final SecurityUserDetailsService securityUserDetailsService;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -87,7 +88,7 @@ public class SecurityConfiguration {
 
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        authProvider.setUserDetailsService(userService.userDetailsService());
+        authProvider.setUserDetailsService(securityUserDetailsService);
 
         authProvider.setPasswordEncoder(passwordEncoder());
 

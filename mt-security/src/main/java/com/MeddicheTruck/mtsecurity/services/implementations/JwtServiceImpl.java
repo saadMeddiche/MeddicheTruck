@@ -1,12 +1,15 @@
 package com.MeddicheTruck.mtsecurity.services.implementations;
 
 
+import com.MeddicheTruck.mtsecurity.entities.User;
 import com.MeddicheTruck.mtsecurity.services.JwtService;
+import com.MeddicheTruck.mtsecurity.services.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +23,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
+
+    private final UserService userService;
 
     @Value("${token.signing.key}")
     private String jwtSigningKey;
@@ -30,16 +36,13 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(User user) {
 
         //Add authorities to the token
         Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", userDetails.getAuthorities()
-                .stream().map(GrantedAuthority::getAuthority).toList());
+        claims.put("authorities", user.getAuthorities());
 
-
-        return generateToken(claims,
-                userDetails);
+        return generateToken(claims, user);
     }
 
     @Override
@@ -53,8 +56,8 @@ public class JwtServiceImpl implements JwtService {
         return claimsResolvers.apply(claims);
     }
 
-    private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
+    private String generateToken(Map<String, Object> extraClaims, User user) {
+        return Jwts.builder().setClaims(extraClaims).setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();

@@ -5,6 +5,7 @@ import com.MeddicheTruck.mtsecurity.dtos.authentication.response.TokenValidation
 import com.MeddicheTruck.mtsecurity.dtos.tokenValidation.TokenValidationRequest;
 import com.MeddicheTruck.mtsecurity.services.JwtService;
 import com.MeddicheTruck.mtsecurity.services.UserService;
+import com.MeddicheTruck.mtsecurity.services.implementations.SecurityUserDetailsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,13 +20,13 @@ public class TokenValidationController {
 
     private final JwtService jwtService;
 
-    private  final UserService userService;
+    private  final SecurityUserDetailsService securityUserDetailsService;
 
     @PostMapping("/validate")
     public ResponseEntity<?> validateToken(@Valid @RequestBody TokenValidationRequest request) {
 
         // Load user details by username
-        UserDetails userDetails = userService.userDetailsService().loadUserByUsername(request.getUsername());
+        UserDetails userDetails = securityUserDetailsService.loadUserByUsername(request.getUsername());
 
         // Check if the token is valid
         boolean isValid = jwtService.isTokenValid(request.getToken(), userDetails);
