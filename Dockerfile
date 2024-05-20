@@ -4,5 +4,4 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
 COPY --from=build /mt-main/target/MeddicheTruck.jar MeddicheTruck.jar
-ENTRYPOINT ["java","-jar","MeddicheTruck.jar"]
-EXPOSE 8080
+ENTRYPOINT ["java","-jar","/MeddicheTruck.jar"]
