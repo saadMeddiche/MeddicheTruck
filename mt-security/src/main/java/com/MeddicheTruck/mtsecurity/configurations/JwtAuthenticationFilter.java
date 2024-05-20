@@ -3,6 +3,7 @@ package com.MeddicheTruck.mtsecurity.configurations;
 
 import com.MeddicheTruck.mtsecurity.services.JwtService;
 import com.MeddicheTruck.mtsecurity.services.UserService;
+import com.MeddicheTruck.mtsecurity.services.implementations.SecurityUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,12 +24,11 @@ import java.util.function.Predicate;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private JwtService jwtService;
+    private final SecurityUserDetailsService securityUserDetailsService;
 
-    private final UserService userService;
-
-    public JwtAuthenticationFilter(JwtService jwtService, UserService userService) {
+    public JwtAuthenticationFilter(JwtService jwtService, SecurityUserDetailsService securityUserDetailsService) {
         this.jwtService = jwtService;
-        this.userService = userService;
+        this.securityUserDetailsService = securityUserDetailsService;
     }
 
     // Predicate to check if authorization should be skipped
@@ -95,7 +95,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     // Loads user details using the user email
     private UserDetails loadUserDetails(String userEmail) {
-        return userService.userDetailsService().loadUserByUsername(userEmail);
+        return securityUserDetailsService.loadUserByUsername(userEmail);
     }
 
     // Sets the authentication context using the provided request and user details

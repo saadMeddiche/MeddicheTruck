@@ -2,15 +2,16 @@ package com.MeddicheTruck.mtsecurity.controllers;
 
 import com.MeddicheTruck.mtsecurity.dtos.authentication.response.JwtAuthenticationResponse;
 import com.MeddicheTruck.mtsecurity.dtos.authentication.response.TokenValidationResponse;
+import com.MeddicheTruck.mtsecurity.dtos.tokenValidation.TokenValidationRequest;
 import com.MeddicheTruck.mtsecurity.services.JwtService;
 import com.MeddicheTruck.mtsecurity.services.UserService;
+import com.MeddicheTruck.mtsecurity.services.implementations.SecurityUserDetailsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/token")
@@ -19,12 +20,22 @@ public class TokenValidationController {
 
     private final JwtService jwtService;
 
-    private  final UserService userService;
+    private  final SecurityUserDetailsService securityUserDetailsService;
 
-    @GetMapping("/validate")
-    public ResponseEntity<?> validateToken() {
-        TokenValidationResponse response = new TokenValidationResponse(true);
+    @PostMapping("/validate")
+    public ResponseEntity<?> validateToken(@Valid @RequestBody TokenValidationRequest request) {
+
+        // Load user details by username
+        UserDetails userDetails = securityUserDetailsService.loadUserByUsername(request.getUsername());
+
+        // Check if the token is valid
+        boolean isValid = jwtService.isTokenValid(request.getToken(), userDetails);
+
+        // Create a response object
+        TokenValidationResponse response = new TokenValidationResponse(isValid);
+
+        // Return the response
         return new ResponseEntity<>(response , HttpStatus.OK);
-//       return ResponseEntity.ok(jwtService.isTokenValid(jwtAuthenticationResponse.getToken(), userService.userDetailsService().loadUserByUsername(jwtService.extractUserName(jwtAuthenticationResponse.getToken()))));
+
     }
 }

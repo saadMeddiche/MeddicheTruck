@@ -1,72 +1,31 @@
 package com.MeddicheTruck.mtmain.controllers;
 
-import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.ValidationException;
-import com.MeddicheTruck.mtcore.services.FileStorageSystem;
-import com.MeddicheTruck.mtcore.services.Naming;
-import com.MeddicheTruck.mtmain.entities.Vehicle;
+import com.MeddicheTruck.mtcore.base.BaseController;
+import com.MeddicheTruck.mtmain.dtos.VehicleImageIDto;
+import com.MeddicheTruck.mtmain.dtos.VehicleImageODto;
 import com.MeddicheTruck.mtmain.entities.VehicleImage;
-import com.MeddicheTruck.mtmain.repositories.VehicleImageRepository;
-import com.MeddicheTruck.mtmain.repositories.VehicleRepository;
+import com.MeddicheTruck.mtmain.services.VehicleImageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/v1/vehicleImages")
-public class VehicleImageController {
-
-    VehicleImageRepository vehicleImageRepository;
-
-    VehicleRepository vehicleRepository;
-    private final FileStorageSystem fss;
-    private final Naming n;
+public class VehicleImageController extends BaseController<VehicleImage, VehicleImageIDto, VehicleImageODto, VehicleImageService> {
 
     @Autowired
-    VehicleImageController(FileStorageSystem fss , Naming n , VehicleImageRepository vehicleImageRepository ,VehicleRepository vehicleRepository) {
-        this.fss = fss;
-        this.n = n;
-        this.vehicleImageRepository = vehicleImageRepository;
-        this.vehicleRepository = vehicleRepository;
+    VehicleImageController(VehicleImageService vehicleImageService) {
+        super(vehicleImageService);
     }
 
-    @PostMapping
-    public ResponseEntity<?> createVehicleImage(@RequestBody VehicleImage vehicleImage) {
-
-        System.out.println("Ia m here");
-
-        Vehicle vehicle = vehicleRepository.findById(vehicleImage.getVehicle().getId()).get();
-
-        vehicleImage.setTenant(vehicle.getTenant());
-        vehicleImage.setVehicle(vehicle);
-
-        vehicleImage.setPhotoPath(fss.store(
-                vehicleImage.getPhotoInBase64Format(),
-                n.uniquifyWord(vehicleImage.getName()) ,
-                "vehicles")
-        );
-
-        VehicleImage savedVehicleImage = vehicleImageRepository.save(vehicleImage);
-        return ResponseEntity.ok(savedVehicleImage);
+    @GetMapping("/of/{vehicleId}")
+    public ResponseEntity<?> getVehicleImagesByVehicleId(@PathVariable Long vehicleId ,
+                                                         @RequestParam(defaultValue = "") String searchTerm ,
+                                                         @RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "5") int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.getVehicleImagesByVehicleId(vehicleId , searchTerm, pageable));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteVehicleImage(@PathVariable Long id) {
-
-        System.out.println("I am here 2");
-        Optional<VehicleImage> vehicleImage = vehicleImageRepository.findById(id);
-
-        vehicleImage.ifPresentOrElse(
-                (value) ->{
-
-                },
-                () ->{
-                    throw new ValidationException("Vehicle Image Does Not Exist");
-                }
-        );
-        vehicleImageRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

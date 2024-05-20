@@ -1,13 +1,10 @@
 package com.MeddicheTruck.mtmain.entities;
 
-import com.MeddicheTruck.mtmain.listeners.PieceListener;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.TenantId;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.util.ArrayList;
@@ -19,36 +16,25 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(PieceListener.class)
-public class Piece {
+public class Piece extends BaseEntity {
 
-    @TenantId
-    @JsonIgnore
-    private String tenant;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @NotNull(message = "The name of the piece can not be null")
     private String name;
 
-    @OneToMany(mappedBy =  "piece" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("piece")
-    @RestResource(exported = false)
-    private List<PieceImage> images ;
+    private Boolean inStock = true;
 
-    @ManyToMany(mappedBy = "pieces")
-    @JsonIgnoreProperties({"pieces" , "involvedPersons"})
-    private List<Transaction> transactions = new ArrayList<>();
+    @OneToMany(mappedBy =  "piece" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("piece")
+    private List<PieceImage> images = new ArrayList<>();
+
+    @OneToMany(mappedBy = "piece" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("piece")
+    private List<PieceTransaction> transactions = new ArrayList<>();
 
     @Override
     public String toString() {
         return "Piece{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", images=" + images +
                 '}';
     }
-
 }

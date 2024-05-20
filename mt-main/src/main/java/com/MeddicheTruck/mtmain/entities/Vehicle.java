@@ -1,15 +1,13 @@
 package com.MeddicheTruck.mtmain.entities;
 
-import com.MeddicheTruck.mtmain.listeners.VehicleListener;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.MeddicheTruck.mtmain.enums.EngineType;
 import com.MeddicheTruck.mtmain.enums.VehicleType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.TenantId;
-import org.springframework.data.rest.core.annotation.RestResource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,31 +16,27 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EntityListeners(VehicleListener.class)
-public class Vehicle {
+public class Vehicle extends BaseEntity {
 
-    @TenantId
-    @JsonIgnore
-    private String tenant;
+    private Boolean inStock;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private VehicleType type;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private EngineType engineType;
 
     private String model;
 
+    @Column(unique = true)
     private String plate;
 
-    @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
     @JsonIgnoreProperties("vehicle")
-    @RestResource(exported = false)
-    private List<VehicleImage> images;
+    private List<VehicleImage> images = new ArrayList<>();
 
+    @OneToMany(mappedBy = "vehicle" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("vehicle")
+    private List<VehicleTransaction> transactions = new ArrayList<>();
 
 }

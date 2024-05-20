@@ -15,8 +15,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class SignUpRequest {
 
-    @NotNull(message = "The username of role can not be null")
-    @NotBlank(message = "The username of role can not be blank")
+    @NotNull(message = "The username can not be null")
+    @NotBlank(message = "The username can not be blank")
     @Pattern(regexp = "^[^\\s]*$", message = "No space allowed in username")
     private String username;
 
