@@ -7,7 +7,7 @@ default:
 
 token:
   signing:
-    key: 412F4428472B4B6250655368566E5970337336763979244226452948404D6352
+    key: ${TOKEN_SIGNING_KEY:412F4428472B4B6250655368566E5970337336763979244226452948404D6352}
 
 spring:
 
@@ -38,11 +38,6 @@ spring:
     changelog: changelog/app-changelog.xml
     default-schema: meddichetruck
     enabled: false
-
-  # Add Prefix to the base url
-  data:
-    rest:
-      basePath: /api/v1
 
 
 
