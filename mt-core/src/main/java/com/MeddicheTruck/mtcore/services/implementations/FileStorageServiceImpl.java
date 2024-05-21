@@ -79,12 +79,17 @@ public class FileStorageServiceImpl implements FileStorageSystem {
     }
 
     private String getResourceRelativePath(String fullPath) {
-        int resourcesIndex = fullPath.indexOf("\\images");
 
-        if (resourcesIndex != -1) {
+        int resourcesIndexLocal = fullPath.indexOf("\\images");
+
+        int resourcesIndex = fullPath.indexOf("/images");
+
+        if (resourcesIndexLocal != -1) {
             return fullPath.substring(resourcesIndex).replace("\\", "/");
+        } else if (resourcesIndex != -1) {
+            return fullPath.substring(resourcesIndex);
         } else {
-            throw new IllegalArgumentException("Path does not contain the /resources directory.");
+            throw new IllegalArgumentException("Path does not contain the /images directory.");
         }
     }
 
