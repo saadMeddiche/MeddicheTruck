@@ -1,11 +1,21 @@
 version: '3.8'
 
 services:
-  app:
-    image: 'meddichetruck:latest'
+  db:
+    image: postgres
+    container_name: database
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=meddichetruck
+    ports:
+      - "5432:5432"
+
+  app-back:
+    image: 'meddichetruckback:latest'
     build:
       context: .
-    container_name: application
+    container_name: application-backend
     depends_on:
       - db
     environment:
@@ -17,12 +27,17 @@ services:
     ports:
       - "8080:8080"
 
-  db:
-    image: postgres
-    container_name: database
+  app-front:
+    image: 'meddichetruckfront:latest'
+    build:
+      context: .
+    container_name: application-frontend
+    depends_on:
+      - app-back
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=meddichetruck
+        - DOMAIN=http://localhost:8080,
+        - API_VERSION=/api/v1,
+
     ports:
-      - "5432:5432"
+      - "4200:4200"
+
