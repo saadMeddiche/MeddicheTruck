@@ -1,4 +1,3 @@
-#Propeties Of upload images
 upload:
   vehicle-images:
     directory: ${VEHICLE_UPLOAD_DIRECTORY:vehicle-images}
@@ -12,7 +11,10 @@ upload:
 
 static-upload:
   upload-directory: ${STATIC_CONTENT_UPLOAD_DIRECTORY:static-upload}
-  url: ${STATIC_CONTENT_PATH:/images/**}
+  url: ${STATIC_CONTENT_PATH:images}
+
+domain:
+  url: ${DOMAIN_URL:http://localhost:8080}
 
 token:
   signing:

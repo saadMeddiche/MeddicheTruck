@@ -1,8 +1,9 @@
 package com.MeddicheTruck.mtmain.services;
 
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.StorageException;
+import com.MeddicheTruck.mtmain.properties.Domain;
 import com.MeddicheTruck.mtmain.properties.StaticContent;
-import com.MeddicheTruck.mtmain.properties.StorageProperties;
+import com.MeddicheTruck.mtmain.properties.interfaces.StorageProperties;
 import jakarta.annotation.PostConstruct;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,14 +19,20 @@ public abstract class FileSystemStorageService {
 
     private final StaticContent staticContent;
 
-    protected FileSystemStorageService(StorageProperties properties , StaticContent staticContent) {
+    private final Domain domain;
+
+    private final StorageProperties properties;
+
+    protected FileSystemStorageService(StorageProperties properties , StaticContent staticContent , Domain domain) {
         this.rootLocation = Path.of(String.format(
                 "%s%s%s",
                 staticContent.getDirectory(),
                 File.separator,
                 properties.getDirectory()
         ));
+        this.properties = properties;
         this.staticContent = staticContent;
+        this.domain = domain;
     }
 
     public String uploadFile(MultipartFile file) {
@@ -44,7 +51,12 @@ public abstract class FileSystemStorageService {
 
             try (InputStream inputStream = file.getInputStream()){
                 Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
-                return destinationFile.toString();
+                return String.format("%s/%s/%s/%s",
+                        domain.getUrl(),
+                        staticContent.getUrl(),
+                        properties.getDirectory(),
+                        file.getOriginalFilename()
+                );
             }
 
 

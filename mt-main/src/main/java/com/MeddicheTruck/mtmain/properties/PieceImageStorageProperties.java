@@ -1,5 +1,6 @@
 package com.MeddicheTruck.mtmain.properties;
 
+import com.MeddicheTruck.mtmain.properties.interfaces.StorageProperties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

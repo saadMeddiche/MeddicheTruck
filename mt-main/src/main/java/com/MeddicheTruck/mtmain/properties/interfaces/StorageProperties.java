@@ -1,4 +1,4 @@
-package com.MeddicheTruck.mtmain.properties;
+package com.MeddicheTruck.mtmain.properties.interfaces;
 
 import java.util.List;
 

@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         String absolutePath = staticContent.getUploadDirectoryAbsolutePath();
-        String url = staticContent.getUrl();
+        String url = String.format("/%s/**", staticContent.getUrl());
 
         registry.addResourceHandler(url)
                 .addResourceLocations(String.format("file:%s", absolutePath));
