@@ -7,6 +7,7 @@ import com.MeddicheTruck.mtmain.clones.PieceImageUpdateClone;
 import com.MeddicheTruck.mtmain.dtos.PieceImageIDto;
 import com.MeddicheTruck.mtmain.dtos.PieceImageODto;
 import com.MeddicheTruck.mtmain.entities.PieceImage;
+import com.MeddicheTruck.mtmain.entities.VehicleImage;
 import com.MeddicheTruck.mtmain.repositories.PieceImageRepository;
 import com.MeddicheTruck.mtmain.services.PieceImageService;
 import com.MeddicheTruck.mtmain.services.PieceService;
@@ -57,6 +58,19 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
     @Override
     public void updateValidation(PieceImageIDto pieceImageIDto) {
         validateObjectAgainstAnotherObject(pieceImageIDto , PieceImageUpdateClone.class);
+    }
+
+    @Override
+    public void beforeDelete(Long id) {
+
+        PieceImage pieceImage = repository.findById(id)
+                .orElseThrow(() -> new DoNotExistException("The piece image does not exist"));
+
+        String photoName = pieceImageSystemStorageService
+                .extractFileNameFromPhotoUrl(pieceImage.getPhotoPath());
+
+        pieceImageSystemStorageService.deleteFile(photoName);
+
     }
 
     public CustomPageResponse<PieceImage , PieceImageODto> getPieceImagesByPieceId(Long pieceId , String searchTerm, Pageable pageable) {

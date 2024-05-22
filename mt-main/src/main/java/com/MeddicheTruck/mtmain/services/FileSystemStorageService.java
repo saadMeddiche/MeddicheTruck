@@ -36,6 +36,7 @@ public abstract class FileSystemStorageService {
         this.domain = domain;
     }
 
+    // Upload file to the server and return the url to access it
     public String uploadFile(MultipartFile file) {
         try {
 
@@ -79,11 +80,17 @@ public abstract class FileSystemStorageService {
                     .normalize()
                     .toAbsolutePath();
 
+            // Delete the file if it exists
             Files.delete(destinationFile);
 
-        } catch (Exception e) {
-            throw new StorageException("Failed to delete file." + e);
+        } catch (Exception e ) {
+            System.out.println("Failed to delete file." + e);
+            throw new StorageException("Failed to delete file.");
         }
+    }
+
+    public String extractFileNameFromPhotoUrl(String photoUrl) {
+        return photoUrl.substring(photoUrl.lastIndexOf("/") + 1);
     }
 
     @PostConstruct
