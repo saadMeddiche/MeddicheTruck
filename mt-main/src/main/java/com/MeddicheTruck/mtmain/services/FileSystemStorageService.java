@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 public abstract class FileSystemStorageService {
 
@@ -40,8 +41,13 @@ public abstract class FileSystemStorageService {
 
             if(file.isEmpty()) throw new StorageException("Failed to store empty file.");
 
+            String fileName = String.format("%s_%s",
+                    UUID.randomUUID(),
+                    file.getOriginalFilename()
+            );
+
             Path destinationFile = this.rootLocation
-                    .resolve(Path.of(file.getOriginalFilename()))
+                    .resolve(Path.of(fileName))
                     .normalize()
                     .toAbsolutePath();
 
@@ -55,7 +61,7 @@ public abstract class FileSystemStorageService {
                         domain.getUrl(),
                         staticContent.getUrl(),
                         properties.getDirectory(),
-                        file.getOriginalFilename()
+                        fileName
                 );
             }
 
