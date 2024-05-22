@@ -7,10 +7,10 @@ import com.MeddicheTruck.mtmain.clones.VehicleImageUpdateClone;
 import com.MeddicheTruck.mtmain.dtos.VehicleImageIDto;
 import com.MeddicheTruck.mtmain.dtos.VehicleImageODto;
 import com.MeddicheTruck.mtmain.entities.VehicleImage;
-import com.MeddicheTruck.mtmain.properties.VehicleImageStorageProperties;
 import com.MeddicheTruck.mtmain.repositories.VehicleImageRepository;
 import com.MeddicheTruck.mtmain.services.VehicleImageService;
 import com.MeddicheTruck.mtmain.services.VehicleService;
+import com.MeddicheTruck.mtmain.services.concretes.VehicleImageSystemStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class VehicleImageServiceImpl extends BaseService<VehicleImage, VehicleIm
 
     VehicleService vehicleService;
 
-    FileSystemStorageService fileSystemStorageService;
+    VehicleImageSystemStorageService vehicleImageSystemStorageService;
 
 
     @Override
@@ -34,12 +34,13 @@ public class VehicleImageServiceImpl extends BaseService<VehicleImage, VehicleIm
     @Autowired
     public VehicleImageServiceImpl(VehicleImageRepository vehicleImageRepository,
                                    VehicleService vehicleService,
-                                   VehicleImageStorageProperties vehicleImageStorageProperties) {
+                                   VehicleImageSystemStorageService vehicleImageSystemStorageService
+    ) {
 
         super(vehicleImageRepository, VehicleImage.class, VehicleImageIDto.class, VehicleImageODto.class);
 
         this.vehicleService = vehicleService;
-        this.fileSystemStorageService = new FileSystemStorageService(vehicleImageStorageProperties);
+        this.vehicleImageSystemStorageService = vehicleImageSystemStorageService;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class VehicleImageServiceImpl extends BaseService<VehicleImage, VehicleIm
     @Override
     public void beforeSave(VehicleImage vehicleImage, VehicleImageIDto vehicleImageIDto) {
         // Store the vehicle image , and set the photo path of the vehicle image to the path of the stored image
-        String photoPath = fileSystemStorageService.uploadFile(vehicleImageIDto.getPhoto());
+        String photoPath = vehicleImageSystemStorageService.uploadFile(vehicleImageIDto.getPhoto());
         vehicleImage.setPhotoPath(photoPath);
     }
 

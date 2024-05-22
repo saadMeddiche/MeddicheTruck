@@ -10,6 +10,7 @@ import com.MeddicheTruck.mtmain.entities.PieceImage;
 import com.MeddicheTruck.mtmain.repositories.PieceImageRepository;
 import com.MeddicheTruck.mtmain.services.PieceImageService;
 import com.MeddicheTruck.mtmain.services.PieceService;
+import com.MeddicheTruck.mtmain.services.concretes.PieceImageSystemStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -22,15 +23,20 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
 
     PieceService pieceService;
 
+    private final PieceImageSystemStorageService pieceImageSystemStorageService;
+
     @Override
     protected String recordName() {
         return "piece image";
     }
 
     @Autowired
-    public PieceImageServiceImpl(PieceImageRepository pieceImageRepository , PieceService pieceService) {
+    public PieceImageServiceImpl(PieceImageRepository pieceImageRepository ,
+                                 PieceService pieceService,
+                                 PieceImageSystemStorageService pieceImageSystemStorageService) {
         super(pieceImageRepository, PieceImage.class, PieceImageIDto.class , PieceImageODto.class);
         this.pieceService = pieceService;
+        this.pieceImageSystemStorageService = pieceImageSystemStorageService;
     }
 
     @Override
@@ -44,7 +50,8 @@ public class PieceImageServiceImpl extends BaseService<PieceImage, PieceImageIDt
     @Override
     public void beforeSave(PieceImage pieceImage , PieceImageIDto pieceImageIDto) {
         // Store the piece image , and set the photo path of the piece image to the path of the stored image
-        throw new UnsupportedOperationException("Not implemented yet");
+        String photoPath = pieceImageSystemStorageService.uploadFile(pieceImageIDto.getPhoto());
+        pieceImage.setPhotoPath(photoPath);
     }
 
     @Override

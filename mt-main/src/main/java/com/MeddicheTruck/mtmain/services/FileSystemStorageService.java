@@ -1,27 +1,33 @@
-package com.MeddicheTruck.mtmain.services.implementations;
+package com.MeddicheTruck.mtmain.services;
 
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.StorageException;
+import com.MeddicheTruck.mtmain.properties.StaticContent;
 import com.MeddicheTruck.mtmain.properties.StorageProperties;
-import com.MeddicheTruck.mtmain.services.StorageService;
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-@Service
-public class FileSystemStorageService implements StorageService {
+public abstract class FileSystemStorageService {
 
     private final Path rootLocation;
 
-    public FileSystemStorageService(StorageProperties properties) {
-        this.rootLocation = Path.of(properties.getDirectory());
+    private final StaticContent staticContent;
+
+    protected FileSystemStorageService(StorageProperties properties , StaticContent staticContent) {
+        this.rootLocation = Path.of(String.format(
+                "%s%s%s",
+                staticContent.getDirectory(),
+                File.separator,
+                properties.getDirectory()
+        ));
+        this.staticContent = staticContent;
     }
 
-    @Override
     public String uploadFile(MultipartFile file) {
         try {
 
@@ -47,7 +53,6 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
-    @Override
     public void deleteFile(String fileName) {
         try {
 
@@ -63,12 +68,15 @@ public class FileSystemStorageService implements StorageService {
         }
     }
 
-    @Override
     @PostConstruct
-    public void init() {
+    private void init() {
         try {
+            Files.createDirectories(staticContent.getUploadDirectory());
+            System.out.println("Static upload at: " + staticContent.getUploadDirectory());
+
             Files.createDirectories(rootLocation);
             System.out.println("Storage initialized at: " + rootLocation);
+
         } catch (Exception e) {
             throw new StorageException("Could not initialize storage." + e);
         }

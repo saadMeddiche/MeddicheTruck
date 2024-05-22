@@ -1,12 +1,12 @@
 #Propeties Of upload images
 upload:
   vehicle-images:
-    directory: ${VEHICLE_UPLOAD_DIRECTORY:static-upload/vehicle-images}
+    directory: ${VEHICLE_UPLOAD_DIRECTORY:vehicle-images}
     allowed-extensions: .png, .jpg, .jpeg
     max-file-size: 5MB
 
-  pieces-images:
-    directory: ${PIECE_UPLOAD_DIRECTORY:static-upload/pieces-images}
+  piece-images:
+    directory: ${PIECE_UPLOAD_DIRECTORY:piece-images}
     allowed-extensions: .png, .jpg, .jpeg
     max-file-size: 5MB
 

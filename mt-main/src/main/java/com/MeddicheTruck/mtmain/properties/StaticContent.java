@@ -17,13 +17,21 @@ public class StaticContent {
 
     private Path uploadDirectory;
 
-    @Getter
-    @Setter
+    @Getter @Setter
+    private String directory;
+
+    @Getter @Setter
     private String url;
 
     public void setUploadDirectory(String uploadDirectory) {
         this.uploadDirectory = Path.of(uploadDirectory);
+        this.directory = uploadDirectory;
     }
+
+    public Path getUploadDirectory() {
+        return uploadDirectory;
+    }
+
     public String getUploadDirectoryAbsolutePath() {
         return String.format("%s%s", uploadDirectory.toAbsolutePath(), File.separator);
     }

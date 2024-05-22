@@ -7,6 +7,7 @@ import com.MeddicheTruck.mtcore.annotations.IncludeOnPutRequest;
 import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -29,6 +30,6 @@ public class PieceImageIDto extends BaseEntityDto {
 
     @IncludeOnPostRequest
     @NotNull(message = "The photo of the piece can not be null")
-    protected byte[] photoInBase64;
+    protected MultipartFile photo;
 
 }
