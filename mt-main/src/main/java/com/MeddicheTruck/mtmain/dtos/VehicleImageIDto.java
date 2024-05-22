@@ -8,6 +8,7 @@ import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -31,5 +32,5 @@ public class VehicleImageIDto extends BaseEntityDto {
 
     @IncludeOnPostRequest
     @NotNull(message = "The photo of the vehicle can not be null")
-    protected byte[] photoInBase64;
+    protected MultipartFile photo;
 }

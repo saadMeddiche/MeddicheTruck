@@ -1,9 +1,18 @@
-#Propeties Of FileStorageService
-default:
-  resource:
-    path: mt-main/src/main/resources/static/images
+#Propeties Of upload images
+upload:
+  vehicle-images:
+    directory: ${VEHICLE_UPLOAD_DIRECTORY:static-upload/vehicle-images}
+    allowed-extensions: .png, .jpg, .jpeg
+    max-file-size: 5MB
 
-  extension: .png
+  pieces-images:
+    directory: ${PIECE_UPLOAD_DIRECTORY:static-upload/pieces-images}
+    allowed-extensions: .png, .jpg, .jpeg
+    max-file-size: 5MB
+
+static-upload:
+  upload-directory: ${STATIC_CONTENT_UPLOAD_DIRECTORY:static-upload}
+  url: ${STATIC_CONTENT_PATH:/images/**}
 
 token:
   signing:
@@ -26,7 +35,7 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: ${SPRING_JPA_HIBERNATE_DIALECT:org.hibernate.dialect.PostgreSQLDialect}
         format_sql: true
 
     show-sql: false
@@ -39,6 +48,7 @@ spring:
     default-schema: meddichetruck
     enabled: false
 
-
-
+  servlet:
+    multipart:
+      enabled: true
 

@@ -77,6 +77,11 @@ public class ExceptionHandlerFactory {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(StorageException.class)
+    public ResponseEntity<?> handleStorageException(StorageException exception) {
+        return new ResponseEntity<>(List.of(exception.getError()) , HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
     // Yeh I know ,  I also do not like this one
     @ExceptionHandler(HttpMessageNotReadableException.class)
