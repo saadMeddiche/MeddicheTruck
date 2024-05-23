@@ -60,12 +60,10 @@ public class VehicleTransactionServiceImpl extends BaseService<VehicleTransactio
 
     @Override
     public void saveValidation(VehicleTransactionIDto vehicleTransactionIDto) {
-
+        globalValidation(vehicleTransactionIDto);
         // check if the vehicle is in stock before selling it
         if(vehicleTransactionIDto.getType().equals(TransactionType.SELL.toString()))
             throwExceptionIf(vehicleService::isNotInStock , vehicleTransactionIDto.getVehicleId() , DoNotExistException::new , String.format("The vehicle with id %d is not in stock" , vehicleTransactionIDto.getVehicleId()));
-
-        globalValidation(vehicleTransactionIDto);
 
     }
 
@@ -84,9 +82,9 @@ public class VehicleTransactionServiceImpl extends BaseService<VehicleTransactio
 
     @Override
     public void globalValidation(VehicleTransactionIDto vehicleTransactionIDto) {
+        validateObject(vehicleTransactionIDto);
         throwExceptionIf(vehicleService::doesNotExistById , vehicleTransactionIDto.getVehicleId() , DoNotExistException::new , String.format("The vehicle with id %d does not exist" , vehicleTransactionIDto.getVehicleId()));
         throwExceptionIf(personService::doesNotExistById , vehicleTransactionIDto.getPersonId() , DoNotExistException::new , String.format("The person with id %d does not exist" , vehicleTransactionIDto.getPersonId()));
-        validateObject(vehicleTransactionIDto);
     }
 
 }
