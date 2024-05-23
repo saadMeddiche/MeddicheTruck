@@ -23,6 +23,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=1234
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    volumes:
+      - static-upload:/static-upload
 
     ports:
       - "8080:8080"
@@ -41,3 +43,5 @@ services:
     ports:
       - "4200:4200"
 
+volumes:
+  static-upload:

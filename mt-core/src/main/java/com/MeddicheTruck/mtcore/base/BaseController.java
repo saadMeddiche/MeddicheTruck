@@ -4,6 +4,7 @@ import com.MeddicheTruck.mtcore.annotations.FilterDtoFields;
 import com.MeddicheTruck.mtcore.models.BaseEntity;
 import com.MeddicheTruck.mtcore.models.BaseEntityDto;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,8 +41,16 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
         return ResponseEntity.ok(service.findAll());
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<?> create(@RequestBody @FilterDtoFields I_DTO dto) {
+
+        O_DTO addedDto = service.save(dto);
+
+        return ResponseEntity.ok(addedDto);
+    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> createM(@ModelAttribute @FilterDtoFields I_DTO dto) {
 
         O_DTO addedDto = service.save(dto);
 

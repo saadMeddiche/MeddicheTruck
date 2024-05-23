@@ -34,9 +34,9 @@ public class BaseValidation {
     public  <O, E extends Exception> void throwExceptionIf(Predicate<O> predicate, O value, ExceptionSupplier<E> exceptionSupplier, String message) throws E {
         if (predicate.test(value)) throw exceptionSupplier.get(message);
     }
-
     @FunctionalInterface
     public interface ExceptionSupplier<E extends Exception> {
         E get(String message);
     }
 }
+
