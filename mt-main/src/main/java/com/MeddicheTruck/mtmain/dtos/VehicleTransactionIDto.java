@@ -20,6 +20,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @AdaptedDto
+@ToString
 public class VehicleTransactionIDto extends BaseEntityDto {
 
     @IncludeOnPutRequest

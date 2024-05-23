@@ -1,6 +1,7 @@
 package com.MeddicheTruck.mtmain.services.implementations;
 
 import com.MeddicheTruck.mtcore.base.BaseService;
+import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.AlreadyExistsException;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
 import com.MeddicheTruck.mtmain.dtos.VehicleDto;
 import com.MeddicheTruck.mtmain.dtos.VehicleTransactionIDto;
@@ -64,6 +65,9 @@ public class VehicleTransactionServiceImpl extends BaseService<VehicleTransactio
         // check if the vehicle is in stock before selling it
         if(vehicleTransactionIDto.getType().equals(TransactionType.SELL.toString()))
             throwExceptionIf(vehicleService::isNotInStock , vehicleTransactionIDto.getVehicleId() , DoNotExistException::new , String.format("The vehicle with id %d is not in stock" , vehicleTransactionIDto.getVehicleId()));
+
+        if(vehicleTransactionIDto.getType().equals(TransactionType.BUY.toString()))
+            throwExceptionIf(vehicleService::isInStock , vehicleTransactionIDto.getVehicleId() , AlreadyExistsException::new , String.format("The vehicle with id %d is already in stock" , vehicleTransactionIDto.getVehicleId()));
 
     }
 
