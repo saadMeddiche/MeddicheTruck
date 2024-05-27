@@ -67,6 +67,16 @@ public abstract class BaseController<E extends BaseEntity,I_DTO extends BaseEnti
         return ResponseEntity.ok(updatedDto);
     }
 
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateM(@ModelAttribute @FilterDtoFields I_DTO dto) {
+
+        if(!service.existsById(dto.getId())) return ResponseEntity.notFound().build();
+
+        O_DTO updatedDto = service.update(dto);
+
+        return ResponseEntity.ok(updatedDto);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
 
