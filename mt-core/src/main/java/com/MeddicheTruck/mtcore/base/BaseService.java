@@ -1,6 +1,5 @@
 package com.MeddicheTruck.mtcore.base;
 
-import com.MeddicheTruck.mtcore.annotations.FilterDtoFields;
 import com.MeddicheTruck.mtcore.controllers.CustomPageResponse;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.DoNotExistException;
 import com.MeddicheTruck.mtcore.handlingExceptions.costumExceptions.ValidationException;
@@ -81,6 +80,7 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
         E entityToUpdate = mapper.map(dto, entityClass);
         beforeUpdate(entityToUpdate , dto);
         E updatedEntity = repository.save(entityToUpdate);
+        afterUpdate(updatedEntity , dto);
         return mapper.map(updatedEntity, o_dtoClass);
     }
 
@@ -88,11 +88,13 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
         globalValidation(dto);
     }
     public void beforeUpdate(E entity , I_DTO dto){}
+    public void afterUpdate(E entity , I_DTO dto){}
 
     public void deleteById(Long id){
         deleteValidation(id);
         beforeDelete(id);
         repository.deleteById(id);
+        afterDelete();
     }
 
     public void globalValidation(I_DTO dto){
@@ -104,6 +106,8 @@ public abstract class BaseService<E extends BaseEntity, I_DTO extends BaseEntity
         idDoNotExistValidation(id);
     }
     public void beforeDelete(Long id){}
+
+    public void afterDelete(){}
 
     public O_DTO findById(Long id){
         idNullValidation(id);

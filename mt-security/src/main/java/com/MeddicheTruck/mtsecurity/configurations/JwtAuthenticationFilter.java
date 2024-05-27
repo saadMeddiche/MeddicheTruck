@@ -1,8 +1,6 @@
 package com.MeddicheTruck.mtsecurity.configurations;
 
-
 import com.MeddicheTruck.mtsecurity.services.JwtService;
-import com.MeddicheTruck.mtsecurity.services.UserService;
 import com.MeddicheTruck.mtsecurity.services.implementations.SecurityUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
