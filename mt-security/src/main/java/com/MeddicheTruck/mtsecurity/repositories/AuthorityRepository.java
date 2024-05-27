@@ -1,12 +1,12 @@
 package com.MeddicheTruck.mtsecurity.repositories;
 
 
-import com.MeddicheTruck.mtsecurity.entities.Role;
+import com.MeddicheTruck.mtsecurity.entities.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface AuthorityRepository extends JpaRepository<Authority, Long> {
 
-    Role findByName(String name);
+    Authority findByName(String name);
 }

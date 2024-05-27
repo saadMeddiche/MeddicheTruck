@@ -8,21 +8,17 @@ import com.MeddicheTruck.mtsecurity.dtos.authentication.request.SignUpRequest;
 import com.MeddicheTruck.mtsecurity.dtos.authentication.response.JwtAuthenticationResponse;
 
 import com.MeddicheTruck.mtsecurity.embeddables.Password;
-import com.MeddicheTruck.mtsecurity.entities.Role;
+import com.MeddicheTruck.mtsecurity.entities.Authority;
 import com.MeddicheTruck.mtsecurity.entities.User;
 import com.MeddicheTruck.mtsecurity.services.*;
 import com.MeddicheTruck.mtsecurity.services.validations.UserValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final RoleService roleService;
+    private final AuthorityService authorityService;
 
     private final SchemaCreationService schemaCreationService;
 
@@ -88,7 +84,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private User buildUser(SignUpRequest request) {
 
-        Role MEMBER = roleService.getRoleByName("USER");
+        Authority MEMBER = authorityService.getRoleByName("USER");
 
         // Build a User object from the SignUpRequest
         return User.builder()
@@ -98,7 +94,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .password(new Password(request.getPassword()))  // --- Encrypt the password
                 .birthDate(request.getBirthDate())
                 .creationDateAccount(LocalDate.now())
-                .roles(List.of(MEMBER))  // --- Set the default role (MEMBER)
+                .authorities(List.of(MEMBER))  // --- Set the default role (MEMBER)
                 .build();
     }
 }

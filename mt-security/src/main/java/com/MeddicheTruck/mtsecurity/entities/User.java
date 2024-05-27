@@ -45,19 +45,17 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_role",
+            name = "user_authority",
             schema = "security_schema",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            inverseJoinColumns = @JoinColumn(name = "authority_id")
     )
-    @JsonIgnoreProperties({"users" , "permissions"})
-    private List<Role> roles;
+    private List<Authority> authorities;
 
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
-                .flatMap(role -> role.getPermissions().stream())
-                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
+        return this.authorities.stream()
+                .map(authority -> new SimpleGrantedAuthority(authority.getName()))
                 .toList();
     }
 }
