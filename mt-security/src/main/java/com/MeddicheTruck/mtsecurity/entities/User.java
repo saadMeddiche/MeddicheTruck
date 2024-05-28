@@ -43,7 +43,7 @@ public class User {
 
     private LocalDate lastLogin;
 
-    @ManyToMany(cascade = CascadeType.ALL , fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE , fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_authority",
             schema = "security_schema",

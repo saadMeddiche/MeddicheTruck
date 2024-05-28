@@ -11,6 +11,7 @@ import com.MeddicheTruck.mtsecurity.services.validations.UserValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -25,7 +26,6 @@ public class UserServiceImpl implements UserService {
     private final UserValidationService validation;
 
     private final SecurityUserDetailsService securityUserDetailsService;
-
 
     public User createUser(User user){
 

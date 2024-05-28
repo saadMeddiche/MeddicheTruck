@@ -10,12 +10,14 @@ import com.MeddicheTruck.mtsecurity.dtos.authentication.response.JwtAuthenticati
 import com.MeddicheTruck.mtsecurity.embeddables.Password;
 import com.MeddicheTruck.mtsecurity.entities.Authority;
 import com.MeddicheTruck.mtsecurity.entities.User;
+import com.MeddicheTruck.mtsecurity.enums.BaseAuthority;
 import com.MeddicheTruck.mtsecurity.services.*;
 import com.MeddicheTruck.mtsecurity.services.validations.UserValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,8 +33,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtService jwtService;
 
     private final AuthenticationManager authenticationManager;
-
-    private final AuthorityService authorityService;
 
     private final SchemaCreationService schemaCreationService;
 
@@ -84,8 +84,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private User buildUser(SignUpRequest request) {
 
-        Authority MEMBER = authorityService.getRoleByName("USER");
-
         // Build a User object from the SignUpRequest
         return User.builder()
                 .username(request.getUsername())
@@ -94,7 +92,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .password(new Password(request.getPassword()))  // --- Encrypt the password
                 .birthDate(request.getBirthDate())
                 .creationDateAccount(LocalDate.now())
-                .authorities(List.of(MEMBER))  // --- Set the default role (MEMBER)
+                .authorities(List.of(
+                        new Authority(BaseAuthority.ACCESS_USER_DASHBOARD)
+                ))
                 .build();
     }
 }
