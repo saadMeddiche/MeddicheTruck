@@ -36,10 +36,10 @@ public class Person extends BaseEntity {
     private String description;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    private List<PieceTransaction> pieceTransactionsAsBuyer;
+    private List<PieceTransaction> pieceTransactions;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-    private List<VehicleTransaction> vehicleTransactionsAsSeller;
+    private List<VehicleTransaction> vehicleTransactions;
 
     @Override
     public String toString() {
