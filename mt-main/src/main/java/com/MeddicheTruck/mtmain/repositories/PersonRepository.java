@@ -19,6 +19,8 @@ public interface PersonRepository extends BaseRepository<Person> {
             "p.firstName LIKE %:searchTerm% OR " +
             "p.middleName LIKE %:searchTerm% OR " +
             "p.lastName LIKE %:searchTerm% OR " +
+            "p.mainPhoneNumber LIKE %:searchTerm% OR " +
+            "p.secondaryPhoneNumber LIKE %:searchTerm% OR " +
             "CAST(p.birthDate AS string ) LIKE %:searchTerm% OR " +
             "p.description LIKE %:searchTerm%")
     Page<Person> dynamicSearch(@Param("searchTerm") String searchTerm, Pageable pageable);

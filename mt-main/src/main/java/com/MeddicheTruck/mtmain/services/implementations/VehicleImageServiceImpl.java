@@ -62,18 +62,6 @@ public class VehicleImageServiceImpl extends BaseService<VehicleImage, VehicleIm
     }
 
     @Override
-    public void beforeDelete(Long id) {
-
-        VehicleImage vehicleImage = repository.findById(id)
-                .orElseThrow(() -> new DoNotExistException("The vehicle image does not exist"));
-
-        String photoName = vehicleImageSystemStorageService
-                .extractFileNameFromPhotoUrl(vehicleImage.getPhotoPath());
-
-        vehicleImageSystemStorageService.deleteFile(photoName);
-    }
-
-    @Override
     public CustomPageResponse<VehicleImage, VehicleImageODto> getVehicleImagesByVehicleId(Long vehicleId, String searchTerm, Pageable pageable) {
 
         throwExceptionIf(vehicleService::doesNotExistById, vehicleId, DoNotExistException::new, String.format("The vehicle with id %d does not exist", vehicleId));

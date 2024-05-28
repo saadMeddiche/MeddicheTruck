@@ -1,6 +1,7 @@
 package com.MeddicheTruck.mtmain.entities;
 
 import com.MeddicheTruck.mtcore.models.BaseImage;
+import com.MeddicheTruck.mtmain.listeners.VehicleImageListener;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,6 +12,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(VehicleImageListener.class)
 public class VehicleImage extends BaseImage {
 
     @ManyToOne
